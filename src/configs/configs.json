@@ -1,4 +1,6 @@
 {
-  "panel_url": "http://localhost:3000/admin/",
+  "panel_base_url": "http://localhost:3000",
+  "panel_home_path": "/admin",
+  "panel_name": "Admin Panel",
   "admin_api": "http://localhost:5000/admin/api/"
 }

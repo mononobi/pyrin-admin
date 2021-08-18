@@ -15,6 +15,7 @@ class PageComponent extends Component {
     }
 }
 
+
 class PagesComponent extends Component {
 
     render() {
@@ -23,6 +24,7 @@ class PagesComponent extends Component {
         })
     }
 }
+
 
 export class HomeComponent extends Component {
 

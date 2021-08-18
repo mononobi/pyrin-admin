@@ -1,4 +1,4 @@
-import { CONFIGS } from '../configs'
+import { CONFIGS } from '../configs';
 
 
 export function getMainMetadata() {
