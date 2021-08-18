@@ -1,0 +1,4 @@
+{
+  "panel_url": "http://localhost:3000/admin/",
+  "admin_api": "http://localhost:5000/admin/api/"
+}
