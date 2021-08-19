@@ -1,5 +1,7 @@
 import React, { Component }  from 'react';
+import { Link } from "react-router-dom";
 import { getMainMetadata } from '../services/metadata';
+import { getListPage } from '../services/url';
 import { BaseComponent } from './base';
 
 
@@ -8,9 +10,12 @@ class PageComponent extends Component {
     render() {
         return (
             <>
-                <h1>{this.props.page.category}</h1>
-                <h2>{this.props.page.plural_name}</h2>
-                <h3>{this.props.page.register_name}</h3>
+                <h2>{this.props.page.category}</h2>
+                <h3>
+                    <Link to={getListPage(this.props.page.register_name)}>
+                        {this.props.page.plural_name}
+                    </Link>
+                </h3>
             </>
         )
     }
