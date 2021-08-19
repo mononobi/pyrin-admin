@@ -1,5 +1,6 @@
 import React, { Component }  from 'react';
 import { getMainMetadata } from '../services/metadata';
+import { BaseComponent } from './base';
 
 
 class PageComponent extends Component {
@@ -26,18 +27,28 @@ class PagesComponent extends Component {
 }
 
 
-export class HomeComponent extends Component {
+export class HomeComponent extends BaseComponent {
 
     state = {
-        pages: [],
-        isLoaded: false
+        metadata: [],
+        isMetadataLoaded: false
+    }
+
+    _fetchMetadata()
+    {
+        return getMainMetadata();
+    }
+
+    _getMetadata(json)
+    {
+        return json.results;
     }
 
     render() {
-        if (this.state.isLoaded)
+        if (this.state.isMetadataLoaded)
         {
             return (
-                <PagesComponent pages={this.state.pages}/>
+                <PagesComponent pages={this.state.metadata}/>
             )
         }
         else {
@@ -45,14 +56,5 @@ export class HomeComponent extends Component {
                 <div> LOADING... </div>
             )
         }
-    }
-
-    componentDidMount() {
-        let response = getMainMetadata();
-        response.then((json) => {
-            this.setState({
-                pages: json.results,
-                isLoaded: true})
-        })
     }
 }

@@ -5,7 +5,6 @@ import { HomeComponent } from './components/home';
 import { ListComponent } from './components/list';
 import { AddComponent } from './components/add';
 import { EditComponent } from './components/edit';
-import { ViewComponent } from './components/view';
 import { LoginComponent } from './components/login';
 import { NotFoundComponent } from './components/not_found';
 
@@ -32,13 +31,8 @@ const routes = [
     exact: true
   },
   {
-    path: CONFIGS.panel_home_path + '/:register_name/:pk/edit',
+    path: CONFIGS.panel_home_path + '/:register_name/:pk',
     component: EditComponent,
-    exact: true
-  },
-  {
-    path: CONFIGS.panel_home_path + '/:register_name/:pk/view',
-    component: ViewComponent,
     exact: true
   },
   {
