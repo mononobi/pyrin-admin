@@ -1,5 +1,5 @@
 import React, { Component }  from 'react';
-import { IconButton, ListItemSecondaryAction } from '@material-ui/core';
+import {IconButton, ListItemSecondaryAction, Tooltip } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -17,20 +17,26 @@ class PageComponent extends Component {
     render() {
         return (
             <div className='page'>
-                <Link component='a' href={getListPage(this.props.page.register_name)} underline='none'>
-                    <ListItem button divider>
-                        <ListItemText primary={this.props.page.plural_name} className='item'/>
-                        { this.props.page.has_create_permission &&
-                            <ListItemSecondaryAction>
-                                <Link component='a' href={getCreatePage(this.props.page.register_name)}>
+                <ListItem button divider>
+                    <Link color='textPrimary' component='a'
+                          href={getListPage(this.props.page.register_name)} underline='hover'>
+                        <Tooltip title={`View ${this.props.page.plural_name}`} placement='right'>
+                            <ListItemText primary={this.props.page.plural_name} className='item'/>
+                        </Tooltip>
+                    </Link>
+                    {
+                        this.props.page.has_create_permission &&
+                        <ListItemSecondaryAction>
+                            <Link component='a' href={getCreatePage(this.props.page.register_name)}>
+                                <Tooltip title={`Add ${this.props.page.name}`} placement='right'>
                                     <IconButton edge='end'>
-                                        <AddIcon titleAccess='Add'/>
+                                        <AddIcon />
                                     </IconButton>
-                                </Link>
-                            </ListItemSecondaryAction>
-                        }
-                    </ListItem>
-                </Link>
+                                </Tooltip>
+                            </Link>
+                        </ListItemSecondaryAction>
+                    }
+                </ListItem>
             </div>
         )
     }

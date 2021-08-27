@@ -14,22 +14,22 @@ export const ROUTES = [
         exact: true
     },
     {
-        path: CONFIGS.panel_home_path + '/login',
+        path: `${CONFIGS.panel_home_path}/login`,
         component: LoginComponent,
         exact: true
     },
     {
-        path: CONFIGS.panel_home_path + '/:register_name',
+        path: `${CONFIGS.panel_home_path}/:register_name`,
         component: ListComponent,
         exact: true
     },
     {
-        path: CONFIGS.panel_home_path + '/:register_name/add',
+        path: `${CONFIGS.panel_home_path}/:register_name/add`,
         component: AddComponent,
         exact: true
     },
     {
-        path: CONFIGS.panel_home_path + '/:register_name/:pk',
+        path: `${CONFIGS.panel_home_path}/:register_name/:pk`,
         component: EditComponent,
         exact: true
     },
