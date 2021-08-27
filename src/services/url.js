@@ -1,4 +1,4 @@
-import { CONFIGS } from '../configs';
+import { CONFIGS } from '../core/configs';
 
 
 export function getListPage(register_name) {

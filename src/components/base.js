@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { NotImplementedError } from '../exceptions';
+import { NotImplementedError } from '../core/exceptions';
 
 
 export class BaseComponent extends Component {
