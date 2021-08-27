@@ -1,5 +1,5 @@
 import React, { Component }  from 'react';
-import { IconButton, ListItemSecondaryAction} from '@material-ui/core';
+import { IconButton, ListItemSecondaryAction } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
