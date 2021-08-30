@@ -1,6 +1,6 @@
 import React from 'react';
-import { getFindMetadata} from '../../services/metadata';
-import { BaseComponent } from '../base';
+import { getFindMetadata} from '../../../services/metadata';
+import { BaseComponent } from '../../base';
 
 
 export class ListComponent extends BaseComponent {

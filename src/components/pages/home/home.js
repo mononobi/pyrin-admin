@@ -6,9 +6,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Link from '@material-ui/core/Link';
 import {v4 as uuidv4} from 'uuid'
-import { getMainMetadata } from '../../services/metadata';
-import { getListPage, getCreatePage } from '../../services/url';
-import { BaseComponent } from '../base';
+import { getMainMetadata } from '../../../services/metadata';
+import { getListPage, getCreatePage } from '../../../services/url';
+import { BaseComponent } from '../../base';
 import './home.css';
 
 

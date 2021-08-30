@@ -1,6 +1,6 @@
 import React from 'react';
-import { getCreateMetadata } from '../../services/metadata';
-import { BaseComponent } from '../base';
+import { getCreateMetadata } from '../../../services/metadata';
+import { BaseComponent } from '../../base';
 
 
 export class AddComponent extends BaseComponent {
