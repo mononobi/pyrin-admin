@@ -17,26 +17,26 @@ class PageComponent extends Component {
     render() {
         return (
             <div className='page'>
-                <ListItem button divider>
-                    <Link color='textPrimary' component='a'
-                          href={getListPage(this.props.page.register_name)} underline='hover'>
-                        <Tooltip title={`View ${this.props.page.plural_name}`} placement='right'>
+                <Link color='textPrimary' component='a'
+                      href={getListPage(this.props.page.register_name)} underline='none'>
+                    <Tooltip title={`View ${this.props.page.plural_name}`} placement='right'>
+                        <ListItem button divider>
                             <ListItemText primary={this.props.page.plural_name} className='item'/>
-                        </Tooltip>
-                    </Link>
-                    {
-                        this.props.page.has_create_permission &&
-                        <ListItemSecondaryAction>
-                            <Link component='a' href={getCreatePage(this.props.page.register_name)}>
-                                <Tooltip title={`Add ${this.props.page.name}`} placement='right'>
-                                    <IconButton edge='end'>
-                                        <AddIcon />
-                                    </IconButton>
-                                </Tooltip>
-                            </Link>
-                        </ListItemSecondaryAction>
-                    }
-                </ListItem>
+                            {
+                                this.props.page.has_create_permission &&
+                                <ListItemSecondaryAction>
+                                    <Link href={getCreatePage(this.props.page.register_name)}>
+                                        <Tooltip title={`Add ${this.props.page.name}`} placement='right'>
+                                            <IconButton edge='end'>
+                                                <AddIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                    </Link>
+                                </ListItemSecondaryAction>
+                            }
+                        </ListItem>
+                    </Tooltip>
+                </Link>
             </div>
         )
     }

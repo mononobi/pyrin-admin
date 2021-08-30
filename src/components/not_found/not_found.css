@@ -1,0 +1,19 @@
+.container {
+    background-color: inherit;
+    width: 100%;
+    color: #2f2d2d;
+    text-align: center;
+}
+
+.home-button {
+    background-color: #c0bcbc;
+}
+
+.home-button:hover, .home-button:focus {
+    background-color: #aba7a7;
+}
+
+.home-button:active {
+    background-color: #a4a0a0;
+    box-shadow: #9d9999;
+}
