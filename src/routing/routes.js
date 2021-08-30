@@ -1,10 +1,10 @@
 import { CONFIGS } from '../core/configs';
-import { HomeComponent } from '../components/home/home';
-import { ListComponent } from '../components/list/list';
-import { AddComponent } from '../components/add/add';
-import { EditComponent } from '../components/edit/edit';
-import { LoginComponent } from '../components/login/login';
-import { NotFoundComponent } from '../components/not_found/not_found';
+import { HomeComponent } from '../components/pages/home/home';
+import { ListComponent } from '../components/pages/list/list';
+import { AddComponent } from '../components/pages/add/add';
+import { EditComponent } from '../components/pages/edit/edit';
+import { LoginComponent } from '../components/pages/login/login';
+import { NotFoundComponent } from '../components/pages/not_found/not_found';
 
 
 export const ROUTES = [
