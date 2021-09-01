@@ -1,6 +1,8 @@
 import React from 'react';
-import { getFindMetadata} from '../../../services/metadata';
+import MaterialTable from 'material-table';
+import { getFindMetadata } from '../../../services/metadata';
 import { BaseComponent } from '../../base';
+import { getListData } from '../../../services/data';
 
 
 export class ListComponent extends BaseComponent {
@@ -10,7 +12,36 @@ export class ListComponent extends BaseComponent {
         return getFindMetadata(this.props.match.params.register_name);
     }
 
-    render() {
-        return <div> LIST </div>
+    _render() {
+
+        return (
+            <MaterialTable
+                options={
+                    {
+                        padding: 'dense',
+                        pageSize: 4,
+                        pageSizeOptions: [4],
+                        draggable: false
+                    }
+                }
+                title={this.state.metadata.plural_name}
+                columns={this.state.metadata.list_datasource_info}
+                data={query =>
+                    new Promise((resolve, reject) => {
+                        let response = getListData(
+                            this.state.metadata.register_name, query.page + 1, query.pageSize
+                        )
+
+                        response.then(json => {
+                            resolve({
+                                data: json.results,
+                                page: query.page,
+                                totalCount: json.count_total
+                            })
+                        })
+                    })
+                }
+            />
+        )
     }
 }

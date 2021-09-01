@@ -6,17 +6,17 @@ export function getMainMetadata() {
         .then(response => response.json());
 }
 
-export function getCreateMetadata(register_name) {
-    return fetch(`${CONFIGS.admin_api}metadata/${register_name}/create/`)
+export function getCreateMetadata(registerName) {
+    return fetch(`${CONFIGS.admin_api}metadata/${registerName}/create/`)
         .then(response => response.json());
 }
 
-export function getUpdateMetadata(register_name) {
-    return fetch(`${CONFIGS.admin_api}metadata/${register_name}/update/`)
+export function getUpdateMetadata(registerName) {
+    return fetch(`${CONFIGS.admin_api}metadata/${registerName}/update/`)
         .then(response => response.json());
 }
 
-export function getFindMetadata(register_name) {
-    return fetch(`${CONFIGS.admin_api}metadata/${register_name}/find/`)
+export function getFindMetadata(registerName) {
+    return fetch(`${CONFIGS.admin_api}metadata/${registerName}/find/`)
         .then(response => response.json());
 }

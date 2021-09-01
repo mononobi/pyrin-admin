@@ -1,5 +1,8 @@
 {
   "panel_home_path": "/admin",
   "panel_name": "Admin Panel",
-  "admin_api": "http://localhost:5000/admin/api/"
+  "admin_api": "http://localhost:5000/admin/api/",
+  "page_key": "page",
+  "page_size_key": "page_size",
+  "ordering_key": "order_by"
 }

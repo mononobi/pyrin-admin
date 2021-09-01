@@ -1,14 +1,14 @@
 import { CONFIGS } from '../core/configs';
 
 
-export function getListPage(register_name) {
-    return `${CONFIGS.panel_home_path}/${register_name}`;
+export function getListPage(registerName) {
+    return `${CONFIGS.panel_home_path}/${registerName}`;
 }
 
-export function getCreatePage(register_name) {
-    return `${CONFIGS.panel_home_path}/${register_name}/add`;
+export function getCreatePage(registerName) {
+    return `${CONFIGS.panel_home_path}/${registerName}/add`;
 }
 
-export function getUpdatePage(register_name, pk) {
-    return `${CONFIGS.panel_home_path}/${register_name}/${pk}`;
+export function getUpdatePage(registerName, pk) {
+    return `${CONFIGS.panel_home_path}/${registerName}/${pk}`;
 }

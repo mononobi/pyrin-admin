@@ -84,17 +84,7 @@ export class HomeComponent extends BaseComponent {
         return json.results;
     }
 
-    render() {
-        if (this.state.isMetadataLoaded)
-        {
-            return (
-                <PagesComponent pages={this.state.metadata}/>
-            )
-        }
-        else {
-            return (
-                <div> LOADING... </div>
-            )
-        }
+    _render() {
+        return <PagesComponent pages={this.state.metadata}/>
     }
 }
