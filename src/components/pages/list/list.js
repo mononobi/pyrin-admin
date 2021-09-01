@@ -13,7 +13,6 @@ export class ListComponent extends BaseComponent {
     }
 
     _render() {
-
         return (
             <MaterialTable
                 options={
