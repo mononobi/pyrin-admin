@@ -9,13 +9,11 @@ export class BaseComponent extends Component {
         isMetadataLoaded: false
     }
 
-    _fetchMetadata()
-    {
+    _fetchMetadata() {
         throw new NotImplementedError();
     }
 
-    _getMetadata(json)
-    {
+    _getMetadata(json) {
         return json;
     }
 
