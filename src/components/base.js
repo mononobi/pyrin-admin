@@ -22,7 +22,7 @@ export class BaseComponent extends Component {
     _componentDidMount() {}
 
     _render() {
-        return <></>
+        throw new NotImplementedError();
     }
 
     componentDidMount() {
