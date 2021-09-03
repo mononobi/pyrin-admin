@@ -18,8 +18,9 @@ export class ListComponent extends BaseComponent {
                 options={
                     {
                         padding: 'dense',
-                        pageSize: 4,
-                        pageSizeOptions: [4],
+                        paging: this.state.metadata.paged,
+                        pageSize: this.state.metadata.page_size,
+                        pageSizeOptions: this.state.metadata.page_size_options,
                         draggable: false
                     }
                 }
