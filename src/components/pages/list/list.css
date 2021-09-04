@@ -1,23 +1,24 @@
 th:nth-child(even) {
     background-color: #5391cc;
     color: white;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: bold;
 }
 
 th:nth-child(odd) {
     background-color: #5391cc;
     color: white;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: bold;
 }
+
 
 tbody tr:hover {
     background-color: #dadada;
 }
 
 tbody tr {
-    font-size: 13px;
+    font-size: 12px;
     /* the font-family must be set here to make all numbers english even if browser font is not. */
     font-family: Roboto, "Open Sans", serif;
 }
