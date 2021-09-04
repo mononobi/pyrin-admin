@@ -1,12 +1,12 @@
 th:nth-child(even) {
-    background-color: #5391cc;
+    background-color: #68a3da;
     color: white;
     font-size: 12px;
     font-weight: bold;
 }
 
 th:nth-child(odd) {
-    background-color: #5391cc;
+    background-color: #68a3da;
     color: white;
     font-size: 12px;
     font-weight: bold;

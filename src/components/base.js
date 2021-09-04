@@ -13,15 +13,17 @@ export class BaseComponent extends Component {
         throw new NotImplementedError();
     }
 
+    _render() {
+        throw new NotImplementedError();
+    }
+
     _getMetadata(json) {
         return json;
     }
 
     _componentDidMount() {}
 
-    _render() {
-        throw new NotImplementedError();
-    }
+    _prepare_rendering() {}
 
     componentDidMount() {
         let response = this._fetchMetadata();
@@ -37,6 +39,7 @@ export class BaseComponent extends Component {
     render() {
         if (this.state.isMetadataLoaded)
         {
+            this._prepare_rendering();
             return this._render();
         }
         else {
