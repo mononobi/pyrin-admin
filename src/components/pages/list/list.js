@@ -3,6 +3,7 @@ import MaterialTable from 'material-table';
 import { getFindMetadata } from '../../../services/metadata';
 import { BaseComponent } from '../../base';
 import { getListData } from '../../../services/data';
+import './list.css'
 
 
 export class ListComponent extends BaseComponent {

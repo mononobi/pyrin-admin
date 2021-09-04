@@ -1,11 +1,11 @@
 import React, { Component }  from 'react';
-import {IconButton, ListItemSecondaryAction, Tooltip } from '@material-ui/core';
+import { IconButton, ListItemSecondaryAction, Tooltip } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Link from '@material-ui/core/Link';
-import {v4 as uuidv4} from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 import { getMainMetadata } from '../../../services/metadata';
 import { getListPage, getCreatePage } from '../../../services/url';
 import { BaseComponent } from '../../base';
@@ -20,8 +20,8 @@ class PageComponent extends Component {
                 <Link color='textPrimary' component='a'
                       href={getListPage(this.props.page.register_name)} underline='none'>
                     <Tooltip title={`View ${this.props.page.plural_name}`} placement='right'>
-                        <ListItem button divider>
-                            <ListItemText primary={this.props.page.plural_name} className='item'/>
+                        <ListItem button divider className='item'>
+                            <ListItemText primary={this.props.page.plural_name}/>
                             {
                                 this.props.page.has_create_permission &&
                                 <ListItemSecondaryAction>
@@ -52,7 +52,7 @@ class PagesComponent extends Component {
                 return (
                     <div className='pages' key={uuidv4()}>
                         <div className='category'>{category_name}</div>
-                        <List component='nav' dense={true} className='list'>
+                        <List component='nav' dense={true}>
                             {
                                 category[category_name].map(page => {
                                     return <PageComponent key={page.register_name} page={page}/>
