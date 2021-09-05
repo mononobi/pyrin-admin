@@ -34,7 +34,7 @@ export class ListComponent extends BaseComponent {
                             {rowData[field_name]}
                         </Link>
                     )
-                };
+                }
             }
         }
     }
