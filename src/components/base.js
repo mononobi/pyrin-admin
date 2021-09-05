@@ -23,7 +23,7 @@ export class BaseComponent extends Component {
 
     _componentDidMount() {}
 
-    _prepare_rendering() {}
+    _prepareRendering() {}
 
     componentDidMount() {
         let response = this._fetchMetadata();
@@ -39,7 +39,7 @@ export class BaseComponent extends Component {
     render() {
         if (this.state.isMetadataLoaded)
         {
-            this._prepare_rendering();
+            this._prepareRendering();
             return this._render();
         }
         else {

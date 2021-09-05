@@ -15,11 +15,7 @@ export class ListComponent extends BaseComponent {
         return getFindMetadata(this.props.match.params.register_name);
     }
 
-    _prepare_rendering() {
-        if (!this.state.metadata.has_get_permission) {
-            return
-        }
-
+    _preparePKColumn() {
         for (let i = 0; i < this.state.metadata.list_datasource_info.length; i++) {
             let field_name = this.state.metadata.list_datasource_info[i].field;
             if (this.state.metadata.pk.includes(field_name)) {
@@ -36,6 +32,12 @@ export class ListComponent extends BaseComponent {
                     )
                 }
             }
+        }
+    }
+
+    _prepareRendering() {
+        if (this.state.metadata.has_get_permission) {
+            this._preparePKColumn()
         }
     }
 
