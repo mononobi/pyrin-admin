@@ -21,7 +21,7 @@ export class ListComponent extends BaseComponent {
             if (this.state.metadata.pk.includes(field_name)) {
                 this.state.metadata.list_datasource_info[i].cellStyle = {
                     fontWeight: 'bolder',
-                    color: '#0c4b7e'
+                    color: '#12558d',
                 }
                 this.state.metadata.list_datasource_info[i].render = rowData => {
                     return (
