@@ -4,41 +4,64 @@ import Link from '@material-ui/core/Link';
 import { getFindMetadata } from '../../../services/metadata';
 import { BaseComponent } from '../../base';
 import { getListData } from '../../../services/data';
-import {getCreatePage, getUpdatePage} from '../../../services/url';
+import { getCreatePage, getUpdatePage } from '../../../services/url';
 import './list.css'
 
 
 export class ListComponent extends BaseComponent {
+
+    LINK_COLOR = '#12558d'
 
     _fetchMetadata()
     {
         return getFindMetadata(this.props.match.params.register_name);
     }
 
-    _preparePKColumn() {
-        for (let i = 0; i < this.state.metadata.list_datasource_info.length; i++) {
-            let field_name = this.state.metadata.list_datasource_info[i].field;
-            if (this.state.metadata.pk.includes(field_name)) {
-                this.state.metadata.list_datasource_info[i].cellStyle = {
-                    fontWeight: 'bolder',
-                    color: '#12558d',
+    _renderPK(info) {
+        info.cellStyle = {
+            fontWeight: 'bolder',
+            color: this.LINK_COLOR,
+        }
+        info.render = rowData => {
+            return (
+                <Link component='a' underline='hover'
+                      href={getUpdatePage(info.pk_register_name, rowData[info.field])}>
+                    {rowData[info.field]}
+                </Link>
+            )
+        }
+    }
+
+    _renderFK(info) {
+        info.cellStyle = {
+            fontWeight: 'bold',
+            color: this.LINK_COLOR,
+        }
+        info.render = rowData => {
+            return (
+                <Link component='a' underline='hover'
+                      href={getUpdatePage(info.fk_register_name, rowData[info.field])}>
+                    {rowData[info.field]}
+                </Link>
+            )
+        }
+    }
+
+    _renderLinks() {
+        for (let i = 0; i < this.state.metadata.datasource_info.length; i++) {
+            if (!this.state.metadata.datasource_info[i].hidden) {
+                if (this.state.metadata.datasource_info[i].is_pk) {
+                    this._renderPK(this.state.metadata.datasource_info[i])
                 }
-                this.state.metadata.list_datasource_info[i].render = rowData => {
-                    return (
-                        <Link component='a' underline='hover'
-                              href={getUpdatePage(this.state.metadata.register_name, rowData[field_name])}>
-                            {rowData[field_name]}
-                        </Link>
-                    )
+                else if (this.state.metadata.datasource_info[i].is_fk) {
+                    this._renderFK(this.state.metadata.datasource_info[i])
                 }
             }
         }
     }
 
     _prepareRendering() {
-        if (this.state.metadata.has_get_permission) {
-            this._preparePKColumn()
-        }
+        this._renderLinks()
     }
 
     _render() {
@@ -60,7 +83,7 @@ export class ListComponent extends BaseComponent {
                     }
                 }
                 title={this.state.metadata.plural_name}
-                columns={this.state.metadata.list_datasource_info}
+                columns={this.state.metadata.datasource_info}
                 data={query =>
                     new Promise((resolve, reject) => {
                         let response = getListData(
@@ -94,11 +117,26 @@ export class ListComponent extends BaseComponent {
                         position: 'toolbarOnSelect',
                         hidden: !this.state.metadata.has_remove_permission,
                         onClick: (event, rowData) => {
-                            console.log(JSON.stringify(rowData));
-                            alert(`Deleting user ${rowData[0].id}`);
+                            alert(`Deleting User ${rowData[0][this.state.metadata.pk_name]}`);
+                        }
+                    },
+                    {
+                        icon: 'edit',
+                        tooltip: `View ${this.state.metadata.name}`,
+                        position: 'row',
+                        hidden: !this.state.metadata.has_get_permission,
+                        onClick: (event, rowData) => {
+                            let url = getUpdatePage(this.state.metadata.register_name,
+                                rowData[this.state.metadata.pk_name]);
+                            window.open(url);
                         }
                     }
                 ]}
+                localization={{
+                    header: {
+                        actions: ''
+                    },
+                }}
             />
         )
     }
