@@ -23,10 +23,14 @@ export class ListComponent extends BaseComponent {
             color: this.LINK_COLOR,
         }
         info.render = rowData => {
+            let value = rowData[info.field];
+            if (info.lookup) {
+                value = info.lookup[value]
+            }
             return (
                 <Link component='a' underline='hover'
                       href={getUpdatePage(info.pk_register_name, rowData[info.field])}>
-                    {rowData[info.field]}
+                    {value}
                 </Link>
             )
         }
@@ -38,10 +42,14 @@ export class ListComponent extends BaseComponent {
             color: this.LINK_COLOR,
         }
         info.render = rowData => {
+            let value = rowData[info.field];
+            if (info.lookup) {
+                value = info.lookup[value]
+            }
             return (
                 <Link component='a' underline='hover'
                       href={getUpdatePage(info.fk_register_name, rowData[info.field])}>
-                    {rowData[info.field]}
+                    {value}
                 </Link>
             )
         }
@@ -105,6 +113,16 @@ export class ListComponent extends BaseComponent {
                         onClick: event => {
                             let url = getCreatePage(this.state.metadata.register_name);
                             window.open(url);
+                        }
+                    },
+                    {
+                        icon: 'delete',
+                        tooltip: `Delete All ${this.state.metadata.plural_name}`,
+                        position: 'toolbar',
+                        hidden: !this.state.metadata.has_remove_permission,
+                        isFreeAction: true,
+                        onClick: event => {
+                            alert(`Deleting All Users`);
                         }
                     },
                     {
