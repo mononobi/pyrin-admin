@@ -69,8 +69,10 @@ export class ListComponent extends BaseComponent {
     }
 
     _render() {
+        const tableRef = React.createRef();
         return (
             <MaterialTable
+                tableRef={tableRef}
                 options={
                     {
                         padding: 'dense',
@@ -104,6 +106,14 @@ export class ListComponent extends BaseComponent {
                     })
                 }
                 actions={[
+                    {
+                        icon: 'refresh',
+                        tooltip: 'Refresh Data',
+                        isFreeAction: true,
+                        onClick: event => {
+                            tableRef.current && tableRef.current.onQueryChange();
+                        }
+                    },
                     {
                         icon: 'add',
                         tooltip: `Add ${this.state.metadata.name}`,
