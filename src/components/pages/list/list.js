@@ -20,7 +20,7 @@ export class ListComponent extends BaseComponent {
 
     _renderPK(info) {
         info.cellStyle = {
-            fontWeight: 'bolder',
+            fontWeight: 'bold',
             color: this.LINK_COLOR,
         }
 
