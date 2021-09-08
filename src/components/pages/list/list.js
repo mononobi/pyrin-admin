@@ -89,7 +89,7 @@ export class ListComponent extends BaseComponent {
                         pageSizeOptions: this.state.metadata.page_size_options,
                         paginationType: this.state.metadata.pagination_type,
                         paginationPosition: this.state.metadata.pagination_position,
-                        draggable: false,
+                        draggable: this.state.metadata.column_ordering,
                         selection: this.state.metadata.has_remove_permission,
                         emptyRowsWhenPaging: false,
                         rowStyle: rowData => ({ backgroundColor: rowData.tableData.checked ?
