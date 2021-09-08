@@ -82,6 +82,7 @@ export class ListComponent extends BaseComponent {
                 options={
                     {
                         search: false,
+                        grouping: this.state.metadata.grouping,
                         columnsButton: this.state.metadata.column_selection || this.state.metadata.enable_export,
                         exportButton: this.state.metadata.enable_export,
                         padding: this.state.metadata.table_type,
