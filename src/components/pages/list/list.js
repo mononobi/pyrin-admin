@@ -75,6 +75,7 @@ export class ListComponent extends BaseComponent {
                 tableRef={tableRef}
                 options={
                     {
+                        exportButton: this.state.metadata.enable_export,
                         padding: this.state.metadata.table_type,
                         paging: this.state.metadata.paged,
                         pageSize: this.state.metadata.page_size,
