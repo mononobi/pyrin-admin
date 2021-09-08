@@ -81,6 +81,7 @@ export class ListComponent extends BaseComponent {
                 tableRef={tableRef}
                 options={
                     {
+                        search: false,
                         columnsButton: this.state.metadata.column_selection || this.state.metadata.enable_export,
                         exportButton: this.state.metadata.enable_export,
                         padding: this.state.metadata.table_type,
