@@ -11,6 +11,6 @@ export const THEME = createTheme({
         }
     },
     typography: {
-        fontFamily: ['Roboto', '"Open Sans"', 'serif'].join(',')
+        fontFamily: ['Roboto', '"Open Sans"', 'sans-serif'].join(',')
     }
 })
