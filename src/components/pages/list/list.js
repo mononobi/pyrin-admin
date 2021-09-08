@@ -10,7 +10,8 @@ import './list.css'
 
 export class ListComponent extends BaseComponent {
 
-    LINK_COLOR = '#12558d'
+    LINK_COLOR = '#12558d';
+    SELECTED_ROW_COLOR = 'rgba(185,215,232,0.44)';
 
     _fetchMetadata()
     {
@@ -84,7 +85,7 @@ export class ListComponent extends BaseComponent {
                         selection: this.state.metadata.has_remove_permission,
                         emptyRowsWhenPaging: false,
                         rowStyle: rowData => ({ backgroundColor: rowData.tableData.checked ?
-                                'rgba(185,215,232,0.44)' : '' })
+                                this.SELECTED_ROW_COLOR : '' })
                     }
                 }
                 title={this.state.metadata.plural_name}
