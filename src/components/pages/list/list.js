@@ -31,7 +31,7 @@ export class ListComponent extends BaseComponent {
                     value = info.lookup[value];
                 }
                 return (
-                    <Link component='a' underline='hover'
+                    <Link component='a' underline='hover' target='_blank'
                           href={getUpdatePage(info.pk_register_name, rowData[info.field])}>
                         {value}
                     </Link>
@@ -52,7 +52,7 @@ export class ListComponent extends BaseComponent {
                     value = info.lookup[value]
                 }
                 return (
-                    <Link component='a' underline='hover'
+                    <Link component='a' underline='hover' target='_blank'
                           href={getUpdatePage(info.fk_register_name, rowData[info.field])}>
                         {value}
                     </Link>
@@ -155,6 +155,7 @@ export class ListComponent extends BaseComponent {
                     },
                     {
                         icon: 'edit',
+                        iconProps: {fontSize: 'inherit', color: 'action'},
                         tooltip: `View ${this.state.metadata.name}`,
                         position: 'row',
                         hidden: !this.state.metadata.has_get_permission,
