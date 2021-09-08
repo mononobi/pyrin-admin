@@ -58,10 +58,10 @@ export class ListComponent extends BaseComponent {
     _prepareRendering() {
         for (let i = 0; i < this.state.metadata.datasource_info.length; i++) {
             if (!this.state.metadata.datasource_info[i].hidden) {
-                if (this.state.metadata.datasource_info[i].is_pk) {
+                if (this.state.metadata.link_pk && this.state.metadata.datasource_info[i].is_pk) {
                     this._renderPK(this.state.metadata.datasource_info[i]);
                 }
-                else if (this.state.metadata.datasource_info[i].is_fk) {
+                else if (this.state.metadata.link_fk && this.state.metadata.datasource_info[i].is_fk) {
                     this._renderFK(this.state.metadata.datasource_info[i]);
                 }
             }
