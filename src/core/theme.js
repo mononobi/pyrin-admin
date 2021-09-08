@@ -8,7 +8,7 @@ export const THEME = createTheme({
         },
         secondary: {
             main: '#12558d'
-        },
+        }
     },
     typography: {
         fontFamily: ['Roboto', '"Open Sans"', 'serif'].join(',')
