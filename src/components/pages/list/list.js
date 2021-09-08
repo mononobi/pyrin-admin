@@ -23,17 +23,20 @@ export class ListComponent extends BaseComponent {
             fontWeight: 'bolder',
             color: this.LINK_COLOR,
         }
-        info.render = rowData => {
-            let value = rowData[info.field];
-            if (info.lookup) {
-                value = info.lookup[value]
+
+        if (this.state.metadata.link_pk) {
+            info.render = rowData => {
+                let value = rowData[info.field];
+                if (info.lookup) {
+                    value = info.lookup[value];
+                }
+                return (
+                    <Link component='a' underline='hover'
+                          href={getUpdatePage(info.pk_register_name, rowData[info.field])}>
+                        {value}
+                    </Link>
+                )
             }
-            return (
-                <Link component='a' underline='hover'
-                      href={getUpdatePage(info.pk_register_name, rowData[info.field])}>
-                    {value}
-                </Link>
-            )
         }
     }
 
@@ -41,27 +44,30 @@ export class ListComponent extends BaseComponent {
         info.cellStyle = {
             color: this.LINK_COLOR,
         }
-        info.render = rowData => {
-            let value = rowData[info.field];
-            if (info.lookup) {
-                value = info.lookup[value]
+
+        if (this.state.metadata.link_fk) {
+            info.render = rowData => {
+                let value = rowData[info.field];
+                if (info.lookup) {
+                    value = info.lookup[value]
+                }
+                return (
+                    <Link component='a' underline='hover'
+                          href={getUpdatePage(info.fk_register_name, rowData[info.field])}>
+                        {value}
+                    </Link>
+                )
             }
-            return (
-                <Link component='a' underline='hover'
-                      href={getUpdatePage(info.fk_register_name, rowData[info.field])}>
-                    {value}
-                </Link>
-            )
         }
     }
 
     _prepareRendering() {
         for (let i = 0; i < this.state.metadata.datasource_info.length; i++) {
             if (!this.state.metadata.datasource_info[i].hidden) {
-                if (this.state.metadata.link_pk && this.state.metadata.datasource_info[i].is_pk) {
+                if (this.state.metadata.datasource_info[i].is_pk) {
                     this._renderPK(this.state.metadata.datasource_info[i]);
                 }
-                else if (this.state.metadata.link_fk && this.state.metadata.datasource_info[i].is_fk) {
+                else if (this.state.metadata.datasource_info[i].is_fk) {
                     this._renderFK(this.state.metadata.datasource_info[i]);
                 }
             }
