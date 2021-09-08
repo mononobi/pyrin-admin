@@ -38,7 +38,6 @@ export class ListComponent extends BaseComponent {
 
     _renderFK(info) {
         info.cellStyle = {
-            fontWeight: 'bold',
             color: this.LINK_COLOR,
         }
         info.render = rowData => {
@@ -75,7 +74,7 @@ export class ListComponent extends BaseComponent {
                 tableRef={tableRef}
                 options={
                     {
-                        padding: 'dense',
+                        padding: this.state.metadata.table_type,
                         paging: this.state.metadata.paged,
                         pageSize: this.state.metadata.page_size,
                         pageSizeOptions: this.state.metadata.page_size_options,
