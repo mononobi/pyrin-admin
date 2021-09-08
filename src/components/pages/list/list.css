@@ -12,7 +12,6 @@ th:nth-child(odd) {
     font-weight: bold;
 }
 
-
 tbody tr:hover {
     background-color: #dadada;
 }
