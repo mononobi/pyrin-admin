@@ -1,4 +1,6 @@
 import React from 'react';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import CancelIcon from '@material-ui/icons/Cancel';
 import MaterialTable from 'material-table';
 import Link from '@material-ui/core/Link';
 import { getFindMetadata } from '../../../services/metadata';
@@ -61,14 +63,30 @@ export class ListComponent extends BaseComponent {
         }
     }
 
+    _renderBoolean(info) {
+        info.render = rowData => {
+            let checked = rowData[info.field];
+            if (checked) {
+                return <CheckCircleIcon color='action' fontSize='small'/>;
+            }
+            else {
+                return <CancelIcon color='disabled' fontSize='small'/>;
+            }
+        }
+    }
+
     _prepareRendering() {
         for (let i = 0; i < this.state.metadata.datasource_info.length; i++) {
-            if (!this.state.metadata.datasource_info[i].hidden) {
-                if (this.state.metadata.datasource_info[i].is_pk) {
-                    this._renderPK(this.state.metadata.datasource_info[i]);
+            let info = this.state.metadata.datasource_info[i];
+            if (!info.hidden) {
+                if (info.is_pk) {
+                    this._renderPK(info);
                 }
-                else if (this.state.metadata.datasource_info[i].is_fk) {
-                    this._renderFK(this.state.metadata.datasource_info[i]);
+                else if (info.is_fk) {
+                    this._renderFK(info);
+                }
+                else if (info.type === 'boolean') {
+                    this._renderBoolean(info);
                 }
             }
         }
@@ -139,7 +157,7 @@ export class ListComponent extends BaseComponent {
                         icon: 'delete',
                         tooltip: `Delete All ${this.state.metadata.plural_name}`,
                         position: 'toolbar',
-                        hidden: !this.state.metadata.has_remove_permission,
+                        hidden: !this.state.metadata.has_remove_all_permission,
                         isFreeAction: true,
                         onClick: event => {
                             alert(`Deleting All Users`);
