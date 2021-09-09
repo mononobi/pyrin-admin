@@ -121,7 +121,8 @@ export class ListComponent extends BaseComponent {
                 data={query =>
                     new Promise((resolve, reject) => {
                         let response = getListData(
-                            this.state.metadata.register_name, query.page + 1, query.pageSize
+                            this.state.metadata.register_name, query.page + 1,
+                            query.pageSize, query.orderBy, query.orderDirection
                         )
 
                         response.then(json => {
@@ -139,7 +140,9 @@ export class ListComponent extends BaseComponent {
                         tooltip: 'Refresh Data',
                         isFreeAction: true,
                         onClick: event => {
-                            tableRef.current && tableRef.current.onQueryChange();
+                            if (tableRef.current && tableRef.current.state) {
+                                tableRef.current.onQueryChange(tableRef.current.state.query);
+                            }
                         }
                     },
                     {
