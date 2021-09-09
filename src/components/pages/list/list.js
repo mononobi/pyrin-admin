@@ -5,7 +5,7 @@ import MaterialTable from 'material-table';
 import Link from '@material-ui/core/Link';
 import { getFindMetadata } from '../../../services/metadata';
 import { BaseComponent } from '../../base';
-import { getListData } from '../../../services/data';
+import { find } from '../../../services/data';
 import { getCreatePage, getUpdatePage } from '../../../services/url';
 import './list.css'
 
@@ -120,8 +120,7 @@ export class ListComponent extends BaseComponent {
                 columns={this.state.metadata.datasource_info}
                 data={query =>
                     new Promise((resolve, reject) => {
-                        let response = getListData(
-                            this.state.metadata.register_name, query.page + 1,
+                        let response = find(this.state.metadata.register_name, query.page + 1,
                             query.pageSize, query.orderBy, query.orderDirection
                         )
 
