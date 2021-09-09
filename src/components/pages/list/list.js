@@ -21,7 +21,7 @@ export class ListComponent extends BaseComponent {
     _renderPK(info) {
         info.cellStyle = {
             fontWeight: 'bold',
-            color: this.LINK_COLOR,
+            color: this.LINK_COLOR
         }
 
         if (this.state.metadata.link_pk) {
@@ -42,7 +42,7 @@ export class ListComponent extends BaseComponent {
 
     _renderFK(info) {
         info.cellStyle = {
-            color: this.LINK_COLOR,
+            color: this.LINK_COLOR
         }
 
         if (this.state.metadata.link_fk) {
