@@ -14,3 +14,10 @@ export const THEME = createTheme({
         fontFamily: ['Roboto', '"Open Sans"', 'sans-serif'].join(',')
     }
 })
+
+THEME.props = {
+
+    MuiMenuItem: {
+        style: {fontSize: '13px', fontWeight: 'bold'}
+    }
+};
