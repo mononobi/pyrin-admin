@@ -99,7 +99,7 @@ export class ListComponent extends BaseComponent {
                 tableRef={tableRef}
                 options={
                     {
-                        search: false,
+                        search: this.state.metadata.search,
                         grouping: this.state.metadata.grouping,
                         columnsButton: this.state.metadata.column_selection || this.state.metadata.enable_export,
                         exportButton: this.state.metadata.enable_export,
