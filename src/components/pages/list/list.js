@@ -99,7 +99,9 @@ export class ListComponent extends BaseComponent {
                 tableRef={tableRef}
                 options={
                     {
+                        debounceInterval: this.state.metadata.search_debounce_interval,
                         search: this.state.metadata.search,
+                        searchAutoFocus: this.state.metadata.search,
                         grouping: this.state.metadata.grouping,
                         columnsButton: this.state.metadata.column_selection || this.state.metadata.enable_export,
                         exportButton: this.state.metadata.enable_export,
@@ -121,7 +123,7 @@ export class ListComponent extends BaseComponent {
                 data={query =>
                     new Promise((resolve, reject) => {
                         let response = find(this.state.metadata.register_name, query.page + 1,
-                            query.pageSize, query.orderBy, query.orderDirection
+                            query.pageSize, query.orderBy, query.orderDirection, query.search
                         )
 
                         response.then(json => {
