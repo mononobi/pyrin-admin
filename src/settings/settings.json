@@ -5,5 +5,7 @@
   "page_key": "page",
   "page_size_key": "page_size",
   "ordering_key": "order_by",
-  "query_param": "_query_"
+  "query_param": "_query_",
+  "locale_key": "lc",
+  "timezone_key": "tz"
 }
