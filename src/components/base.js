@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import { NotImplementedError } from '../core/exceptions';
+import './base.css'
 
 
 export class BaseComponent extends Component {
@@ -43,7 +45,11 @@ export class BaseComponent extends Component {
             return this._render();
         }
         else {
-            return <div> LOADING... </div>
+            return (
+                <div className='page-loading'>
+                    <LinearProgress color='primary'/>
+                </div>
+            )
         }
     }
 }
