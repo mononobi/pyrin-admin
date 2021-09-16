@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
+import React  from 'react';
+import { BaseComponent } from '../../base/base/base';
 
 
-export class LoginComponent extends Component {
+export class LoginComponent extends BaseComponent {
 
-    render() {
+    _render() {
         return <div> LOGIN </div>
     }
-
-    componentDidMount() {}
 }

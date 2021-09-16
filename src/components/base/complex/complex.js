@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { NotImplementedError } from '../core/exceptions';
-import './base.css'
+import { NotImplementedError } from '../../../core/exceptions';
+import { BaseComponent } from '../base/base';
+import './complex.css'
 
 
-export class BaseComponent extends Component {
+export class ComplexComponent extends BaseComponent {
 
     state = {
         metadata: {},
@@ -15,17 +16,9 @@ export class BaseComponent extends Component {
         throw new NotImplementedError();
     }
 
-    _render() {
-        throw new NotImplementedError();
-    }
-
     _getMetadata(json) {
         return json;
     }
-
-    _componentDidMount() {}
-
-    _prepareRendering() {}
 
     componentDidMount() {
         let response = this._fetchMetadata();
@@ -35,14 +28,13 @@ export class BaseComponent extends Component {
                 isMetadataLoaded: true})
         })
 
-        this._componentDidMount();
+        super._componentDidMount();
     }
 
     render() {
         if (this.state.isMetadataLoaded)
         {
-            this._prepareRendering();
-            return this._render();
+            return super.render()
         }
         else {
             return (

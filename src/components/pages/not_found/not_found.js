@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
+import React  from 'react';
 import Chip from '@material-ui/core/Chip';
 import HomeIcon from '@material-ui/icons/Home';
+import { BaseComponent } from '../../base/base/base';
 import './not_found.css';
 
 
-export class NotFoundComponent extends Component {
+export class NotFoundComponent extends BaseComponent {
 
-    render() {
+    _render() {
         return (
             <>
                 <div className='container'>
@@ -17,6 +18,4 @@ export class NotFoundComponent extends Component {
             </>
         )
     }
-
-    componentDidMount() {}
 }

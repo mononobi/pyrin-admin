@@ -1,16 +1,16 @@
 import React from 'react';
 import { getUpdateMetadata } from '../../../services/metadata';
-import { BaseComponent } from '../../base';
+import { ComplexComponent } from '../../base/complex/complex';
 
 
-export class EditComponent extends BaseComponent {
+export class EditComponent extends ComplexComponent {
 
     _fetchMetadata()
     {
         return getUpdateMetadata(this.props.match.params.register_name);
     }
 
-    render() {
+    _render() {
         return <div> EDIT {this.props.match.params.register_name} - {this.props.match.params.pk} </div>
     }
 }
