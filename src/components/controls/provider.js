@@ -1,5 +1,5 @@
 import { ServerFormFieldTypeEnum } from './globals/enumerations';
-import { TextBox } from './text_box/text_box';
+import { TextArea, TextBox } from './text_box/text_box';
 import { PasswordInput } from './password/password';
 import { DatePicker, TimePicker, DateTimePicker } from './pickers/pickers';
 
@@ -15,7 +15,7 @@ CONTROL_MAP[ServerFormFieldTypeEnum.NUMBER] = null;
 CONTROL_MAP[ServerFormFieldTypeEnum.PASSWORD] = PasswordInput;
 CONTROL_MAP[ServerFormFieldTypeEnum.TELEPHONE] = null;
 CONTROL_MAP[ServerFormFieldTypeEnum.STRING] = TextBox;
-CONTROL_MAP[ServerFormFieldTypeEnum.TEXT] = null;
+CONTROL_MAP[ServerFormFieldTypeEnum.TEXT] = TextArea;
 CONTROL_MAP[ServerFormFieldTypeEnum.URL] = null;
 CONTROL_MAP[ServerFormFieldTypeEnum.UUID] = null;
 CONTROL_MAP[ServerFormFieldTypeEnum.IPV4] = null;
