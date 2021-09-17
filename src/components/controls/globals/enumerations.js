@@ -6,6 +6,8 @@ export const ServerFormFieldTypeEnum = {
     EMAIL: 'email',
     FILE: 'file',
     NUMBER: 'number',
+    INTEGER: 'integer',
+    FLOAT: 'float',
     PASSWORD: 'password',
     TELEPHONE: 'telephone',
     STRING: 'string',

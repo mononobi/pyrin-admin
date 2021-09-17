@@ -15,6 +15,10 @@ export class TextBox extends BaseControl {
     MULTILINE = false;
     AUTO_COMPLETE = AutoCompleteEnum.ON;
 
+    _getStep() {
+        return null;
+    }
+
     _render() {
         return (
             <div style={{width: this.state.length, margin: INPUT_CONTAINER_MARGIN}}>
@@ -27,8 +31,14 @@ export class TextBox extends BaseControl {
                            required={this.props.info.required}
                            margin={INPUT_MARGIN}
                            InputProps={{style: {fontSize: INPUT_FONT_SIZE}}}
+                           inputProps={{
+                               step: this._getStep(),
+                               maxLength: this.props.info.max_length,
+                               minLength: this.props.info.min_length
+                           }}
                            InputLabelProps={{style: {fontSize: INPUT_LABEL_FONT_SIZE}}}
                            type={this.TYPE}
+                           // step={this._getStep()}
                            style={{width: INPUT_FILL}}
                 />
             </div>

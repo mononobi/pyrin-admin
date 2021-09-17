@@ -6,6 +6,7 @@ import { BaseComplexPage } from '../base/base';
 import { TextArea, TextBox } from '../../controls/text_box/text_box';
 import { PasswordInput } from '../../controls/password/password';
 import { UUIDInput } from '../../controls/uuid/uuid';
+import { FloatInput, IntegerInput, NumberInput } from '../../controls/number/number';
 
 
 export class AddComponent extends BaseComplexPage {
@@ -39,6 +40,15 @@ export class AddComponent extends BaseComplexPage {
                     <TextArea info={this.state.metadata.data_fields[1]}/>
                     <Divider/>
                     <UUIDInput info={this.state.metadata.data_fields[3]}/>
+                    <Divider/>
+
+                    <NumberInput info={this.state.metadata.data_fields[5]}/>
+                    <Divider/>
+
+                    <IntegerInput info={this.state.metadata.data_fields[3]}/>
+                    <Divider/>
+
+                    <FloatInput info={this.state.metadata.data_fields[4]}/>
                     <Divider/>
                 </div>
             </Paper>
