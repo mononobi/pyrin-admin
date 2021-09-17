@@ -19,7 +19,7 @@ export class BaseControl extends BaseComponent {
         if (label_length > 25 && label_length < 45) {
             chosen_label_length = LONG_INPUT_LENGTH;
         }
-        else if (label_length > 45) {
+        else if (label_length >= 45) {
             chosen_label_length = VERY_LONG_INPUT_LENGTH;
         }
 
@@ -27,7 +27,7 @@ export class BaseControl extends BaseComponent {
             if (max_length > 25 * 3 && max_length < 45 * 3) {
                 chosen_max_value_length = LONG_INPUT_LENGTH;
             }
-            else if (max_length > 45 * 2) {
+            else if (max_length >= 45 * 3) {
                 chosen_max_value_length = VERY_LONG_INPUT_LENGTH;
             }
         }
@@ -36,7 +36,7 @@ export class BaseControl extends BaseComponent {
             if (min_length > 25 && min_length < 45) {
                 chosen_min_value_length = LONG_INPUT_LENGTH;
             }
-            else if (min_length > 45) {
+            else if (min_length >= 45) {
                 chosen_min_value_length = VERY_LONG_INPUT_LENGTH;
             }
         }
