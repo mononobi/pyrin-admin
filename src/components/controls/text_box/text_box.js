@@ -34,7 +34,9 @@ export class TextBox extends BaseControl {
                            inputProps={{
                                step: this._getStep(),
                                maxLength: this.props.info.max_length,
-                               minLength: this.props.info.min_length
+                               minLength: this.props.info.min_length,
+                               max: this.props.info.max_value,
+                               min: this.props.info.min_value
                            }}
                            InputLabelProps={{style: {fontSize: INPUT_LABEL_FONT_SIZE}}}
                            type={this.TYPE}
