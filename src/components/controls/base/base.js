@@ -47,9 +47,8 @@ export class BaseControl extends BaseComponent {
     }
 
     _componentDidMount() {
-        let length = this._getLength();
         this.setState({
-            input_length: length
+            input_length: this._getLength()
         })
     }
 }
