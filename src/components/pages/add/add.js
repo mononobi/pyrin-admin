@@ -7,6 +7,9 @@ import { TextArea, TextBox } from '../../controls/text_box/text_box';
 import { PasswordInput } from '../../controls/password/password';
 import { UUIDInput } from '../../controls/uuid/uuid';
 import { FloatInput, IntegerInput, NumberInput } from '../../controls/number/number';
+import { getControl } from '../../controls/provider';
+import {DropDown} from "../../controls/dropdown/dropdown";
+import SimpleSelect from "../../controls/test";
 
 
 export class AddComponent extends BaseComplexPage {
@@ -22,16 +25,10 @@ export class AddComponent extends BaseComplexPage {
                 <div>
                     <Divider/>
                     <DateTimePicker info={this.state.metadata.data_fields[4]}/>
-                    {/*<br/>*/}
                     <Divider/>
-                    {/*<br/>*/}
                     <TimePicker info={this.state.metadata.data_fields[1]}/>
-                    {/*<br/>*/}
                     <Divider/>
-                    {/*<br/>*/}
                     <DatePicker info={this.state.metadata.data_fields[2]}/>
-                    {/*<Divider/>*/}
-                    {/*<br/>*/}
                     <Divider/>
                     <TextBox info={this.state.metadata.data_fields[0]}/>
                     <Divider/>
@@ -41,14 +38,13 @@ export class AddComponent extends BaseComplexPage {
                     <Divider/>
                     <UUIDInput info={this.state.metadata.data_fields[3]}/>
                     <Divider/>
-
                     <NumberInput info={this.state.metadata.data_fields[5]}/>
                     <Divider/>
-
-                    <IntegerInput info={this.state.metadata.data_fields[3]}/>
+                    <DropDown info={this.state.metadata.data_fields[0]}/>
                     <Divider/>
-
                     <FloatInput info={this.state.metadata.data_fields[4]}/>
+                    <Divider/>
+                    <SimpleSelect/>
                     <Divider/>
                 </div>
             </Paper>

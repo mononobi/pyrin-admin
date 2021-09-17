@@ -4,6 +4,7 @@ import { PasswordInput } from './password/password';
 import { TextArea, TextBox } from './text_box/text_box';
 import { DatePicker, TimePicker, DateTimePicker } from './pickers/pickers';
 import { NumberInput, IntegerInput, FloatInput } from './number/number';
+import { DropDown } from './dropdown/dropdown';
 
 
 const CONTROL_MAP = {};
@@ -28,8 +29,12 @@ CONTROL_MAP[ServerFormFieldTypeEnum.OBJECT] = null;
 
 Object.freeze(CONTROL_MAP);
 
-export function getControl(type) {
-    let control = CONTROL_MAP[type];
+export function getControl(info) {
+    if (info.in_enum) {
+        return DropDown;
+    }
+
+    let control = CONTROL_MAP[info.form_field_type];
     if (control) {
         return control;
     }
