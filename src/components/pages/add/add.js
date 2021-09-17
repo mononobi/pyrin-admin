@@ -3,7 +3,7 @@ import { Divider, Paper } from '@material-ui/core';
 import { getCreateMetadata } from '../../../services/metadata';
 import { DatePicker, DateTimePicker, TimePicker } from '../../controls/pickers/pickers';
 import { BaseComplexPage } from '../base/base';
-import {TextBox} from "../../controls/text_box/text_box";
+import { TextBox } from '../../controls/text_box/text_box';
 
 
 export class AddComponent extends BaseComplexPage {

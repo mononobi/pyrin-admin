@@ -50,7 +50,8 @@ export class DatePicker extends BaseControl {
                         }}
                         InputProps={{
                             required: this.props.info.required,
-                            style: {fontSize: INPUT_FONT_SIZE}
+                            style: {fontSize: INPUT_FONT_SIZE},
+                            autoComplete: 'off'
                         }}
                         onChange={value => {
                             this.setState({
@@ -97,7 +98,8 @@ export class TimePicker extends BaseControl {
                         }}
                         InputProps={{
                             required: this.props.info.required,
-                            style: {fontSize: INPUT_FONT_SIZE}
+                            style: {fontSize: INPUT_FONT_SIZE},
+                            autoComplete: 'off'
                         }}
                         onChange={value => {
                             this.setState({
@@ -144,7 +146,8 @@ export class DateTimePicker extends BaseControl {
                         }}
                         InputProps={{
                             required: this.props.info.required,
-                            style: {fontSize: INPUT_FONT_SIZE}
+                            style: {fontSize: INPUT_FONT_SIZE},
+                            autoComplete: 'off'
                         }}
                         onChange={value => {
                             this.setState({

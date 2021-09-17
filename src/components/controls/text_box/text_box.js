@@ -1,6 +1,7 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import { BaseControl } from '../base/base';
+import { ClientFormFieldTypeEnum } from '../globals/enumerations';
 import {
     INPUT_CONTAINER_MARGIN, INPUT_FILL, INPUT_FONT_SIZE, INPUT_LABEL_FONT_SIZE,
     INPUT_LENGTH, INPUT_MARGIN, INPUT_SIZE, INPUT_VARIANT, LONG_INPUT_LENGTH,
@@ -12,6 +13,7 @@ import '../globals/styles/inputs.css';
 export class TextBox extends BaseControl {
 
     WIDTH = INPUT_LENGTH;
+    TYPE = ClientFormFieldTypeEnum.TEXT;
 
     _render() {
         return (
@@ -24,7 +26,7 @@ export class TextBox extends BaseControl {
                            margin={INPUT_MARGIN}
                            InputProps={{style: {fontSize: INPUT_FONT_SIZE}}}
                            InputLabelProps={{style: {fontSize: INPUT_LABEL_FONT_SIZE}}}
-                           type={this.props.info.form_field_type}
+                           type={this.TYPE}
                            style={{width: INPUT_FILL}}
                 />
             </div>
