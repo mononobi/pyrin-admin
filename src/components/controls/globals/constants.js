@@ -1,6 +1,6 @@
 export const INPUT_LENGTH = '250px'
-export const LONG_INPUT_LENGTH = '350px'
-export const VERY_LONG_INPUT_LENGTH = '450px'
+export const LONG_INPUT_LENGTH = '400px'
+export const VERY_LONG_INPUT_LENGTH = '550px'
 export const INPUT_MARGIN = 'dense'
 export const INPUT_VARIANT = 'outlined'
 export const INPUT_FILL = '100%'
