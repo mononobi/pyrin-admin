@@ -1,0 +1,11 @@
+.MuiInputLabel-root {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 70%;
+    height: 100%;
+}
+
+.MuiInputLabel-shrink {
+    max-width: 101%;
+}
