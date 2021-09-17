@@ -5,7 +5,9 @@ import {
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { BaseControl } from '../base/base';
-import { INPUT_CONTAINER_MARGIN, INPUT_FILL, INPUT_LENGTH, INPUT_MARGIN, INPUT_VARIANT
+import {
+    INPUT_CONTAINER_MARGIN, INPUT_FILL, INPUT_FONT_SIZE,
+    INPUT_LABEL_FONT_SIZE, INPUT_LENGTH, INPUT_MARGIN, INPUT_VARIANT
 } from '../globals/constants';
 import {
     INPUT_DATE_FORMAT, INPUT_DATETIME_FORMAT, INPUT_PICKER_VARIANT, INPUT_TIME_FORMAT,
@@ -42,8 +44,14 @@ export class DatePicker extends BaseControl {
                         invalidDateMessage={INVALID_DATE_MESSAGE}
                         maxDateMessage={MAX_DATE_MESSAGE}
                         minDateMessage={MIN_DATE_MESSAGE}
-                        InputLabelProps={{ required: this.props.info.required }}
-                        InputProps={{ required: this.props.info.required }}
+                        InputLabelProps={{
+                            required: this.props.info.required,
+                            style: {fontSize: INPUT_LABEL_FONT_SIZE}
+                        }}
+                        InputProps={{
+                            required: this.props.info.required,
+                            style: {fontSize: INPUT_FONT_SIZE}
+                        }}
                         onChange={value => {
                             this.setState({
                                 selectedDate: value
@@ -83,8 +91,14 @@ export class TimePicker extends BaseControl {
                         invalidDateMessage={INVALID_TIME_MESSAGE}
                         maxDateMessage={MAX_TIME_MESSAGE}
                         minDateMessage={MIN_TIME_MESSAGE}
-                        InputLabelProps={{ required: this.props.info.required }}
-                        InputProps={{ required: this.props.info.required }}
+                        InputLabelProps={{
+                            required: this.props.info.required,
+                            style: {fontSize: INPUT_LABEL_FONT_SIZE}
+                        }}
+                        InputProps={{
+                            required: this.props.info.required,
+                            style: {fontSize: INPUT_FONT_SIZE}
+                        }}
                         onChange={value => {
                             this.setState({
                                 selectedTime: value
@@ -124,8 +138,14 @@ export class DateTimePicker extends BaseControl {
                         invalidDateMessage={INVALID_DATETIME_MESSAGE}
                         maxDateMessage={MAX_DATETIME_MESSAGE}
                         minDateMessage={MIN_DATETIME_MESSAGE}
-                        InputLabelProps={{ required: this.props.info.required }}
-                        InputProps={{ required: this.props.info.required }}
+                        InputLabelProps={{
+                            required: this.props.info.required,
+                            style: {fontSize: INPUT_LABEL_FONT_SIZE}
+                        }}
+                        InputProps={{
+                            required: this.props.info.required,
+                            style: {fontSize: INPUT_FONT_SIZE}
+                        }}
                         onChange={value => {
                             this.setState({
                                 selectedDateTime: value

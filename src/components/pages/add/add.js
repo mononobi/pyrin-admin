@@ -3,6 +3,7 @@ import { Divider, Paper } from '@material-ui/core';
 import { getCreateMetadata } from '../../../services/metadata';
 import { DatePicker, DateTimePicker, TimePicker } from '../../controls/pickers/pickers';
 import { BaseComplexPage } from '../base/base';
+import {TextBox} from "../../controls/text_box/text_box";
 
 
 export class AddComponent extends BaseComplexPage {
@@ -15,7 +16,7 @@ export class AddComponent extends BaseComplexPage {
     _render() {
         return (
             <Paper elevation24>
-                <div style={{fontSize: '8px'}}>
+                <div>
                     <Divider/>
                     <DateTimePicker info={this.state.metadata.data_fields[4]}/>
                     {/*<br/>*/}
@@ -29,6 +30,7 @@ export class AddComponent extends BaseComplexPage {
                     {/*<Divider/>*/}
                     {/*<br/>*/}
                     <Divider/>
+                    <TextBox info={this.state.metadata.data_fields[3]}/>
                 </div>
             </Paper>
         )
