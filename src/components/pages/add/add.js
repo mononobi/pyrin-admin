@@ -4,6 +4,7 @@ import { getCreateMetadata } from '../../../services/metadata';
 import { DatePicker, DateTimePicker, TimePicker } from '../../controls/pickers/pickers';
 import { BaseComplexPage } from '../base/base';
 import { TextBox } from '../../controls/text_box/text_box';
+import { PasswordInput } from '../../controls/password/password';
 
 
 export class AddComponent extends BaseComplexPage {
@@ -30,7 +31,10 @@ export class AddComponent extends BaseComplexPage {
                     {/*<Divider/>*/}
                     {/*<br/>*/}
                     <Divider/>
-                    <TextBox info={this.state.metadata.data_fields[3]}/>
+                    <TextBox info={this.state.metadata.data_fields[0]}/>
+                    <Divider/>
+                    <PasswordInput info={this.state.metadata.data_fields[3]}/>
+                    <Divider/>
                 </div>
             </Paper>
         )
