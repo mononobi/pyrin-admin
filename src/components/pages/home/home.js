@@ -12,7 +12,7 @@ import { BaseComplexPage, BasePage } from '../base/base';
 import './home.css';
 
 
-class PageComponent extends BasePage {
+class PageItemComponent extends BasePage {
 
     _render() {
         return (
@@ -43,7 +43,7 @@ class PageComponent extends BasePage {
 }
 
 
-class PagesComponent extends BasePage {
+class PageListComponent extends BasePage {
 
     _render() {
         return (
@@ -55,7 +55,7 @@ class PagesComponent extends BasePage {
                         <List component='nav' dense={true}>
                             {
                                 category[category_name].map(page => {
-                                    return <PageComponent key={page.register_name} page={page}/>
+                                    return <PageItemComponent key={page.register_name} page={page}/>
                                 })
                             }
                         </List>
@@ -85,6 +85,6 @@ export class HomeComponent extends BaseComplexPage {
     }
 
     _render() {
-        return <PagesComponent pages={this.state.metadata}/>
+        return <PageListComponent pages={this.state.metadata}/>
     }
 }
