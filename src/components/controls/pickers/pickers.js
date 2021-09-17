@@ -1,10 +1,11 @@
 import React from 'react';
 import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
 import {
     MuiPickersUtilsProvider, KeyboardDatePicker, KeyboardDateTimePicker, KeyboardTimePicker
 } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
 import { BaseControl } from '../base/base';
+import { AutoCompleteEnum } from '../globals/enumerations';
 import {
     INPUT_CONTAINER_MARGIN, INPUT_FILL, INPUT_FONT_SIZE,
     INPUT_LABEL_FONT_SIZE, INPUT_MARGIN, INPUT_VARIANT
@@ -51,7 +52,7 @@ export class DatePicker extends BaseControl {
                         InputProps={{
                             required: this.props.info.required,
                             style: {fontSize: INPUT_FONT_SIZE},
-                            autoComplete: 'off'
+                            autoComplete: AutoCompleteEnum.OFF
                         }}
                         onChange={value => {
                             this.setState({
@@ -99,7 +100,7 @@ export class TimePicker extends BaseControl {
                         InputProps={{
                             required: this.props.info.required,
                             style: {fontSize: INPUT_FONT_SIZE},
-                            autoComplete: 'off'
+                            autoComplete: AutoCompleteEnum.OFF
                         }}
                         onChange={value => {
                             this.setState({
@@ -147,7 +148,7 @@ export class DateTimePicker extends BaseControl {
                         InputProps={{
                             required: this.props.info.required,
                             style: {fontSize: INPUT_FONT_SIZE},
-                            autoComplete: 'off'
+                            autoComplete: AutoCompleteEnum.OFF
                         }}
                         onChange={value => {
                             this.setState({

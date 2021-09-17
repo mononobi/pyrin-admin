@@ -34,3 +34,10 @@ export const ClientFormFieldTypeEnum = {
 };
 
 Object.freeze(ClientFormFieldTypeEnum);
+
+export const AutoCompleteEnum = {
+    ON: 'on',
+    OFF: 'off'
+};
+
+Object.freeze(AutoCompleteEnum);
