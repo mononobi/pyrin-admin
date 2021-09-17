@@ -40,7 +40,6 @@ export class TextBox extends BaseControl {
                            }}
                            InputLabelProps={{style: {fontSize: INPUT_LABEL_FONT_SIZE}}}
                            type={this.TYPE}
-                           // step={this._getStep()}
                            style={{width: INPUT_FILL}}
                 />
             </div>
