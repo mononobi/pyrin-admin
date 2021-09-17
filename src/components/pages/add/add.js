@@ -40,7 +40,11 @@ export class AddComponent extends BaseComplexPage {
                     <Divider/>
                     <NumberInput info={this.state.metadata.data_fields[5]}/>
                     <Divider/>
-                    <DropDown info={this.state.metadata.data_fields[0]}/>
+                    {
+                        React.createElement(getControl(this.state.metadata.data_fields[0]),
+                            {info: this.state.metadata.data_fields[0]})
+                    }
+                    {/*<DropDown info={this.state.metadata.data_fields[0]}/>*/}
                     <Divider/>
                     <FloatInput info={this.state.metadata.data_fields[4]}/>
                     <Divider/>
