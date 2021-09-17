@@ -2,6 +2,7 @@ import { ServerFormFieldTypeEnum } from './globals/enumerations';
 import { TextArea, TextBox } from './text_box/text_box';
 import { PasswordInput } from './password/password';
 import { DatePicker, TimePicker, DateTimePicker } from './pickers/pickers';
+import { UUIDInput } from './uuid/uuid';
 
 
 const CONTROL_MAP = {};
@@ -17,7 +18,7 @@ CONTROL_MAP[ServerFormFieldTypeEnum.TELEPHONE] = null;
 CONTROL_MAP[ServerFormFieldTypeEnum.STRING] = TextBox;
 CONTROL_MAP[ServerFormFieldTypeEnum.TEXT] = TextArea;
 CONTROL_MAP[ServerFormFieldTypeEnum.URL] = null;
-CONTROL_MAP[ServerFormFieldTypeEnum.UUID] = null;
+CONTROL_MAP[ServerFormFieldTypeEnum.UUID] = UUIDInput;
 CONTROL_MAP[ServerFormFieldTypeEnum.IPV4] = null;
 CONTROL_MAP[ServerFormFieldTypeEnum.IPV6] = null;
 CONTROL_MAP[ServerFormFieldTypeEnum.OBJECT] = null;
