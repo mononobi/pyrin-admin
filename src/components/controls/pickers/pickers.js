@@ -7,7 +7,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { BaseControl } from '../base/base';
 import {
     INPUT_CONTAINER_MARGIN, INPUT_FILL, INPUT_FONT_SIZE,
-    INPUT_LABEL_FONT_SIZE, INPUT_LENGTH, INPUT_MARGIN, INPUT_VARIANT
+    INPUT_LABEL_FONT_SIZE, INPUT_MARGIN, INPUT_VARIANT
 } from '../globals/constants';
 import {
     INPUT_DATE_FORMAT, INPUT_DATETIME_FORMAT, INPUT_PICKER_VARIANT, INPUT_TIME_FORMAT,
@@ -26,7 +26,8 @@ export class DatePicker extends BaseControl {
 
     _render() {
         return (
-            <div style={{width: INPUT_LENGTH, margin: INPUT_CONTAINER_MARGIN}}>
+            <div style={{width: this.props.fixed_length ||
+                    this.state.input_length, margin: INPUT_CONTAINER_MARGIN}}>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDatePicker
                         clearable={true}
@@ -73,7 +74,8 @@ export class TimePicker extends BaseControl {
 
     _render() {
         return (
-            <div style={{width: INPUT_LENGTH, margin: INPUT_CONTAINER_MARGIN}}>
+            <div style={{width: this.props.fixed_length ||
+                    this.state.input_length, margin: INPUT_CONTAINER_MARGIN}}>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardTimePicker
                         clearable={true}
@@ -121,7 +123,8 @@ export class DateTimePicker extends BaseControl {
 
     _render() {
         return (
-            <div style={{width: INPUT_LENGTH, margin: INPUT_CONTAINER_MARGIN}}>
+            <div style={{width: this.props.fixed_length ||
+                    this.state.input_length, margin: INPUT_CONTAINER_MARGIN}}>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDateTimePicker
                         clearable={true}
