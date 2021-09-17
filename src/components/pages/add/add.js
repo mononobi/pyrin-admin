@@ -5,6 +5,7 @@ import { DatePicker, DateTimePicker, TimePicker } from '../../controls/pickers/p
 import { BaseComplexPage } from '../base/base';
 import { TextArea, TextBox } from '../../controls/text_box/text_box';
 import { PasswordInput } from '../../controls/password/password';
+import { UUIDInput } from '../../controls/uuid/uuid';
 
 
 export class AddComponent extends BaseComplexPage {
@@ -36,6 +37,8 @@ export class AddComponent extends BaseComplexPage {
                     <PasswordInput info={this.state.metadata.data_fields[3]}/>
                     <Divider/>
                     <TextArea info={this.state.metadata.data_fields[1]}/>
+                    <Divider/>
+                    <UUIDInput info={this.state.metadata.data_fields[3]}/>
                     <Divider/>
                 </div>
             </Paper>
