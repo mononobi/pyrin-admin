@@ -4,11 +4,13 @@ import { INPUT_LENGTH, LONG_INPUT_LENGTH, VERY_LONG_INPUT_LENGTH } from '../glob
 
 export class BaseControl extends BaseComponent {
 
+    FIXED_LENGTH = null;
+
     state = {
-        input_length: INPUT_LENGTH
+        length: INPUT_LENGTH
     };
 
-    _getLength() {
+    _getAutoLength() {
         let max_length = this.props.info.max_length;
         let min_length = this.props.info.min_length;
         let label_length = this.props.info.title.length;
@@ -47,8 +49,19 @@ export class BaseControl extends BaseComponent {
     }
 
     _componentDidMount() {
+        let length = null;
+        if (this.props.fixed_length) {
+            length = this.props.fixed_length
+        }
+        else if (this.FIXED_LENGTH) {
+            length = this.FIXED_LENGTH
+        }
+        else {
+            length = this._getAutoLength()
+        }
+
         this.setState({
-            input_length: this._getLength()
+            length: length
         })
     }
 }

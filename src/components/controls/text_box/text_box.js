@@ -13,14 +13,10 @@ export class TextBox extends BaseControl {
 
     TYPE = ClientFormFieldTypeEnum.TEXT;
     MULTILINE = false;
-    FIXED_LENGTH = null;
 
     _render() {
         return (
-            <div style={{width: this.props.fixed_length ||
-                    this.FIXED_LENGTH ||
-                    this.state.input_length,
-                margin: INPUT_CONTAINER_MARGIN}}>
+            <div style={{width: this.state.length, margin: INPUT_CONTAINER_MARGIN}}>
                 <TextField variant={INPUT_VARIANT}
                            id={this.props.info.field}
                            multiline={this.MULTILINE}

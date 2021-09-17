@@ -26,8 +26,7 @@ export class DatePicker extends BaseControl {
 
     _render() {
         return (
-            <div style={{width: this.props.fixed_length ||
-                    this.state.input_length, margin: INPUT_CONTAINER_MARGIN}}>
+            <div style={{width: this.state.length, margin: INPUT_CONTAINER_MARGIN}}>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDatePicker
                         clearable={true}
@@ -74,8 +73,7 @@ export class TimePicker extends BaseControl {
 
     _render() {
         return (
-            <div style={{width: this.props.fixed_length ||
-                    this.state.input_length, margin: INPUT_CONTAINER_MARGIN}}>
+            <div style={{width: this.state.length, margin: INPUT_CONTAINER_MARGIN}}>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardTimePicker
                         clearable={true}
@@ -123,8 +121,7 @@ export class DateTimePicker extends BaseControl {
 
     _render() {
         return (
-            <div style={{width: this.props.fixed_length ||
-                    this.state.input_length, margin: INPUT_CONTAINER_MARGIN}}>
+            <div style={{width: this.state.length, margin: INPUT_CONTAINER_MARGIN}}>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDateTimePicker
                         clearable={true}
