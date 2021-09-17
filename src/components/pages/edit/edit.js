@@ -1,9 +1,9 @@
 import React from 'react';
 import { getUpdateMetadata } from '../../../services/metadata';
-import { ComplexComponent } from '../../base/complex/complex';
+import { BaseComplexPage } from '../base/base';
 
 
-export class EditComponent extends ComplexComponent {
+export class EditComponent extends BaseComplexPage {
 
     _fetchMetadata()
     {

@@ -1,6 +1,6 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
-import { BaseComponent } from '../../base/base/base';
+import { BaseControl } from '../base/base';
 import {
     INPUT_CONTAINER_MARGIN, INPUT_FILL, INPUT_LENGTH, INPUT_MARGIN, INPUT_SIZE,
     INPUT_VARIANT, LONG_INPUT_LENGTH, SHORT_INPUT_LENGTH, VERY_LONG_INPUT_LENGTH,
@@ -9,7 +9,7 @@ import {
 import '../globals/styles/inputs.css';
 
 
-export class TextBox extends BaseComponent {
+export class TextBox extends BaseControl {
 
     WIDTH = INPUT_LENGTH;
 

@@ -4,7 +4,7 @@ import {
     MuiPickersUtilsProvider, KeyboardDatePicker, KeyboardDateTimePicker, KeyboardTimePicker
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import { BaseComponent } from '../../base/base/base';
+import { BaseControl } from '../base/base';
 import { INPUT_CONTAINER_MARGIN, INPUT_FILL, INPUT_LENGTH, INPUT_MARGIN, INPUT_VARIANT
 } from '../globals/constants';
 import {
@@ -16,7 +16,7 @@ import {
 import './pickers.css';
 
 
-export class DatePicker extends BaseComponent {
+export class DatePicker extends BaseControl {
 
     state = {
         selectedDate: null
@@ -56,7 +56,7 @@ export class DatePicker extends BaseComponent {
     }
 }
 
-export class TimePicker extends BaseComponent {
+export class TimePicker extends BaseControl {
 
     state = {
         selectedTime: null
@@ -97,7 +97,7 @@ export class TimePicker extends BaseComponent {
     }
 }
 
-export class DateTimePicker extends BaseComponent {
+export class DateTimePicker extends BaseControl {
 
     state = {
         selectedDateTime: null

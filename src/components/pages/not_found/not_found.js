@@ -1,11 +1,11 @@
 import React  from 'react';
 import Chip from '@material-ui/core/Chip';
 import HomeIcon from '@material-ui/icons/Home';
-import { BaseComponent } from '../../base/base/base';
+import { BasePage } from '../base/base';
 import './not_found.css';
 
 
-export class NotFoundComponent extends BaseComponent {
+export class NotFoundComponent extends BasePage {
 
     _render() {
         return (

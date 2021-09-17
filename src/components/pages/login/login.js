@@ -1,8 +1,8 @@
 import React  from 'react';
-import { BaseComponent } from '../../base/base/base';
+import { BasePage } from '../base/base';
 
 
-export class LoginComponent extends BaseComponent {
+export class LoginComponent extends BasePage {
 
     _render() {
         return <div> LOGIN </div>

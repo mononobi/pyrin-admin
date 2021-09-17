@@ -4,13 +4,13 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import MaterialTable from 'material-table';
 import Link from '@material-ui/core/Link';
 import { getFindMetadata } from '../../../services/metadata';
-import { ComplexComponent } from '../../base/complex/complex';
 import { find } from '../../../services/data';
 import { getCreatePage, getUpdatePage } from '../../../services/url';
+import { BaseComplexPage } from '../base/base';
 import './list.css'
 
 
-export class ListComponent extends ComplexComponent {
+export class ListComponent extends BaseComplexPage {
 
     LINK_COLOR = '#12558d';
     SELECTED_ROW_COLOR = 'rgba(185,215,232,0.44)';

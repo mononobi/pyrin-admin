@@ -8,12 +8,11 @@ import Link from '@material-ui/core/Link';
 import { v4 as uuidv4 } from 'uuid'
 import { getMainMetadata } from '../../../services/metadata';
 import { getListPage, getCreatePage } from '../../../services/url';
-import { ComplexComponent } from '../../base/complex/complex';
-import { BaseComponent } from '../../base/base/base';
+import { BaseComplexPage, BasePage } from '../base/base';
 import './home.css';
 
 
-class PageComponent extends BaseComponent {
+class PageComponent extends BasePage {
 
     _render() {
         return (
@@ -44,7 +43,7 @@ class PageComponent extends BaseComponent {
 }
 
 
-class PagesComponent extends BaseComponent {
+class PagesComponent extends BasePage {
 
     _render() {
         return (
@@ -68,7 +67,7 @@ class PagesComponent extends BaseComponent {
 }
 
 
-export class HomeComponent extends ComplexComponent {
+export class HomeComponent extends BaseComplexPage {
 
     state = {
         metadata: [],
