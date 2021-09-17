@@ -18,7 +18,7 @@ export class AddComponent extends BaseComplexPage {
 
     _render() {
         return (
-            <Paper elevation24>
+            <Paper>
                 <div>
                     <Divider/>
                     <DateTimePicker info={this.state.metadata.data_fields[4]}/>

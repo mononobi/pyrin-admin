@@ -27,3 +27,12 @@ CONTROL_MAP[ServerFormFieldTypeEnum.IPV6] = null;
 CONTROL_MAP[ServerFormFieldTypeEnum.OBJECT] = null;
 
 Object.freeze(CONTROL_MAP);
+
+export function getControl(type) {
+    let control = CONTROL_MAP[type];
+    if (control) {
+        return control;
+    }
+
+    return CONTROL_MAP[ServerFormFieldTypeEnum.STRING];
+}
