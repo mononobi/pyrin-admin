@@ -1,5 +1,7 @@
 import React from 'react';
+import { Divider, Paper } from '@material-ui/core';
 import { getUpdateMetadata } from '../../../services/metadata';
+import { createControl } from '../../controls/provider';
 import { BaseComplexPage } from '../base/base';
 
 
@@ -11,6 +13,23 @@ export class EditComponent extends BaseComplexPage {
     }
 
     _render() {
-        return <div> EDIT {this.props.match.params.register_name} - {this.props.match.params.pk} </div>
+        return (
+            <Paper variant='elevation' elevation={3}>
+                {
+                    this.state.metadata.data_fields.map(item => {
+                        return (
+                            <>
+                                {
+                                    createControl(item)
+                                }
+                                {
+                                    <Divider/>
+                                }
+                            </>
+                        )
+                    })
+                }
+            </Paper>
+        )
     }
 }
