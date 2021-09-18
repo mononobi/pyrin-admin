@@ -26,10 +26,10 @@ export class BaseControl extends BaseComponent {
         }
 
         if (max_length) {
-            if (max_length > 25 * 3 && max_length < 45 * 3) {
+            if (max_length > 25 * 6 && max_length < 45 * 6) {
                 chosen_max_value_length = LONG_INPUT_LENGTH;
             }
-            else if (max_length >= 45 * 3) {
+            else if (max_length >= 45 * 6) {
                 chosen_max_value_length = VERY_LONG_INPUT_LENGTH;
             }
         }
