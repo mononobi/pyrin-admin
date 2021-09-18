@@ -1,3 +1,4 @@
+import React from 'react';
 import { ServerFormFieldTypeEnum } from './globals/enumerations';
 import { UUIDInput } from './uuid/uuid';
 import { PasswordInput } from './password/password';
@@ -5,10 +6,11 @@ import { TextArea, TextBox } from './text_box/text_box';
 import { DatePicker, TimePicker, DateTimePicker } from './pickers/pickers';
 import { NumberInput, IntegerInput, FloatInput } from './number/number';
 import { DropDown } from './dropdown/dropdown';
+import { CheckBox } from './checkbox/checkbox';
 
 
 const CONTROL_MAP = {};
-CONTROL_MAP[ServerFormFieldTypeEnum.BOOLEAN] = null;
+CONTROL_MAP[ServerFormFieldTypeEnum.BOOLEAN] = CheckBox;
 CONTROL_MAP[ServerFormFieldTypeEnum.DATE] = DatePicker;
 CONTROL_MAP[ServerFormFieldTypeEnum.DATETIME] = DateTimePicker;
 CONTROL_MAP[ServerFormFieldTypeEnum.TIME] = TimePicker;
@@ -40,4 +42,9 @@ export function getControl(info) {
     }
 
     return CONTROL_MAP[ServerFormFieldTypeEnum.STRING];
+}
+
+export function createControl(info) {
+    let control = getControl(info);
+    return React.createElement(control, {info: info});
 }
