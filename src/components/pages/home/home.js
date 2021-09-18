@@ -85,6 +85,10 @@ export class HomeComponent extends BaseComplexPage {
     }
 
     _render() {
+        if (this.state.metadata?.length <= 0) {
+            return <h3>No admin pages are registered on the server!</h3>
+        }
+
         return <PageListComponent pages={this.state.metadata}/>
     }
 }
