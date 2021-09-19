@@ -14,10 +14,8 @@ export class TextBox extends BaseControl {
     TYPE = ClientFormFieldTypeEnum.TEXT;
     MULTILINE = false;
     AUTO_COMPLETE = AutoCompleteEnum.ON;
-
-    _getStep() {
-        return null;
-    }
+    PATTERN = null;
+    INPUT_MODE = null;
 
     _render() {
         return (
@@ -32,11 +30,12 @@ export class TextBox extends BaseControl {
                            margin={INPUT_MARGIN}
                            InputProps={{style: {fontSize: INPUT_FONT_SIZE}}}
                            inputProps={{
-                               step: this._getStep(),
                                maxLength: this.props.info.max_length,
                                minLength: this.props.info.min_length,
                                max: this.props.info.max_value,
-                               min: this.props.info.min_value
+                               min: this.props.info.min_value,
+                               pattern: this.PATTERN,
+                               inputMode: this.INPUT_MODE
                            }}
                            InputLabelProps={{style: {fontSize: INPUT_LABEL_FONT_SIZE}}}
                            type={this.TYPE}
