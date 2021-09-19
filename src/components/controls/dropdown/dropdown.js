@@ -2,7 +2,7 @@ import React from 'react';
 import Select from '@material-ui/core/Select';
 import { FormControl, InputLabel, MenuItem } from '@material-ui/core';
 import { BaseControl } from '../base/base';
-import { INPUT_MARGIN, INPUT_VARIANT } from '../globals/constants';
+import { INPUT_MARGIN, INPUT_SIZE, INPUT_VARIANT } from '../globals/constants';
 import '../globals/styles/inputs.css';
 
 
@@ -16,7 +16,7 @@ export class DropDown extends BaseControl {
         let label_id = `${this.props.info.field}-title`;
         return (
             <div className='input-container'>
-                <FormControl style={{width: this.state.length}} variant={INPUT_VARIANT} size='small'>
+                <FormControl style={{width: this.state.length}} variant={INPUT_VARIANT} size={INPUT_SIZE}>
                     <InputLabel id={label_id} required={this.props.info.required}>
                         {this.props.info.title}
                     </InputLabel>
