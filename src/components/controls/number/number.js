@@ -1,5 +1,4 @@
 import { TextBox } from '../text_box/text_box';
-import '../globals/styles/inputs.css';
 
 
 export class NumberInput extends TextBox {

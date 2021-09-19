@@ -6,16 +6,14 @@ import {
 } from '@material-ui/pickers';
 import { BaseControl } from '../base/base';
 import { AutoCompleteEnum } from '../globals/enumerations';
-import {
-    INPUT_CONTAINER_MARGIN, INPUT_FILL, INPUT_FONT_SIZE,
-    INPUT_LABEL_FONT_SIZE, INPUT_MARGIN, INPUT_VARIANT
-} from '../globals/constants';
+import { INPUT_MARGIN, INPUT_VARIANT } from '../globals/constants';
 import {
     INPUT_DATE_FORMAT, INPUT_DATETIME_FORMAT, INPUT_PICKER_VARIANT, INPUT_TIME_FORMAT,
     INVALID_DATE_MESSAGE, INVALID_DATETIME_MESSAGE, INVALID_TIME_MESSAGE, MAX_DATE_MESSAGE,
     MAX_DATETIME_MESSAGE, MAX_TIME_MESSAGE, MIN_DATE_MESSAGE, MIN_DATETIME_MESSAGE,
     MIN_TIME_MESSAGE, TODAY_NAME
 } from './constants';
+import '../globals/styles/inputs.css';
 import './pickers.css';
 
 
@@ -27,7 +25,7 @@ export class DatePicker extends BaseControl {
 
     _render() {
         return (
-            <div style={{width: this.state.length, margin: INPUT_CONTAINER_MARGIN}}>
+            <div style={{width: this.state.length}} className='input-container'>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDatePicker
                         clearable={true}
@@ -40,18 +38,15 @@ export class DatePicker extends BaseControl {
                         variant={INPUT_PICKER_VARIANT}
                         animateYearScrolling={true}
                         inputVariant={INPUT_VARIANT}
-                        style={{width: INPUT_FILL}}
                         todayLabel={TODAY_NAME}
                         invalidDateMessage={INVALID_DATE_MESSAGE}
                         maxDateMessage={MAX_DATE_MESSAGE}
                         minDateMessage={MIN_DATE_MESSAGE}
                         InputLabelProps={{
-                            required: this.props.info.required,
-                            style: {fontSize: INPUT_LABEL_FONT_SIZE}
+                            required: this.props.info.required
                         }}
                         InputProps={{
                             required: this.props.info.required,
-                            style: {fontSize: INPUT_FONT_SIZE},
                             autoComplete: AutoCompleteEnum.OFF
                         }}
                         onChange={value => {
@@ -74,7 +69,7 @@ export class TimePicker extends BaseControl {
 
     _render() {
         return (
-            <div style={{width: this.state.length, margin: INPUT_CONTAINER_MARGIN}}>
+            <div style={{width: this.state.length}} className='input-container'>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardTimePicker
                         clearable={true}
@@ -88,18 +83,15 @@ export class TimePicker extends BaseControl {
                         variant={INPUT_PICKER_VARIANT}
                         animateYearScrolling={true}
                         inputVariant={INPUT_VARIANT}
-                        style={{width: INPUT_FILL}}
                         todayLabel={TODAY_NAME}
                         invalidDateMessage={INVALID_TIME_MESSAGE}
                         maxDateMessage={MAX_TIME_MESSAGE}
                         minDateMessage={MIN_TIME_MESSAGE}
                         InputLabelProps={{
-                            required: this.props.info.required,
-                            style: {fontSize: INPUT_LABEL_FONT_SIZE}
+                            required: this.props.info.required
                         }}
                         InputProps={{
                             required: this.props.info.required,
-                            style: {fontSize: INPUT_FONT_SIZE},
                             autoComplete: AutoCompleteEnum.OFF
                         }}
                         onChange={value => {
@@ -122,7 +114,7 @@ export class DateTimePicker extends BaseControl {
 
     _render() {
         return (
-            <div style={{width: this.state.length, margin: INPUT_CONTAINER_MARGIN}}>
+            <div style={{width: this.state.length}} className='input-container'>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDateTimePicker
                         clearable={true}
@@ -136,18 +128,15 @@ export class DateTimePicker extends BaseControl {
                         variant={INPUT_PICKER_VARIANT}
                         animateYearScrolling={true}
                         inputVariant={INPUT_VARIANT}
-                        style={{width: INPUT_FILL}}
                         todayLabel={TODAY_NAME}
                         invalidDateMessage={INVALID_DATETIME_MESSAGE}
                         maxDateMessage={MAX_DATETIME_MESSAGE}
                         minDateMessage={MIN_DATETIME_MESSAGE}
                         InputLabelProps={{
-                            required: this.props.info.required,
-                            style: {fontSize: INPUT_LABEL_FONT_SIZE}
+                            required: this.props.info.required
                         }}
                         InputProps={{
                             required: this.props.info.required,
-                            style: {fontSize: INPUT_FONT_SIZE},
                             autoComplete: AutoCompleteEnum.OFF
                         }}
                         onChange={value => {

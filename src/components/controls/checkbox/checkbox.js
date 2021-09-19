@@ -2,17 +2,17 @@ import React from 'react';
 import { FormControlLabel } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import { BaseControl } from '../base/base';
-import { INPUT_CONTAINER_MARGIN } from '../globals/constants';
+import '../globals/styles/inputs.css';
 
 
 export class CheckBox extends BaseControl {
 
     _render() {
         return (
-            <div style={{width: this.state.length, margin: INPUT_CONTAINER_MARGIN}}>
+            <div style={{width: this.state.length}} className='input-container'>
                 <FormControlLabel
                     labelPlacement='end'
-                    label={<span style={{ fontSize: '13px' }}>{this.props.info.title}</span>}
+                    label={this.props.info.title}
                     control={
                         <Checkbox
                             id={this.props.info.field}

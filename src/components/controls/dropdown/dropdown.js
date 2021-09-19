@@ -2,10 +2,8 @@ import React from 'react';
 import Select from '@material-ui/core/Select';
 import { FormControl, InputLabel, MenuItem } from '@material-ui/core';
 import { BaseControl } from '../base/base';
-import {
-    INPUT_CONTAINER_MARGIN, INPUT_FILL, INPUT_FONT_SIZE,
-    INPUT_LABEL_FONT_SIZE, INPUT_MARGIN, INPUT_VARIANT
-} from '../globals/constants';
+import { INPUT_MARGIN, INPUT_VARIANT } from '../globals/constants';
+import '../globals/styles/inputs.css';
 
 
 export class DropDown extends BaseControl {
@@ -17,11 +15,9 @@ export class DropDown extends BaseControl {
     _render() {
         let label_id = `${this.props.info.field}-title`;
         return (
-            <div>
-                <FormControl style={{width: this.state.length, margin: INPUT_CONTAINER_MARGIN}}
-                             variant={INPUT_VARIANT}>
-                    <InputLabel id={label_id} required={this.props.info.required}
-                                style={{fontSize: INPUT_LABEL_FONT_SIZE}}>
+            <div className='input-container'>
+                <FormControl style={{width: this.state.length}} variant={INPUT_VARIANT} size='small'>
+                    <InputLabel id={label_id} required={this.props.info.required}>
                         {this.props.info.title}
                     </InputLabel>
                     <Select
@@ -31,14 +27,11 @@ export class DropDown extends BaseControl {
                         labelId={label_id}
                         label={this.props.info.title}
                         value={this.state.selectedValue}
-                        style={{width: INPUT_FILL}}
                         InputLabelProps={{
-                            required: this.props.info.required,
-                            style: {fontSize: INPUT_LABEL_FONT_SIZE}
+                            required: this.props.info.required
                         }}
                         inputProps={{
-                            required: this.props.info.required,
-                            style: {fontSize: INPUT_FONT_SIZE},
+                            required: this.props.info.required
                         }}
                         onChange={event => {
                             this.setState({

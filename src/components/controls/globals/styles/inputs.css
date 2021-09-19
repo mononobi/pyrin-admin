@@ -1,3 +1,9 @@
+:root {
+    --input-font-size: 13px;
+    --input-height: 20px;
+    --input-container-padding: 10px;
+}
+
 .MuiInputLabel-root {
     white-space: nowrap;
     overflow: hidden;
@@ -8,4 +14,33 @@
 
 .MuiInputLabel-shrink {
     max-width: 125%;
+}
+
+.input-container {
+    padding: var(--input-container-padding);
+}
+
+.input-container input:focus-visible {
+    outline-offset: 0;
+}
+
+.input-container input {
+    font-size: var(--input-font-size);
+    height: var(--input-height);
+    padding: 6px 8px;
+    border-radius: 4px;
+    z-index: 1;
+    margin: 2px;
+}
+
+.input-container label {
+    font-size: var(--input-font-size);
+}
+
+.input-container span {
+    font-size: var(--input-font-size);
+}
+
+.input-container div {
+    font-size: var(--input-font-size);
 }

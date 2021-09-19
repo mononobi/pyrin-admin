@@ -17,6 +17,6 @@ export const THEME = createTheme({
 
 THEME.props = {
     MuiMenuItem: {
-        style: {fontSize: '13px', fontWeight: 'bold'}
+        style: {fontSize: '12px'}
     }
 };

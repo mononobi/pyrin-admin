@@ -3,8 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import { BaseControl } from '../base/base';
 import { AutoCompleteEnum, ClientFormFieldTypeEnum } from '../globals/enumerations';
 import {
-    INPUT_CONTAINER_MARGIN, INPUT_FILL, INPUT_FONT_SIZE, INPUT_LABEL_FONT_SIZE,
-    INPUT_MARGIN, INPUT_SIZE, INPUT_VARIANT, VERY_LONG_INPUT_LENGTH
+    INPUT_FILL, INPUT_MARGIN, INPUT_SIZE, INPUT_VARIANT, VERY_LONG_INPUT_LENGTH
 } from '../globals/constants';
 import '../globals/styles/inputs.css';
 
@@ -19,7 +18,7 @@ export class TextBox extends BaseControl {
 
     _render() {
         return (
-            <div style={{width: this.state.length, margin: INPUT_CONTAINER_MARGIN}}>
+            <div style={{width: this.state.length}} className='input-container'>
                 <TextField variant={INPUT_VARIANT}
                            id={this.props.info.field}
                            autoComplete={this.AUTO_COMPLETE}
@@ -28,7 +27,6 @@ export class TextBox extends BaseControl {
                            size={INPUT_SIZE}
                            required={this.props.info.required}
                            margin={INPUT_MARGIN}
-                           InputProps={{style: {fontSize: INPUT_FONT_SIZE}}}
                            inputProps={{
                                maxLength: this.props.info.max_length,
                                minLength: this.props.info.min_length,
@@ -37,7 +35,6 @@ export class TextBox extends BaseControl {
                                pattern: this.PATTERN,
                                inputMode: this.INPUT_MODE
                            }}
-                           InputLabelProps={{style: {fontSize: INPUT_LABEL_FONT_SIZE}}}
                            type={this.TYPE}
                            style={{width: INPUT_FILL}}
                 />
