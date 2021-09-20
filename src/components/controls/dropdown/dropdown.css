@@ -1,0 +1,35 @@
+.dropdown-container {
+    padding: var(--input-container-padding);
+}
+
+.dropdown-container input:focus-visible {
+    outline-offset: 0
+}
+
+.dropdown-container input {
+    font-size: var(--input-font-size);
+    height: var(--input-height);
+    padding: 6px 8px;
+    border-radius: 4px;
+    z-index: 1;
+    margin: 2px;
+}
+
+.dropdown-container label {
+    font-size: var(--input-font-size);
+    padding: 8px 1px;
+}
+
+.dropdown-container label[data-shrink="true"] {
+    top: 10px;
+    padding-top: 0;
+    margin-left: 1px;
+}
+
+.dropdown-container span {
+    font-size: var(--input-font-size);
+}
+
+.dropdown-container div {
+    font-size: var(--input-font-size);
+}
