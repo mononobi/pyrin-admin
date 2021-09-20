@@ -5,5 +5,5 @@ import { TextBox } from '../text_box/text_box';
 export class PasswordInput extends TextBox {
 
     TYPE = ClientFormFieldTypeEnum.PASSWORD;
-    AUTO_COMPLETE = AutoCompleteEnum.OFF;
+    AUTO_COMPLETE = AutoCompleteEnum.NEW_PASSWORD;
 }
