@@ -48,6 +48,7 @@ export class DatePicker extends BaseControl {
                             required: this.props.info.required,
                             autoComplete: AutoCompleteEnum.OFF
                         }}
+                        disabled={this.props.info.read_only}
                         onChange={value => {
                             this.setState({
                                 selectedDate: value
@@ -93,6 +94,7 @@ export class TimePicker extends BaseControl {
                             required: this.props.info.required,
                             autoComplete: AutoCompleteEnum.OFF
                         }}
+                        disabled={this.props.info.read_only}
                         onChange={value => {
                             this.setState({
                                 selectedTime: value
@@ -138,6 +140,7 @@ export class DateTimePicker extends BaseControl {
                             required: this.props.info.required,
                             autoComplete: AutoCompleteEnum.OFF
                         }}
+                        disabled={this.props.info.read_only}
                         onChange={value => {
                             this.setState({
                                 selectedDateTime: value

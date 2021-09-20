@@ -18,7 +18,8 @@ export class DropDown extends BaseControl {
         return (
             <div style={{width: this.state.length}} className='dropdown-container'>
                 <FormControl style={{width: this.state.length, paddingTop: '9px'}}
-                             variant={INPUT_VARIANT} size={INPUT_SIZE}>
+                             variant={INPUT_VARIANT} size={INPUT_SIZE}
+                             disabled={this.props.info.read_only}>
                     <InputLabel id={label_id} required={this.props.info.required}>
                         {this.props.info.title}
                     </InputLabel>

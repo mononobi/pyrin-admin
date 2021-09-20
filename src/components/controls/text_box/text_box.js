@@ -27,6 +27,7 @@ export class TextBox extends BaseControl {
                            size={INPUT_SIZE}
                            required={this.props.info.required}
                            margin={INPUT_MARGIN}
+                           disabled={this.props.info.read_only}
                            inputProps={{
                                maxLength: this.props.info.max_length,
                                minLength: this.props.info.min_length,
