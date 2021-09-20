@@ -1,19 +1,32 @@
 :root {
     --input-font-size: 13px;
+    --input-label-shrink-font-size: 14px;
     --input-height: 20px;
     --input-container-padding: 4px;
 }
+
+/*.MuiInputLabel-root {*/
+/*    white-space: nowrap;*/
+/*    overflow: hidden;*/
+/*    text-overflow: ellipsis;*/
+/*    max-width: 85%;*/
+/*    height: 100%;*/
+/*}*/
+
+/*.MuiInputLabel-shrink {*/
+/*    max-width: 125%;*/
+/*}*/
 
 .MuiInputLabel-root {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 85%;
+    max-width: 70%;
     height: 100%;
 }
 
 .MuiInputLabel-shrink {
-    max-width: 125%;
+    max-width: 101%;
 }
 
 .input-container {
@@ -41,6 +54,7 @@
     top: 0;
     padding-top: 2px;
     margin-left: 1px;
+    font-size: var(--input-label-shrink-font-size);
 }
 
 .input-container span {

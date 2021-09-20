@@ -24,6 +24,7 @@
     top: 10px;
     padding-top: 0;
     margin-left: 1px;
+    font-size: var(--input-label-shrink-font-size);
 }
 
 .dropdown-container span {

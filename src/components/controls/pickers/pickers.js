@@ -14,7 +14,6 @@ import {
     MIN_TIME_MESSAGE, TODAY_NAME
 } from './constants';
 import '../globals/styles/inputs.css';
-import './pickers.css';
 
 
 export class DatePicker extends BaseControl {
