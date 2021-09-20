@@ -39,7 +39,8 @@
 
 .input-container label[data-shrink="true"] {
     top: 0;
-    padding: 2px;
+    padding-top: 2px;
+    margin-left: 1px;
 }
 
 .input-container span {
