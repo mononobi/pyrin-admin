@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, Paper } from '@material-ui/core';
+import { Paper } from '@material-ui/core';
 import { getCreateMetadata } from '../../../services/metadata';
 import { createControl } from '../../controls/provider';
 import { BaseComplexPage } from '../base/base';
@@ -21,9 +21,6 @@ export class AddComponent extends BaseComplexPage {
                             <>
                                 {
                                     createControl(item)
-                                }
-                                {
-                                    <Divider/>
                                 }
                             </>
                         )

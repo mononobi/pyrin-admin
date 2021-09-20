@@ -1,7 +1,7 @@
 :root {
     --input-font-size: 13px;
     --input-height: 20px;
-    --input-container-padding: 10px;
+    --input-container-padding: 4px;
 }
 
 .MuiInputLabel-root {
