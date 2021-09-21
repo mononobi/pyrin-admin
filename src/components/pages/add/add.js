@@ -2,7 +2,7 @@ import React from 'react';
 import { Paper } from '@material-ui/core';
 import { getCreateMetadata } from '../../../services/metadata';
 import { BaseComplexPage } from '../base/base';
-import { FormBase } from '../../controls/forms/base';
+import { CreateForm } from '../../controls/forms/create';
 
 
 export class AddComponent extends BaseComplexPage {
@@ -15,7 +15,8 @@ export class AddComponent extends BaseComplexPage {
     _render() {
         return (
             <Paper variant='elevation' elevation={3}>
-                <FormBase initialValues={{}} dataFields={this.state.metadata.data_fields}/>
+                <CreateForm register_name={this.state.metadata.register_name}
+                            dataFields={this.state.metadata.data_fields}/>
             </Paper>
         )
     }
