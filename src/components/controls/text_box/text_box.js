@@ -27,7 +27,6 @@ export class TextBox extends BaseControl {
                            size={INPUT_SIZE}
                            required={this.props.info.required}
                            margin={INPUT_MARGIN}
-                           disabled={this.props.info.read_only}
                            inputProps={{
                                maxLength: this.props.info.max_length,
                                minLength: this.props.info.min_length,
@@ -36,8 +35,14 @@ export class TextBox extends BaseControl {
                                pattern: this.PATTERN,
                                inputMode: this.INPUT_MODE
                            }}
-                           type={this.TYPE}
+                           type={this.props.type || this.TYPE}
                            style={{width: INPUT_FILL}}
+                           disabled={this.props.info.read_only}
+                           name={this.props.info.field}
+                           value={this.props.value}
+                           onChange={this.props.onChange}
+                           error={this.props.error}
+                           helperText={this.props.helperText}
                 />
             </div>
         )

@@ -16,9 +16,13 @@ export class CheckBox extends BaseControl {
                     control={
                         <Checkbox
                             id={this.props.info.field}
-                            size={'medium'}
+                            size='small'
                             required={this.props.info.required}
                             disabled={this.props.info.read_only}
+                            name={this.props.info.field}
+                            value={this.props.value}
+                            onChange={this.props.onChange}
+                            error={this.props.error}
                         />
                     }
                 />

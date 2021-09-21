@@ -1,8 +1,8 @@
 import React from 'react';
 import { Paper } from '@material-ui/core';
 import { getCreateMetadata } from '../../../services/metadata';
-import { createControl } from '../../controls/provider';
 import { BaseComplexPage } from '../base/base';
+import { FormBase } from '../../controls/forms/base';
 
 
 export class AddComponent extends BaseComplexPage {
@@ -15,17 +15,7 @@ export class AddComponent extends BaseComplexPage {
     _render() {
         return (
             <Paper variant='elevation' elevation={3}>
-                {
-                    this.state.metadata.data_fields.map(item => {
-                        return (
-                            <>
-                                {
-                                    createControl(item)
-                                }
-                            </>
-                        )
-                    })
-                }
+                <FormBase initialValues={{}} dataFields={this.state.metadata.data_fields}/>
             </Paper>
         )
     }

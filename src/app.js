@@ -1,16 +1,17 @@
-import React, { Component }  from 'react';
+import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { CONFIGS } from './core/configs';
 import { ROUTES } from './routing/routes';
+import { BaseComponent } from './components/base/base/base';
 
 
-export class App extends Component {
+export class App extends BaseComponent {
 
   state = {
     authenticated: true
   }
 
-  render() {
+  _render() {
     return (
         <BrowserRouter>
           <Switch>

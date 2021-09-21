@@ -9,10 +9,6 @@ import '../dropdown/dropdown.css'
 
 export class DropDown extends BaseControl {
 
-    state = {
-        selectedValue: ''
-    }
-
     _render() {
         let label_id = `${this.props.info.field}-title`;
         return (
@@ -29,25 +25,20 @@ export class DropDown extends BaseControl {
                         id={this.props.info.field}
                         labelId={label_id}
                         label={this.props.info.title}
-                        value={this.state.selectedValue}
-                        InputLabelProps={{
-                            required: this.props.info.required
-                        }}
                         inputProps={{
                             required: this.props.info.required
                         }}
-                        onChange={event => {
-                            this.setState({
-                                selectedValue: event.target.value
-                            })
-                        }}
+                        name={this.props.info.field}
+                        value={this.props.value}
+                        onChange={this.props.onChange}
+                        error={this.props.error}
                     >
                         {
                             !this.props.info.required && <MenuItem value=''><em>---</em></MenuItem>
                         }
                         {
                             this.props.info.in_enum.map(item => {
-                                return <MenuItem value={item.value}>{item.name}</MenuItem>
+                                return <MenuItem key={item.value} value={item.value}>{item.name}</MenuItem>
                             })
                         }
                     </Select>

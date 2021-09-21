@@ -33,7 +33,6 @@ export class DatePicker extends BaseControl {
                         id={this.props.info.field}
                         label={this.props.info.title}
                         showTodayButton={true}
-                        value={this.state.selectedDate}
                         variant={INPUT_PICKER_VARIANT}
                         animateYearScrolling={true}
                         inputVariant={INPUT_VARIANT}
@@ -49,11 +48,11 @@ export class DatePicker extends BaseControl {
                             autoComplete: AutoCompleteEnum.OFF
                         }}
                         disabled={this.props.info.read_only}
-                        onChange={value => {
-                            this.setState({
-                                selectedDate: value
-                            })
-                        }}
+                        name={this.props.info.field}
+                        value={this.props.value}
+                        onChange={this.props.onChange}
+                        error={this.props.error}
+                        helperText={this.props.helperText}
                     />
                 </MuiPickersUtilsProvider>
             </div>
@@ -79,7 +78,6 @@ export class TimePicker extends BaseControl {
                         id={this.props.info.field}
                         label={this.props.info.title}
                         showTodayButton={true}
-                        value={this.state.selectedTime}
                         variant={INPUT_PICKER_VARIANT}
                         animateYearScrolling={true}
                         inputVariant={INPUT_VARIANT}
@@ -95,11 +93,11 @@ export class TimePicker extends BaseControl {
                             autoComplete: AutoCompleteEnum.OFF
                         }}
                         disabled={this.props.info.read_only}
-                        onChange={value => {
-                            this.setState({
-                                selectedTime: value
-                            })
-                        }}
+                        name={this.props.info.field}
+                        value={this.props.value}
+                        onChange={this.props.onChange}
+                        error={this.props.error}
+                        helperText={this.props.helperText}
                     />
                 </MuiPickersUtilsProvider>
             </div>
@@ -125,7 +123,6 @@ export class DateTimePicker extends BaseControl {
                         id={this.props.info.field}
                         label={this.props.info.title}
                         showTodayButton={true}
-                        value={this.state.selectedDateTime}
                         variant={INPUT_PICKER_VARIANT}
                         animateYearScrolling={true}
                         inputVariant={INPUT_VARIANT}
@@ -141,11 +138,11 @@ export class DateTimePicker extends BaseControl {
                             autoComplete: AutoCompleteEnum.OFF
                         }}
                         disabled={this.props.info.read_only}
-                        onChange={value => {
-                            this.setState({
-                                selectedDateTime: value
-                            })
-                        }}
+                        name={this.props.info.field}
+                        value={this.props.value}
+                        onChange={this.props.onChange}
+                        error={this.props.error}
+                        helperText={this.props.helperText}
                     />
                 </MuiPickersUtilsProvider>
             </div>
