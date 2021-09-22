@@ -4,4 +4,9 @@ import { BaseComponent } from '../../base/base/base';
 
 export class BasePage extends BaseComponent {}
 
-export class BaseComplexPage extends ComplexComponent {}
+export class BaseComplexPage extends ComplexComponent {
+
+    _getPluralName() {
+        return this.state.metadata.plural_name;
+    }
+}

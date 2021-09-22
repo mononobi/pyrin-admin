@@ -1,11 +1,23 @@
 import React from 'react';
 import { Paper } from '@material-ui/core';
 import { getUpdateMetadata } from '../../../services/metadata';
-import { createControl } from '../../controls/provider';
 import { BaseComplexPage } from '../base/base';
+import { UpdateForm } from '../../controls/forms/update';
+import { get } from '../../../services/data';
 
 
 export class EditComponent extends BaseComplexPage {
+
+    REQUIRES_DATA = true;
+    OPERATION_NAME = 'view details of';
+
+    _hasPermission() {
+        return this.state.metadata.has_get_permission;
+    }
+
+    _fetchData() {
+        return get(this.props.match.params.register_name, this.props.match.params.pk)
+    }
 
     _fetchMetadata()
     {
@@ -15,17 +27,11 @@ export class EditComponent extends BaseComplexPage {
     _render() {
         return (
             <Paper variant='elevation' elevation={3}>
-                {
-                    this.state.metadata.data_fields.map(item => {
-                        return (
-                            <>
-                                {
-                                    createControl(item)
-                                }
-                            </>
-                        )
-                    })
-                }
+                <UpdateForm register_name={this.state.metadata.register_name}
+                            dataFields={this.state.metadata.data_fields}
+                            pk={this.props.match.params.pk}
+                            initialValues={this.state.data}
+                />
             </Paper>
         )
     }

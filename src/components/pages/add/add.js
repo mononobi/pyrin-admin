@@ -7,6 +7,12 @@ import { CreateForm } from '../../controls/forms/create';
 
 export class AddComponent extends BaseComplexPage {
 
+    OPERATION_NAME = 'add';
+
+    _hasPermission() {
+        return this.state.metadata.has_create_permission;
+    }
+
     _fetchMetadata()
     {
         return getCreateMetadata(this.props.match.params.register_name);

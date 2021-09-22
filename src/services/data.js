@@ -1,4 +1,4 @@
-import {CONFIGS} from '../core/configs';
+import { CONFIGS } from '../core/configs';
 
 
 export function find(registerName, page=null,
@@ -20,5 +20,39 @@ export function find(registerName, page=null,
         url = `${url}&${CONFIGS.query_param}=${search}`
     }
 
+    return fetch(url).then(response => response.json());
+}
+
+
+export function create(registerName, inputs) {
+    let url = `${CONFIGS.admin_api}${registerName}/`;
+    const data = new FormData();
+    for (const [key, value] of Object.entries(inputs)) {
+        data.append(key, value);
+    }
+
+    return fetch(url, {
+        method: 'POST',
+        body: data
+    });
+}
+
+
+export function update(registerName, pk, inputs) {
+    let url = `${CONFIGS.admin_api}${registerName}/${pk}/`;
+    const data = new FormData();
+    for (const [key, value] of Object.entries(inputs)) {
+        data.append(key, value);
+    }
+
+    return fetch(url, {
+        method: 'PATCH',
+        body: data
+    });
+}
+
+
+export function get(registerName, pk) {
+    let url = `${CONFIGS.admin_api}${registerName}/${pk}/`;
     return fetch(url).then(response => response.json());
 }
