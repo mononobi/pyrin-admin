@@ -1,5 +1,5 @@
 import { FormBase } from './base';
-import { update } from '../../../services/data';
+import { update } from '../../services/data';
 
 
 export class UpdateForm extends FormBase {

@@ -2,7 +2,7 @@ import React from 'react';
 import { Paper } from '@material-ui/core';
 import { getCreateMetadata } from '../../../services/metadata';
 import { BaseComplexPage } from '../base/base';
-import { CreateForm } from '../../controls/forms/create';
+import { CreateForm } from '../../forms/create';
 
 
 export class AddComponent extends BaseComplexPage {

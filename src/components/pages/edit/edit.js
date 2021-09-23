@@ -2,7 +2,7 @@ import React from 'react';
 import { Paper } from '@material-ui/core';
 import { getUpdateMetadata } from '../../../services/metadata';
 import { BaseComplexPage } from '../base/base';
-import { UpdateForm } from '../../controls/forms/update';
+import { UpdateForm } from '../../forms/update';
 import { get } from '../../../services/data';
 
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Formik, Form, ErrorMessage } from 'formik';
 import { Button } from '@material-ui/core';
-import { createControl } from '../provider';
-import { BaseComponent } from '../../base/base/base';
-import { NotImplementedError } from '../../../core/exceptions';
+import { createControl } from '../controls/provider';
+import { BaseComponent } from '../base/base/base';
+import { NotImplementedError } from '../../core/exceptions';
 import './base.css'
 
 
@@ -61,9 +61,12 @@ export class FormBase extends BaseComponent {
                                                 props.touched[info.field] && props.errors[info.field],
                                                 props.isSubmitting, this.FOR_UPDATE)
                                         }
-                                        <ErrorMessage key={`${info.field}-error-message`}
-                                                      name={info.field}
-                                                      className={'error-message'}/>
+                                        {/*<ErrorMessage key={`${info.field}-error-message`}*/}
+                                        {/*              name={info.field}*/}
+                                        {/*              component='div'*/}
+                                        {/*              className='error-message'/>*/}
+                                        {/*<div className='error-message'>{props.errors[info.field]}</div>*/}
+
                                     </div>
                                 )
                             })

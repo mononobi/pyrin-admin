@@ -40,7 +40,10 @@ Object.freeze(ClientFormFieldTypeEnum);
 export const AutoCompleteEnum = {
     ON: 'on',
     OFF: 'off',
-    NEW_PASSWORD: 'new-password'
+    NEW_PASSWORD: 'new-password',
+    EMAIL: 'email',
+    URL: 'url',
+    TELEPHONE: 'tel'
 };
 
 Object.freeze(AutoCompleteEnum);

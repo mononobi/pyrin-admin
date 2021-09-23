@@ -7,6 +7,11 @@ import { DatePicker, TimePicker, DateTimePicker } from './pickers/pickers';
 import { NumberInput, IntegerInput, FloatInput } from './number/number';
 import { DropDown } from './dropdown/dropdown';
 import { CheckBox } from './checkbox/checkbox';
+import { EmailInput } from './email/email';
+import { TelephoneInput } from './telephone/telephone';
+import { URLInput } from './url/url';
+import { IPV4Input, IPV6Input } from './ip/ip';
+import { ObjectInput } from './object/object';
 
 
 const CONTROL_MAP = {};
@@ -14,20 +19,20 @@ CONTROL_MAP[ServerFormFieldTypeEnum.BOOLEAN] = CheckBox;
 CONTROL_MAP[ServerFormFieldTypeEnum.DATE] = DatePicker;
 CONTROL_MAP[ServerFormFieldTypeEnum.DATETIME] = DateTimePicker;
 CONTROL_MAP[ServerFormFieldTypeEnum.TIME] = TimePicker;
-CONTROL_MAP[ServerFormFieldTypeEnum.EMAIL] = null;
+CONTROL_MAP[ServerFormFieldTypeEnum.EMAIL] = EmailInput;
 CONTROL_MAP[ServerFormFieldTypeEnum.FILE] = null;
 CONTROL_MAP[ServerFormFieldTypeEnum.NUMBER] = NumberInput;
 CONTROL_MAP[ServerFormFieldTypeEnum.INTEGER] = IntegerInput;
 CONTROL_MAP[ServerFormFieldTypeEnum.FLOAT] = FloatInput;
 CONTROL_MAP[ServerFormFieldTypeEnum.PASSWORD] = PasswordInput;
-CONTROL_MAP[ServerFormFieldTypeEnum.TELEPHONE] = null;
+CONTROL_MAP[ServerFormFieldTypeEnum.TELEPHONE] = TelephoneInput;
 CONTROL_MAP[ServerFormFieldTypeEnum.STRING] = TextBox;
 CONTROL_MAP[ServerFormFieldTypeEnum.TEXT] = TextArea;
-CONTROL_MAP[ServerFormFieldTypeEnum.URL] = null;
+CONTROL_MAP[ServerFormFieldTypeEnum.URL] = URLInput;
 CONTROL_MAP[ServerFormFieldTypeEnum.UUID] = UUIDInput;
-CONTROL_MAP[ServerFormFieldTypeEnum.IPV4] = null;
-CONTROL_MAP[ServerFormFieldTypeEnum.IPV6] = null;
-CONTROL_MAP[ServerFormFieldTypeEnum.OBJECT] = null;
+CONTROL_MAP[ServerFormFieldTypeEnum.IPV4] = IPV4Input;
+CONTROL_MAP[ServerFormFieldTypeEnum.IPV6] = IPV6Input;
+CONTROL_MAP[ServerFormFieldTypeEnum.OBJECT] = ObjectInput;
 
 Object.freeze(CONTROL_MAP);
 
