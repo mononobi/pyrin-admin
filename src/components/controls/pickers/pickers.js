@@ -41,10 +41,10 @@ export class DatePicker extends BaseControl {
                         maxDateMessage={MAX_DATE_MESSAGE}
                         minDateMessage={MIN_DATE_MESSAGE}
                         InputLabelProps={{
-                            required: this.props.info.required
+                            required: this._isRequired()
                         }}
                         InputProps={{
-                            required: this.props.info.required,
+                            required: this._isRequired(),
                             autoComplete: AutoCompleteEnum.OFF
                         }}
                         disabled={this.props.info.read_only}
@@ -86,10 +86,10 @@ export class TimePicker extends BaseControl {
                         maxDateMessage={MAX_TIME_MESSAGE}
                         minDateMessage={MIN_TIME_MESSAGE}
                         InputLabelProps={{
-                            required: this.props.info.required
+                            required: this._isRequired()
                         }}
                         InputProps={{
-                            required: this.props.info.required,
+                            required: this._isRequired(),
                             autoComplete: AutoCompleteEnum.OFF
                         }}
                         disabled={this.props.info.read_only}
@@ -131,10 +131,10 @@ export class DateTimePicker extends BaseControl {
                         maxDateMessage={MAX_DATETIME_MESSAGE}
                         minDateMessage={MIN_DATETIME_MESSAGE}
                         InputLabelProps={{
-                            required: this.props.info.required
+                            required: this._isRequired()
                         }}
                         InputProps={{
-                            required: this.props.info.required,
+                            required: this._isRequired(),
                             autoComplete: AutoCompleteEnum.OFF
                         }}
                         disabled={this.props.info.read_only}

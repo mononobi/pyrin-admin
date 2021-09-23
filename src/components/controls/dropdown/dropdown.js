@@ -16,17 +16,17 @@ export class DropDown extends BaseControl {
                 <FormControl style={{width: this.state.length, paddingTop: '9px'}}
                              variant={INPUT_VARIANT} size={INPUT_SIZE}
                              disabled={this.props.info.read_only}>
-                    <InputLabel id={label_id} required={this.props.info.required}>
+                    <InputLabel id={label_id} required={this._isRequired()}>
                         {this.props.info.title}
                     </InputLabel>
                     <Select
-                        displayEmpty={!this.props.info.required}
+                        displayEmpty={!this._isRequired()}
                         margin={INPUT_MARGIN}
                         id={this.props.info.field}
                         labelId={label_id}
                         label={this.props.info.title}
                         inputProps={{
-                            required: this.props.info.required
+                            required: this._isRequired()
                         }}
                         name={this.props.info.field}
                         value={this.props.value}
@@ -34,7 +34,7 @@ export class DropDown extends BaseControl {
                         error={this.props.error}
                     >
                         {
-                            !this.props.info.required && <MenuItem value=''><em>---</em></MenuItem>
+                            !this._isRequired() && <MenuItem value=''><em>---</em></MenuItem>
                         }
                         {
                             this.props.info.in_enum.map(item => {

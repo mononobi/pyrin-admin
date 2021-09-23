@@ -9,6 +9,8 @@ import './base.css'
 
 export class FormBase extends BaseComponent {
 
+    FOR_UPDATE = false;
+
     _callService(values) {
         throw new NotImplementedError();
     }
@@ -58,7 +60,7 @@ export class FormBase extends BaseComponent {
                                                 props.touched[info.field] &&
                                                 Boolean(props.errors[info.field]),
                                                 props.touched[info.field] && props.errors[info.field],
-                                                props.isSubmitting)
+                                                props.isSubmitting, this.FOR_UPDATE)
                                         }
                                         <ErrorMessage name={info.field}/>
                                     </>

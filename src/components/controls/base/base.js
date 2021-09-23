@@ -10,6 +10,10 @@ export class BaseControl extends BaseComponent {
         length: INPUT_LENGTH
     };
 
+    _isRequired() {
+        return this.props.info.required && !this.props.forUpdate;
+    }
+
     _getAutoLength() {
         let max_length = this.props.info.max_length;
         let min_length = this.props.info.min_length;

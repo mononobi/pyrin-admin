@@ -25,7 +25,7 @@ export class TextBox extends BaseControl {
                            multiline={this.MULTILINE}
                            label={this.props.info.title}
                            size={INPUT_SIZE}
-                           required={this.props.info.required}
+                           required={this._isRequired()}
                            margin={INPUT_MARGIN}
                            inputProps={{
                                maxLength: this.props.info.max_length,

@@ -44,13 +44,13 @@ export function getControl(info) {
     return CONTROL_MAP[ServerFormFieldTypeEnum.STRING];
 }
 
-export function createControl(info, value, onChange,
-                              error, helperText, disabled) {
+export function createControl(info, value, onChange, error,
+                              helperText, disabled, forUpdate) {
     let control = getControl(info);
     return React.createElement(control,
         {
             info: info, value: value, onChange: onChange,
             error: error, helperText: helperText,
-            disabled: disabled
+            disabled: disabled, forUpdate: forUpdate
         });
 }
