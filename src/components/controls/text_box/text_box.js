@@ -13,36 +13,31 @@ export class TextBox extends BaseControl {
     TYPE = ClientFormFieldTypeEnum.TEXT;
     MULTILINE = false;
     AUTO_COMPLETE = AutoCompleteEnum.ON;
-    PATTERN = null;
     INPUT_MODE = null;
 
     _renderControl() {
         return (
-                <TextField variant={INPUT_VARIANT}
-                           id={this._getFieldName()}
-                           autoComplete={this.AUTO_COMPLETE}
-                           multiline={this.MULTILINE}
-                           label={this._getFieldTitle()}
-                           size={INPUT_SIZE}
-                           required={this._isRequired()}
-                           margin={INPUT_MARGIN}
-                           inputProps={{
-                               maxLength: this.props.info.max_length,
-                               minLength: this.props.info.min_length,
-                               max: this.props.info.max_value,
-                               min: this.props.info.min_value,
-                               pattern: this.PATTERN,
-                               inputMode: this.INPUT_MODE
-                           }}
-                           type={this.props.type || this.TYPE}
-                           style={{width: INPUT_FILL}}
-                           disabled={this._isReadOnly()}
-                           name={this._getFieldName()}
-                           value={this.props.value}
-                           onChange={this.props.onChange}
-                           error={this.props.error}
-                           helperText={this.props.helperText}
-                />
+            <TextField
+                fullWidth={true}
+                variant={INPUT_VARIANT}
+                id={this._getFieldName()}
+                autoComplete={this.AUTO_COMPLETE}
+                multiline={this.MULTILINE}
+                label={this._getFieldTitle()}
+                size={INPUT_SIZE}
+                margin={INPUT_MARGIN}
+                inputProps={{
+                    inputMode: this.INPUT_MODE
+                }}
+                type={this.props.type || this.TYPE}
+                style={{width: INPUT_FILL}}
+                disabled={this._isReadOnly()}
+                name={this._getFieldName()}
+                value={this.props.value}
+                onChange={this.props.onChange}
+                error={this.props.error}
+                helperText={this.props.helperText}
+            />
         )
     }
 }

@@ -35,11 +35,7 @@ export class DatePicker extends BaseControl {
                     invalidDateMessage={INVALID_DATE_MESSAGE}
                     maxDateMessage={MAX_DATE_MESSAGE}
                     minDateMessage={MIN_DATE_MESSAGE}
-                    InputLabelProps={{
-                        required: this._isRequired()
-                    }}
                     InputProps={{
-                        required: this._isRequired(),
                         autoComplete: AutoCompleteEnum.OFF
                     }}
                     disabled={this._isReadOnly()}
@@ -74,11 +70,7 @@ export class TimePicker extends BaseControl {
                     invalidDateMessage={INVALID_TIME_MESSAGE}
                     maxDateMessage={MAX_TIME_MESSAGE}
                     minDateMessage={MIN_TIME_MESSAGE}
-                    InputLabelProps={{
-                        required: this._isRequired()
-                    }}
                     InputProps={{
-                        required: this._isRequired(),
                         autoComplete: AutoCompleteEnum.OFF
                     }}
                     disabled={this._isReadOnly()}
@@ -113,11 +105,7 @@ export class DateTimePicker extends BaseControl {
                     invalidDateMessage={INVALID_DATETIME_MESSAGE}
                     maxDateMessage={MAX_DATETIME_MESSAGE}
                     minDateMessage={MIN_DATETIME_MESSAGE}
-                    InputLabelProps={{
-                        required: this._isRequired()
-                    }}
                     InputProps={{
-                        required: this._isRequired(),
                         autoComplete: AutoCompleteEnum.OFF
                     }}
                     disabled={this._isReadOnly()}

@@ -6,9 +6,6 @@ export class NumberInput extends TextBox {
     INPUT_MODE = 'numeric';
 }
 
-export class IntegerInput extends NumberInput {
-
-    PATTERN = '^\\d+$'
-}
+export class IntegerInput extends NumberInput {}
 
 export class FloatInput extends NumberInput {}

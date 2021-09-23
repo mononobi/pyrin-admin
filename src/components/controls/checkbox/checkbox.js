@@ -16,7 +16,6 @@ export class CheckBox extends BaseControl {
                     <Checkbox
                         id={this._getFieldName()}
                         size='small'
-                        required={this._isRequired()}
                         disabled={this._isReadOnly()}
                         name={this._getFieldName()}
                         value={this.props.value}

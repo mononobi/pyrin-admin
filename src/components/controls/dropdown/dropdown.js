@@ -14,10 +14,10 @@ export class DropDown extends BaseControl {
     _renderControl() {
         let label_id = `${this._getFieldName()}-title`;
         return (
-            <FormControl style={{width: this._getLength(), paddingTop: '9px'}}
+            <FormControl style={{paddingTop: '9px'}} fullWidth={true}
                          variant={INPUT_VARIANT} size={INPUT_SIZE}
                          disabled={this._isReadOnly()}>
-                <InputLabel id={label_id} required={this._isRequired()}>
+                <InputLabel id={label_id}>
                     {this._getFieldTitle()}
                 </InputLabel>
                 <Select
@@ -26,16 +26,13 @@ export class DropDown extends BaseControl {
                     id={this._getFieldName()}
                     labelId={label_id}
                     label={this._getFieldTitle()}
-                    inputProps={{
-                        required: this._isRequired()
-                    }}
                     name={this._getFieldName()}
                     value={this.props.value}
                     onChange={this.props.onChange}
                     error={this.props.error}
                 >
                     {
-                        !this._isRequired() && <MenuItem value=''><em>---</em></MenuItem>
+                        !this._isRequired() && <MenuItem value=''><br/></MenuItem>
                     }
                     {
                         this.props.info.in_enum.map(item => {
