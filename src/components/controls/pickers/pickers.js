@@ -45,6 +45,7 @@ export class DatePicker extends BaseControl {
                     onChange={this.props.onChange}
                     error={this.props.error}
                     helperText={this.props.helperText}
+                    FormHelperTextProps={{style: {fontSize: '11px'}, margin: 'dense'}}
                 />
             </MuiPickersUtilsProvider>
         )
@@ -81,6 +82,7 @@ export class TimePicker extends BaseControl {
                     onChange={this.props.onChange}
                     error={this.props.error}
                     helperText={this.props.helperText}
+                    FormHelperTextProps={{style: {fontSize: '11px'}, margin: 'dense'}}
                 />
             </MuiPickersUtilsProvider>
         )
@@ -117,6 +119,7 @@ export class DateTimePicker extends BaseControl {
                     onChange={this.props.onChange}
                     error={this.props.error}
                     helperText={this.props.helperText}
+                    FormHelperTextProps={{style: {fontSize: '11px'}, margin: 'dense'}}
                 />
             </MuiPickersUtilsProvider>
         )

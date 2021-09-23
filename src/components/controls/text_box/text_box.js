@@ -38,6 +38,7 @@ export class TextBox extends BaseControl {
                 onChange={this.props.onChange}
                 error={this.props.error}
                 helperText={this.props.helperText}
+                FormHelperTextProps={{style: {fontSize: '11px'}, margin: 'dense'}}
             />
         )
     }
