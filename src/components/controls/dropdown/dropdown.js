@@ -21,6 +21,7 @@ export class DropDown extends BaseControl {
                     {this._getFieldTitle()}
                 </InputLabel>
                 <Select
+                    key={this._getFieldName()}
                     displayEmpty={!this._isRequired()}
                     margin={INPUT_MARGIN}
                     id={this._getFieldName()}

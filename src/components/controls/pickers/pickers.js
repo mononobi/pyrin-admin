@@ -22,6 +22,7 @@ export class DatePicker extends BaseControl {
         return (
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <KeyboardDatePicker
+                    key={this._getFieldName()}
                     clearable={true}
                     margin={INPUT_MARGIN}
                     format={INPUT_DATE_FORMAT}
@@ -56,6 +57,7 @@ export class TimePicker extends BaseControl {
         return (
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <KeyboardTimePicker
+                    key={this._getFieldName()}
                     clearable={true}
                     ampm={false}
                     margin={INPUT_MARGIN}
@@ -91,6 +93,7 @@ export class DateTimePicker extends BaseControl {
         return (
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <KeyboardDateTimePicker
+                    key={this._getFieldName()}
                     clearable={true}
                     ampm={false}
                     margin={INPUT_MARGIN}

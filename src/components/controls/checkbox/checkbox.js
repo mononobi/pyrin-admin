@@ -14,6 +14,7 @@ export class CheckBox extends BaseControl {
                 label={this._getFieldTitle()}
                 control={
                     <Checkbox
+                        key={this._getFieldName()}
                         id={this._getFieldName()}
                         size='small'
                         disabled={this._isReadOnly()}

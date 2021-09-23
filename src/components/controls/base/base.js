@@ -93,7 +93,9 @@ export class BaseControl extends BaseComponent {
 
     _render() {
         return (
-            <div style={{width: this._getLength()}} className={this.CONTAINER_CLASS_NAME}>
+            <div key={`${this._getFieldName()}-container`}
+                 style={{width: this._getLength()}}
+                 className={this.CONTAINER_CLASS_NAME}>
                 {
                     this._renderControl()
                 }

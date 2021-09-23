@@ -18,6 +18,7 @@ export class TextBox extends BaseControl {
     _renderControl() {
         return (
             <TextField
+                key={this._getFieldName()}
                 fullWidth={true}
                 variant={INPUT_VARIANT}
                 id={this._getFieldName()}

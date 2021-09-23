@@ -61,7 +61,7 @@ export class FormBase extends BaseComponent {
                                                 props.touched[info.field] && props.errors[info.field],
                                                 props.isSubmitting, this.FOR_UPDATE)
                                         }
-                                        <ErrorMessage name={info.field}/>
+                                        <ErrorMessage key={`${info.field}-error-message`} name={info.field}/>
                                     </>
                                 )
                             })
