@@ -57,8 +57,7 @@ export class FormBase extends BaseComponent {
                                         {
                                             createControl(info, props.values[info.field],
                                                 props.handleChange,
-                                                props.touched[info.field] &&
-                                                Boolean(props.errors[info.field]),
+                                                props.touched[info.field] && Boolean(props.errors[info.field]),
                                                 props.touched[info.field] && props.errors[info.field],
                                                 props.isSubmitting, this.FOR_UPDATE)
                                         }
