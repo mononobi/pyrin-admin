@@ -18,7 +18,8 @@ export class CheckBox extends BaseControl {
                         size='small'
                         disabled={this._isReadOnly()}
                         name={this._getFieldName()}
-                        value={this.props.value}
+                        value={this.props.value || false}
+                        checked={this.props.value || false}
                         onChange={this.props.onChange}
                         error={this.props.error}
                     />
