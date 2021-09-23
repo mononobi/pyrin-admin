@@ -7,26 +7,24 @@ import '../globals/styles/inputs.css';
 
 export class CheckBox extends BaseControl {
 
-    _render() {
+    _renderControl() {
         return (
-            <div style={{width: this.state.length}} className='input-container'>
-                <FormControlLabel
-                    labelPlacement='end'
-                    label={this.props.info.title}
-                    control={
-                        <Checkbox
-                            id={this.props.info.field}
-                            size='small'
-                            required={this._isRequired()}
-                            disabled={this.props.info.read_only}
-                            name={this.props.info.field}
-                            value={this.props.value}
-                            onChange={this.props.onChange}
-                            error={this.props.error}
-                        />
-                    }
-                />
-            </div>
+            <FormControlLabel
+                labelPlacement='end'
+                label={this._getFieldTitle()}
+                control={
+                    <Checkbox
+                        id={this._getFieldName()}
+                        size='small'
+                        required={this._isRequired()}
+                        disabled={this._isReadOnly()}
+                        name={this._getFieldName()}
+                        value={this.props.value}
+                        onChange={this.props.onChange}
+                        error={this.props.error}
+                    />
+                }
+            />
         )
     }
 }

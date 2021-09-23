@@ -18,134 +18,116 @@ import '../globals/styles/inputs.css';
 
 export class DatePicker extends BaseControl {
 
-    state = {
-        selectedDate: null
-    }
-
-    _render() {
+    _renderControl() {
         return (
-            <div style={{width: this.state.length}} className='input-container'>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDatePicker
-                        clearable={true}
-                        margin={INPUT_MARGIN}
-                        format={INPUT_DATE_FORMAT}
-                        id={this.props.info.field}
-                        label={this.props.info.title}
-                        showTodayButton={true}
-                        variant={INPUT_PICKER_VARIANT}
-                        animateYearScrolling={true}
-                        inputVariant={INPUT_VARIANT}
-                        todayLabel={TODAY_NAME}
-                        invalidDateMessage={INVALID_DATE_MESSAGE}
-                        maxDateMessage={MAX_DATE_MESSAGE}
-                        minDateMessage={MIN_DATE_MESSAGE}
-                        InputLabelProps={{
-                            required: this._isRequired()
-                        }}
-                        InputProps={{
-                            required: this._isRequired(),
-                            autoComplete: AutoCompleteEnum.OFF
-                        }}
-                        disabled={this.props.info.read_only}
-                        name={this.props.info.field}
-                        value={this.props.value}
-                        onChange={this.props.onChange}
-                        error={this.props.error}
-                        helperText={this.props.helperText}
-                    />
-                </MuiPickersUtilsProvider>
-            </div>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardDatePicker
+                    clearable={true}
+                    margin={INPUT_MARGIN}
+                    format={INPUT_DATE_FORMAT}
+                    id={this._getFieldName()}
+                    label={this._getFieldTitle()}
+                    showTodayButton={true}
+                    variant={INPUT_PICKER_VARIANT}
+                    animateYearScrolling={true}
+                    inputVariant={INPUT_VARIANT}
+                    todayLabel={TODAY_NAME}
+                    invalidDateMessage={INVALID_DATE_MESSAGE}
+                    maxDateMessage={MAX_DATE_MESSAGE}
+                    minDateMessage={MIN_DATE_MESSAGE}
+                    InputLabelProps={{
+                        required: this._isRequired()
+                    }}
+                    InputProps={{
+                        required: this._isRequired(),
+                        autoComplete: AutoCompleteEnum.OFF
+                    }}
+                    disabled={this._isReadOnly()}
+                    name={this._getFieldName()}
+                    value={this.props.value}
+                    onChange={this.props.onChange}
+                    error={this.props.error}
+                    helperText={this.props.helperText}
+                />
+            </MuiPickersUtilsProvider>
         )
     }
 }
 
 export class TimePicker extends BaseControl {
 
-    state = {
-        selectedTime: null
-    }
-
-    _render() {
+    _renderControl() {
         return (
-            <div style={{width: this.state.length}} className='input-container'>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardTimePicker
-                        clearable={true}
-                        ampm={false}
-                        margin={INPUT_MARGIN}
-                        format={INPUT_TIME_FORMAT}
-                        id={this.props.info.field}
-                        label={this.props.info.title}
-                        showTodayButton={true}
-                        variant={INPUT_PICKER_VARIANT}
-                        animateYearScrolling={true}
-                        inputVariant={INPUT_VARIANT}
-                        todayLabel={TODAY_NAME}
-                        invalidDateMessage={INVALID_TIME_MESSAGE}
-                        maxDateMessage={MAX_TIME_MESSAGE}
-                        minDateMessage={MIN_TIME_MESSAGE}
-                        InputLabelProps={{
-                            required: this._isRequired()
-                        }}
-                        InputProps={{
-                            required: this._isRequired(),
-                            autoComplete: AutoCompleteEnum.OFF
-                        }}
-                        disabled={this.props.info.read_only}
-                        name={this.props.info.field}
-                        value={this.props.value}
-                        onChange={this.props.onChange}
-                        error={this.props.error}
-                        helperText={this.props.helperText}
-                    />
-                </MuiPickersUtilsProvider>
-            </div>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardTimePicker
+                    clearable={true}
+                    ampm={false}
+                    margin={INPUT_MARGIN}
+                    format={INPUT_TIME_FORMAT}
+                    id={this._getFieldName()}
+                    label={this._getFieldTitle()}
+                    showTodayButton={true}
+                    variant={INPUT_PICKER_VARIANT}
+                    animateYearScrolling={true}
+                    inputVariant={INPUT_VARIANT}
+                    todayLabel={TODAY_NAME}
+                    invalidDateMessage={INVALID_TIME_MESSAGE}
+                    maxDateMessage={MAX_TIME_MESSAGE}
+                    minDateMessage={MIN_TIME_MESSAGE}
+                    InputLabelProps={{
+                        required: this._isRequired()
+                    }}
+                    InputProps={{
+                        required: this._isRequired(),
+                        autoComplete: AutoCompleteEnum.OFF
+                    }}
+                    disabled={this._isReadOnly()}
+                    name={this._getFieldName()}
+                    value={this.props.value}
+                    onChange={this.props.onChange}
+                    error={this.props.error}
+                    helperText={this.props.helperText}
+                />
+            </MuiPickersUtilsProvider>
         )
     }
 }
 
 export class DateTimePicker extends BaseControl {
 
-    state = {
-        selectedDateTime: null
-    }
-
-    _render() {
+    _renderControl() {
         return (
-            <div style={{width: this.state.length}} className='input-container'>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDateTimePicker
-                        clearable={true}
-                        ampm={false}
-                        margin={INPUT_MARGIN}
-                        format={INPUT_DATETIME_FORMAT}
-                        id={this.props.info.field}
-                        label={this.props.info.title}
-                        showTodayButton={true}
-                        variant={INPUT_PICKER_VARIANT}
-                        animateYearScrolling={true}
-                        inputVariant={INPUT_VARIANT}
-                        todayLabel={TODAY_NAME}
-                        invalidDateMessage={INVALID_DATETIME_MESSAGE}
-                        maxDateMessage={MAX_DATETIME_MESSAGE}
-                        minDateMessage={MIN_DATETIME_MESSAGE}
-                        InputLabelProps={{
-                            required: this._isRequired()
-                        }}
-                        InputProps={{
-                            required: this._isRequired(),
-                            autoComplete: AutoCompleteEnum.OFF
-                        }}
-                        disabled={this.props.info.read_only}
-                        name={this.props.info.field}
-                        value={this.props.value}
-                        onChange={this.props.onChange}
-                        error={this.props.error}
-                        helperText={this.props.helperText}
-                    />
-                </MuiPickersUtilsProvider>
-            </div>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardDateTimePicker
+                    clearable={true}
+                    ampm={false}
+                    margin={INPUT_MARGIN}
+                    format={INPUT_DATETIME_FORMAT}
+                    id={this._getFieldName()}
+                    label={this._getFieldTitle()}
+                    showTodayButton={true}
+                    variant={INPUT_PICKER_VARIANT}
+                    animateYearScrolling={true}
+                    inputVariant={INPUT_VARIANT}
+                    todayLabel={TODAY_NAME}
+                    invalidDateMessage={INVALID_DATETIME_MESSAGE}
+                    maxDateMessage={MAX_DATETIME_MESSAGE}
+                    minDateMessage={MIN_DATETIME_MESSAGE}
+                    InputLabelProps={{
+                        required: this._isRequired()
+                    }}
+                    InputProps={{
+                        required: this._isRequired(),
+                        autoComplete: AutoCompleteEnum.OFF
+                    }}
+                    disabled={this._isReadOnly()}
+                    name={this._getFieldName()}
+                    value={this.props.value}
+                    onChange={this.props.onChange}
+                    error={this.props.error}
+                    helperText={this.props.helperText}
+                />
+            </MuiPickersUtilsProvider>
         )
     }
 }

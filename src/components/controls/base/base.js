@@ -1,10 +1,12 @@
 import { BaseComponent } from '../../base/base/base';
 import { INPUT_LENGTH, LONG_INPUT_LENGTH, VERY_LONG_INPUT_LENGTH } from '../globals/constants';
+import { NotImplementedError } from '../../../core/exceptions';
 
 
 export class BaseControl extends BaseComponent {
 
     FIXED_LENGTH = null;
+    CONTAINER_CLASS_NAME = 'input-container';
 
     state = {
         length: INPUT_LENGTH
@@ -12,6 +14,22 @@ export class BaseControl extends BaseComponent {
 
     _isRequired() {
         return this.props.info.required && !this.props.forUpdate;
+    }
+
+    _isReadOnly() {
+        return this.props.info.read_only;
+    }
+
+    _getFieldTitle() {
+        return this.props.info.title;
+    }
+
+    _getFieldName() {
+        return this.props.info.field;
+    }
+
+    _getLength() {
+        return this.state.length;
     }
 
     _getAutoLength() {
@@ -67,5 +85,19 @@ export class BaseControl extends BaseComponent {
         this.setState({
             length: length
         })
+    }
+
+    _renderControl() {
+        throw new NotImplementedError()
+    }
+
+    _render() {
+        return (
+            <div style={{width: this._getLength()}} className={this.CONTAINER_CLASS_NAME}>
+                {
+                    this._renderControl()
+                }
+            </div>
+        )
     }
 }

@@ -16,14 +16,13 @@ export class TextBox extends BaseControl {
     PATTERN = null;
     INPUT_MODE = null;
 
-    _render() {
+    _renderControl() {
         return (
-            <div style={{width: this.state.length}} className='input-container'>
                 <TextField variant={INPUT_VARIANT}
-                           id={this.props.info.field}
+                           id={this._getFieldName()}
                            autoComplete={this.AUTO_COMPLETE}
                            multiline={this.MULTILINE}
-                           label={this.props.info.title}
+                           label={this._getFieldTitle()}
                            size={INPUT_SIZE}
                            required={this._isRequired()}
                            margin={INPUT_MARGIN}
@@ -37,14 +36,13 @@ export class TextBox extends BaseControl {
                            }}
                            type={this.props.type || this.TYPE}
                            style={{width: INPUT_FILL}}
-                           disabled={this.props.info.read_only}
-                           name={this.props.info.field}
+                           disabled={this._isReadOnly()}
+                           name={this._getFieldName()}
                            value={this.props.value}
                            onChange={this.props.onChange}
                            error={this.props.error}
                            helperText={this.props.helperText}
                 />
-            </div>
         )
     }
 }
