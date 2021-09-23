@@ -15,11 +15,11 @@ export class App extends BaseComponent {
     return (
         <BrowserRouter>
           <Switch>
-            <Route key={-1} exact path='/'>
+            <Route key='-1' exact path='/'>
               <Redirect to={CONFIGS.panel_home_path} />
             </Route>
             {ROUTES.map((route, index) => (
-                <Route key={index} exact={route.exact} path={route.path} component={route.component}/>
+                <Route key={index.toString()} exact={route.exact} path={route.path} component={route.component}/>
             ))}
           </Switch>
         </BrowserRouter>

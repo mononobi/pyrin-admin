@@ -53,7 +53,7 @@ export class FormBase extends BaseComponent {
                         {
                             this.props.dataFields.map(info => {
                                 return (
-                                    <>
+                                    <div key={`${info.field}-row`}>
                                         {
                                             createControl(info, props.values[info.field],
                                                 props.handleChange,
@@ -61,8 +61,10 @@ export class FormBase extends BaseComponent {
                                                 props.touched[info.field] && props.errors[info.field],
                                                 props.isSubmitting, this.FOR_UPDATE)
                                         }
-                                        <ErrorMessage key={`${info.field}-error-message`} name={info.field}/>
-                                    </>
+                                        <ErrorMessage key={`${info.field}-error-message`}
+                                                      name={info.field}
+                                                      className={'error-message'}/>
+                                    </div>
                                 )
                             })
                         }
