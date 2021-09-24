@@ -39,8 +39,7 @@ export class FormBase extends BaseComponent {
             <Formik
                 initialValues={this._getInitialValues(this.props.initialValues)}
                 validate={values => {
-                    return {gender: 'This field is required',
-                            car_id: 'This field is required'};
+                    return {};
                 }}
                 enableReinitialize={true}
                 onSubmit={(values, {setSubmitting}) => {
