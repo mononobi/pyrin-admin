@@ -2,6 +2,7 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import { BaseControl } from '../base/base';
 import { AutoCompleteEnum, ClientFormFieldTypeEnum } from '../globals/enumerations';
+import { HELPER_TEXT_STYLE } from '../globals/styles/inputs';
 import {
     INPUT_FILL, INPUT_MARGIN, INPUT_SIZE, INPUT_VARIANT, VERY_LONG_INPUT_LENGTH
 } from '../globals/constants';
@@ -38,7 +39,8 @@ export class TextBox extends BaseControl {
                 onChange={this.props.onChange}
                 error={this.props.error}
                 helperText={this.props.helperText}
-                FormHelperTextProps={{style: {fontSize: '11px'}, margin: 'dense'}}
+                FormHelperTextProps={{style: HELPER_TEXT_STYLE, margin: 'dense'}
+                }
             />
         )
     }

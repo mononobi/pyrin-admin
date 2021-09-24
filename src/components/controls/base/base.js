@@ -1,6 +1,8 @@
+import React from 'react';
 import { BaseComponent } from '../../base/base/base';
 import { INPUT_LENGTH, LONG_INPUT_LENGTH, VERY_LONG_INPUT_LENGTH } from '../globals/constants';
 import { NotImplementedError } from '../../../core/exceptions';
+import { ErrorMessage } from 'formik';
 
 
 export class BaseControl extends BaseComponent {
@@ -98,6 +100,15 @@ export class BaseControl extends BaseComponent {
                  className={this.CONTAINER_CLASS_NAME}>
                 {
                     this._renderControl()
+                }
+                {
+                    this.props.info.in_enum &&
+                    <ErrorMessage
+                        key={`${this.props.info.field}-error-message`}
+                        name={this.props.info.field}
+                        component='p'
+                        className='error-message'
+                    />
                 }
             </div>
         )

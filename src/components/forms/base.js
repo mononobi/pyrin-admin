@@ -1,5 +1,5 @@
 import React from 'react';
-import { Formik, Form, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
 import { Button } from '@material-ui/core';
 import { createControl } from '../controls/provider';
 import { BaseComponent } from '../base/base/base';
@@ -39,7 +39,8 @@ export class FormBase extends BaseComponent {
             <Formik
                 initialValues={this._getInitialValues(this.props.initialValues)}
                 validate={values => {
-                    return {};
+                    return {gender: 'This field is required',
+                            car_id: 'This field is required'};
                 }}
                 enableReinitialize={true}
                 onSubmit={(values, {setSubmitting}) => {
@@ -53,7 +54,7 @@ export class FormBase extends BaseComponent {
                         {
                             this.props.dataFields.map(info => {
                                 return (
-                                    <div key={`${info.field}-row`}>
+                                    <div key={`${info.field}-form-field`}>
                                         {
                                             createControl(info, props.values[info.field],
                                                 props.handleChange,
@@ -61,12 +62,6 @@ export class FormBase extends BaseComponent {
                                                 props.touched[info.field] && props.errors[info.field],
                                                 props.isSubmitting, this.FOR_UPDATE)
                                         }
-                                        {/*<ErrorMessage key={`${info.field}-error-message`}*/}
-                                        {/*              name={info.field}*/}
-                                        {/*              component='div'*/}
-                                        {/*              className='error-message'/>*/}
-                                        {/*<div className='error-message'>{props.errors[info.field]}</div>*/}
-
                                     </div>
                                 )
                             })

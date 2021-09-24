@@ -7,6 +7,7 @@ import {
 import { BaseControl } from '../base/base';
 import { AutoCompleteEnum } from '../globals/enumerations';
 import { INPUT_MARGIN, INPUT_VARIANT } from '../globals/constants';
+import { HELPER_TEXT_STYLE } from '../globals/styles/inputs';
 import {
     INPUT_DATE_FORMAT, INPUT_DATETIME_FORMAT, INPUT_PICKER_VARIANT, INPUT_TIME_FORMAT,
     INVALID_DATE_MESSAGE, INVALID_DATETIME_MESSAGE, INVALID_TIME_MESSAGE, MAX_DATE_MESSAGE,
@@ -45,7 +46,7 @@ export class DatePicker extends BaseControl {
                     onChange={this.props.onChange}
                     error={this.props.error}
                     helperText={this.props.helperText}
-                    FormHelperTextProps={{style: {fontSize: '11px'}, margin: 'dense'}}
+                    FormHelperTextProps={{style: HELPER_TEXT_STYLE, margin: 'dense'}}
                 />
             </MuiPickersUtilsProvider>
         )
@@ -82,7 +83,7 @@ export class TimePicker extends BaseControl {
                     onChange={this.props.onChange}
                     error={this.props.error}
                     helperText={this.props.helperText}
-                    FormHelperTextProps={{style: {fontSize: '11px'}, margin: 'dense'}}
+                    FormHelperTextProps={{style: HELPER_TEXT_STYLE, margin: 'dense'}}
                 />
             </MuiPickersUtilsProvider>
         )
@@ -119,7 +120,7 @@ export class DateTimePicker extends BaseControl {
                     onChange={this.props.onChange}
                     error={this.props.error}
                     helperText={this.props.helperText}
-                    FormHelperTextProps={{style: {fontSize: '11px'}, margin: 'dense'}}
+                    FormHelperTextProps={{style: HELPER_TEXT_STYLE, margin: 'dense'}}
                 />
             </MuiPickersUtilsProvider>
         )

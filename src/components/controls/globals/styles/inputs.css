@@ -3,6 +3,11 @@
     --input-label-shrink-font-size: 14px;
     --input-height: 20px;
     --input-container-padding: 4px;
+    --helper-text-font-size: 11px;
+    --helper-text-left-right-margin: 8px;
+    --helper-text-top-margin: 4px;
+    --helper-text-color: #f44336;
+    --font-family: Roboto,"Open Sans",sans-serif;
 }
 
 /*.MuiInputLabel-root {*/
@@ -63,4 +68,16 @@
 
 .input-container div {
     font-size: var(--input-font-size);
+}
+
+.error-message {
+    color: var(--helper-text-color);
+    margin-left: var(--helper-text-left-right-margin);
+    margin-right: var(--helper-text-left-right-margin);
+    margin-top: var(--helper-text-top-margin);
+    font-size: var(--helper-text-font-size);
+    text-align: left;
+    font-family: var(--font-family);
+    font-weight: 400;
+    line-height: 1.66;
 }

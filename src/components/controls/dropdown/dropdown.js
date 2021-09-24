@@ -14,9 +14,12 @@ export class DropDown extends BaseControl {
     _renderControl() {
         let label_id = `${this._getFieldName()}-title`;
         return (
-            <FormControl style={{paddingTop: '9px'}} fullWidth={true}
-                         variant={INPUT_VARIANT} size={INPUT_SIZE}
-                         disabled={this._isReadOnly()}>
+            <FormControl style={{paddingTop: '9px'}}
+                         fullWidth={true}
+                         variant={INPUT_VARIANT}
+                         size={INPUT_SIZE}
+                         disabled={this._isReadOnly()}
+                         error={this.props.error}>
                 <InputLabel id={label_id}>
                     {this._getFieldTitle()}
                 </InputLabel>
