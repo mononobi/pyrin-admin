@@ -3,6 +3,7 @@ import { Formik, Form } from 'formik';
 import { Button } from '@material-ui/core';
 import { createControl } from '../controls/provider';
 import { BaseComponent } from '../base/base/base';
+import { getValidator } from '../../validators/provider';
 import { NotImplementedError } from '../../core/exceptions';
 import './base.css'
 
@@ -39,7 +40,21 @@ export class FormBase extends BaseComponent {
             <Formik
                 initialValues={this._getInitialValues(this.props.initialValues)}
                 validate={values => {
-                    return {};
+                    let result = {};
+                    for (const [name, value] of Object.entries(values)) {
+                        let info = this.props.dataFieldsDict[name];
+                        if (info) {
+                            let error = null;
+                            let validator = getValidator(info, this.FOR_UPDATE);
+                            if (validator) {
+                                error = validator.validate(value);
+                            }
+                            if (error) {
+                                result[name] = error;
+                            }
+                        }
+                    }
+                    return result;
                 }}
                 enableReinitialize={true}
                 onSubmit={(values, {setSubmitting}) => {
@@ -55,11 +70,14 @@ export class FormBase extends BaseComponent {
                                 return (
                                     <div key={`${info.field}-form-field`}>
                                         {
-                                            createControl(info, props.values[info.field],
+                                            createControl(
+                                                info,
+                                                props.values[info.field],
                                                 props.handleChange,
                                                 props.touched[info.field] && Boolean(props.errors[info.field]),
                                                 props.touched[info.field] && props.errors[info.field],
-                                                props.isSubmitting, this.FOR_UPDATE)
+                                                props.isSubmitting,
+                                                this.FOR_UPDATE)
                                         }
                                     </div>
                                 )
