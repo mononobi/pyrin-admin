@@ -23,8 +23,15 @@ export class StringValidator extends ValidatorBase {
         return value;
     }
 
+    _isEmpty(value) {
+        if (typeof value === this.TYPE) {
+            value = this._unquote(value)
+        }
+
+        return super._isEmpty(value);
+    }
+
     _validateMinLength(value) {
-        value = this._unquote(value);
         if (this.minLength && value.length < this.minLength) {
             return `Use minimum ${this.minLength} characters`;
         }
@@ -33,7 +40,6 @@ export class StringValidator extends ValidatorBase {
     }
 
     _validateMaxLength(value) {
-        value = this._unquote(value);
         if (this.maxLength && value.length > this.maxLength) {
             return `Use maximum ${this.maxLength} characters`;
         }
@@ -65,6 +71,7 @@ export class StringValidator extends ValidatorBase {
             return booleanError;
         }
 
+        value = this._unquote(value);
         let whitespaceError = this._validateWhitespace(value);
         if (whitespaceError) {
             return whitespaceError;

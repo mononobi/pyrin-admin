@@ -49,8 +49,12 @@ export class ValidatorBase {
         return false;
     }
 
+    _isEmpty(value) {
+        return value === '';
+    }
+
     _isNullOrEmpty(value) {
-        return value === '' || this._isNull(value);
+        return this._isEmpty(value) || this._isNull(value);
     }
 
     _convert(value) {
