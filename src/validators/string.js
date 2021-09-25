@@ -59,7 +59,7 @@ export class StringValidator extends ValidatorBase {
         let lowerValue = value.toLowerCase();
         if (lowerValue === BooleanValueEnum.TRUE ||
             lowerValue === BooleanValueEnum.FALSE) {
-            return 'Quote the value to be processed as a string'
+            return 'Quote the value to be processed as string'
         }
 
         return null;
