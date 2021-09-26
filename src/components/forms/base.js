@@ -12,15 +12,37 @@ export class FormBase extends BaseComponent {
 
     FOR_UPDATE = false;
 
+    state = {
+        initialValues: {}
+    }
+
     _callService(values) {
         throw new NotImplementedError();
     }
 
+    _isReadOnly(name) {
+        let info = this.props.dataFieldsDict[name];
+        return info.read_only;
+    }
+
+    _isEmpty(value) {
+        return value === '' || value === '""' || value === "''";
+    }
+
+    _isDirty(name, value) {
+        if (!this.FOR_UPDATE) {
+            return true;
+        }
+        let oldValue = this.state.initialValues[name];
+        return oldValue !== value;
+    }
+
     _getFilledValues(values) {
         let result = {};
-        for (const [key, value] of Object.entries(values)) {
-            if (value !== '' && value !== '""' && value !== "''") {
-                result[key] = value;
+        for (const [name, value] of Object.entries(values)) {
+            if (!this._isEmpty(value) && !this._isReadOnly(name) &&
+                this._isDirty(name, value)) {
+                result[name] = value;
             }
         }
         return result;
@@ -35,10 +57,16 @@ export class FormBase extends BaseComponent {
         return initialValues;
     }
 
+    _componentDidMount() {
+        this.setState({
+            initialValues: this._getInitialValues(this.props.initialValues)
+        })
+    }
+
     _render() {
         return (
             <Formik
-                initialValues={this._getInitialValues(this.props.initialValues)}
+                initialValues={this.state.initialValues}
                 validate={values => {
                     let result = {};
                     for (const [name, value] of Object.entries(values)) {
@@ -57,9 +85,7 @@ export class FormBase extends BaseComponent {
                     return result;
                 }}
                 enableReinitialize={true}
-                onSubmit={(values,
-                           {setSubmitting, initialValues,
-                               setFieldError, resetForm}) => {
+                onSubmit={(values, {setSubmitting, setFieldError, resetForm}) => {
                     values = this._getFilledValues(values);
                     this._callService(values);
                     setSubmitting(false);

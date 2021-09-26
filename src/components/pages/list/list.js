@@ -7,6 +7,7 @@ import { getFindMetadata } from '../../../services/metadata';
 import { find } from '../../../services/data';
 import { getCreatePage, getUpdatePage } from '../../../services/url';
 import { BaseComplexPage } from '../base/base';
+import { TargetEnum } from '../../../core/enumerations';
 import './list.css'
 
 
@@ -33,7 +34,7 @@ export class ListComponent extends BaseComplexPage {
                     value = info.lookup[value];
                 }
                 return (
-                    <Link component='a' underline='hover' target='_blank'
+                    <Link component='a' underline='hover' target={TargetEnum.SAME_TAB}
                           href={getUpdatePage(info.pk_register_name, rowData[info.field])}>
                         {value}
                     </Link>
@@ -54,7 +55,7 @@ export class ListComponent extends BaseComplexPage {
                     value = info.lookup[value]
                 }
                 return (
-                    <Link component='a' underline='hover' target='_blank'
+                    <Link component='a' underline='hover' target={TargetEnum.SAME_TAB}
                           href={getUpdatePage(info.fk_register_name, rowData[info.field])}>
                         {value}
                     </Link>
@@ -185,7 +186,7 @@ export class ListComponent extends BaseComplexPage {
                         onClick: (event, rowData) => {
                             let url = getUpdatePage(this.state.metadata.register_name,
                                 rowData[this.state.metadata.pk_name]);
-                            window.open(url);
+                            window.open(url, TargetEnum.SAME_TAB);
                         }
                     }
                 ]}
