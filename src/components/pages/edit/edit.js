@@ -24,6 +24,15 @@ export class EditComponent extends BaseComplexPage {
         return getUpdateMetadata(this.props.match.params.register_name);
     }
 
+    _prepareData(data) {
+        let result = {};
+        for (let i = 0; i < this.state.metadata.data_fields.length; i++) {
+            let fieldName = this.state.metadata.data_fields[i].field;
+            result[fieldName] = data[fieldName];
+        }
+        return result;
+    }
+
     _render() {
         return (
             <Paper variant='elevation' elevation={3}>
@@ -31,7 +40,7 @@ export class EditComponent extends BaseComplexPage {
                             dataFields={this.state.metadata.data_fields}
                             dataFieldsDict={this.state.metadata.data_fields_dict}
                             pk={this.props.match.params.pk}
-                            initialValues={this.state.data}
+                            initialValues={this._prepareData(this.state.data)}
                 />
             </Paper>
         )

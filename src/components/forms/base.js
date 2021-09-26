@@ -19,7 +19,7 @@ export class FormBase extends BaseComponent {
     _getFilledValues(values) {
         let result = {};
         for (const [key, value] of Object.entries(values)) {
-            if (value !== '') {
+            if (value !== '' && value !== '""' && value !== "''") {
                 result[key] = value;
             }
         }
@@ -57,10 +57,12 @@ export class FormBase extends BaseComponent {
                     return result;
                 }}
                 enableReinitialize={true}
-                onSubmit={(values, {setSubmitting}) => {
+                onSubmit={(values,
+                           {setSubmitting, initialValues,
+                               setFieldError, resetForm}) => {
                     values = this._getFilledValues(values);
+                    this._callService(values);
                     setSubmitting(false);
-                    return this._callService(values);
                 }}
             >
                 {(props) => (
