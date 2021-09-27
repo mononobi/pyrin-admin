@@ -2,7 +2,7 @@
   "panel_home_path": "/admin",
   "panel_name": "Admin Panel",
   "admin_api": "http://192.168.2.104:5000/admin/api/",
-  "api_timeout": 1000,
+  "api_timeout": 3000,
   "page_key": "page",
   "page_size_key": "page_size",
   "ordering_key": "order_by",

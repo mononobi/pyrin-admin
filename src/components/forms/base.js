@@ -90,7 +90,7 @@ export class FormBase extends BaseComponent {
                     values = this._getFilledValues(values);
                     if (!this._isAnythingChanged(values)) {
                         this.setState({
-                            info: 'No changes have been made to data.'
+                            info: 'No changes have been made.'
                         })
                         setSubmitting(false);
                         return;
