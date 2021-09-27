@@ -9,6 +9,7 @@ import { NotImplementedError } from '../../core/exceptions';
 import { getListPage } from '../../services/url';
 import { TargetEnum } from '../../core/enumerations';
 import { DELETE_BUTTON_COLOR, DELETE_TEXT_COLOR } from '../controls/globals/constants';
+import { ServerFormFieldTypeEnum } from '../controls/globals/enumerations';
 import './base.css'
 
 
@@ -41,6 +42,10 @@ export class FormBase extends BaseComponent {
         return oldValue !== value;
     }
 
+    _isNull(value) {
+        return value === null || value === undefined;
+    }
+
     _getFilledValues(values) {
         let result = {};
         for (const [name, value] of Object.entries(values)) {
@@ -57,9 +62,14 @@ export class FormBase extends BaseComponent {
     }
 
     _getInitialValues(initialValues) {
-        for (const [key, value] of Object.entries(initialValues)) {
-            if (value === null || value === undefined) {
-                initialValues[key] = '';
+        for (const [name, value] of Object.entries(initialValues)) {
+            let info = this.props.dataFieldsDict[name]
+            if (info && info.form_field_type === ServerFormFieldTypeEnum.BOOLEAN &&
+                info.required && (this._isNull(value) || value === '')) {
+                initialValues[name] = false;
+            }
+            else if (this._isNull(value)) {
+                initialValues[name] = '';
             }
         }
         return initialValues;
