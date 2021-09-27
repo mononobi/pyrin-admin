@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Alert, AlertTitle } from '@material-ui/lab';
+import { Alert } from '@material-ui/lab';
 import { Slide } from '@material-ui/core';
 import { NotImplementedError } from '../../../core/exceptions';
 
@@ -32,20 +32,19 @@ export class BaseComponent extends Component {
         })
     }
 
-    _createAlert(message, severity, title) {
+    _createAlert(message, severity) {
         if (!message) {
             message = 'An error has been occurred.';
         }
+
         if (message.slice(-1) !== '.') {
             message = `${message}.`;
         }
+
         return (
             <>
                 <Slide direction='down' in={true} mountOnEnter unmountOnExit>
-                    <Alert variant='filled' severity={severity}>
-                        <AlertTitle>{title}</AlertTitle>
-                        {message}
-                    </Alert>
+                    <Alert variant='filled' severity={severity}>{message}</Alert>
                 </Slide>
             </>
         )
@@ -53,16 +52,16 @@ export class BaseComponent extends Component {
 
     _getAlert() {
         if (this.state.error) {
-            return this._createAlert(this.state.error.message, 'error', 'Error');
+            return this._createAlert(this.state.error.message, 'error');
         }
         else if (this.state.warning) {
-            return this._createAlert(this.state.warning, 'warning', 'Warning');
+            return this._createAlert(this.state.warning, 'warning');
         }
         else if (this.state.success) {
-            return this._createAlert(this.state.success, 'success', 'Success');
+            return this._createAlert(this.state.success, 'success');
         }
         else if (this.state.info) {
-            return this._createAlert(this.state.info, 'info', 'Info');
+            return this._createAlert(this.state.info, 'info');
         }
         return null;
     }

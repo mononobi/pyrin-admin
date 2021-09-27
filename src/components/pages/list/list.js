@@ -124,19 +124,18 @@ export class ListComponent extends BaseComplexPage {
                 data={query =>
                     new Promise((resolve, reject) => {
                         let response = find(this.state.metadata.register_name, query.page + 1,
-                            query.pageSize, query.orderBy, query.orderDirection, query.search
-                        )
+                            query.pageSize, query.orderBy, query.orderDirection, query.search);
 
                         response.then(([json, ok]) => {
                             if (!ok) {
-                                reject(json.message || 'Can not fetch data.')
+                                reject( json.message || 'Data Fetch Error');
                             }
                             else {
                                 resolve({
                                     data: json.results,
                                     page: query.page,
                                     totalCount: json.count_total
-                                })
+                                });
                             }
                         })
                     })
