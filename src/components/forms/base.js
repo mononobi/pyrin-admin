@@ -87,7 +87,7 @@ export class FormBase extends BaseComponent {
                     return result;
                 }}
                 enableReinitialize={true}
-                onSubmit={(values, {setSubmitting, setFieldError, resetForm}) => {
+                onSubmit={(values, {setSubmitting, setFieldError}) => {
                     this._removeAlerts();
                     values = this._getFilledValues(values);
                     if (!this._isAnythingChanged(values)) {
