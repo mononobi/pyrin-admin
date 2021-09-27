@@ -41,6 +41,7 @@ export class EditComponent extends BaseComplexPage {
                             dataFieldsDict={this.state.metadata.data_fields_dict}
                             pk={this.props.match.params.pk}
                             initialValues={this._prepareData(this.state.data)}
+                            hasSavePermission={this.state.metadata.has_update_permission}
                 />
             </Paper>
         )

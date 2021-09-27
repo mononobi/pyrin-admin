@@ -21,7 +21,7 @@ export class BaseInput extends BaseControl {
     }
 
     _isReadOnly() {
-        return this.props.info.read_only;
+        return this.props.info.read_only || this.props.disabled;
     }
 
     _getFieldTitle() {

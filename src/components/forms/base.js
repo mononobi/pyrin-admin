@@ -130,7 +130,7 @@ export class FormBase extends BaseComponent {
                                                 props.handleChange,
                                                 props.touched[info.field] && Boolean(props.errors[info.field]),
                                                 props.touched[info.field] && props.errors[info.field],
-                                                props.isSubmitting,
+                                                props.isSubmitting || !this.props.hasSavePermission,
                                                 this.FOR_UPDATE)
                                         }
                                     </div>
@@ -142,7 +142,7 @@ export class FormBase extends BaseComponent {
                             variant='contained'
                             color='primary'
                             type='submit'
-                            disabled={props.isSubmitting}
+                            disabled={props.isSubmitting || !this.props.hasSavePermission}
                             size='large'
                         >
                             Save
