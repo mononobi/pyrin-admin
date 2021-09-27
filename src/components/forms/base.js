@@ -98,10 +98,10 @@ export class FormBase extends BaseComponent {
                         return;
                     }
                     let result = this._callService(values);
+                    setSubmitting(false);
                     result.then(([json, ok]) => {
                         if (ok) {
                             window.open(getListPage(this.props.register_name), TargetEnum.SAME_TAB);
-                            return null;
                         }
                         else {
                             if (json.data && Object.keys(json.data).length > 0) {
@@ -116,7 +116,6 @@ export class FormBase extends BaseComponent {
                             }
                         }
                     })
-                    setSubmitting(false);
                 }}
             >
                 {(props) => (

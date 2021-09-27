@@ -22,6 +22,7 @@ export class AddComponent extends BaseComplexPage {
         return (
             <Paper variant='elevation' elevation={3}>
                 <CreateForm register_name={this.state.metadata.register_name}
+                            name={this.state.metadata.name}
                             dataFields={this.state.metadata.data_fields}
                             dataFieldsDict={this.state.metadata.data_fields_dict}
                             hasSavePermission={this.state.metadata.has_create_permission}/>

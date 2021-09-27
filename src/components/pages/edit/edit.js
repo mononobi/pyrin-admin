@@ -37,6 +37,7 @@ export class EditComponent extends BaseComplexPage {
         return (
             <Paper variant='elevation' elevation={3}>
                 <UpdateForm register_name={this.state.metadata.register_name}
+                            name={this.state.metadata.name}
                             dataFields={this.state.metadata.data_fields}
                             dataFieldsDict={this.state.metadata.data_fields_dict}
                             pk={this.props.match.params.pk}
