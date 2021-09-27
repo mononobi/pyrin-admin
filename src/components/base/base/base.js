@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { Alert } from '@material-ui/lab';
 import { Slide } from '@material-ui/core';
+import { Snackbar } from '@mui/material';
 import { NotImplementedError } from '../../../core/exceptions';
 import { JSTypeEnum } from '../../../validators/enumerations';
 import { AlertSeverityEnum } from '../../../core/enumerations';
@@ -49,11 +50,13 @@ export class BaseComponent extends Component {
         }
 
         return (
-            <>
-                <Slide direction='down' in={true} mountOnEnter unmountOnExit>
-                    <Alert variant='filled' severity={severity}>{message}</Alert>
-                </Slide>
-            </>
+                <Snackbar open={true} autoHideDuration={this.ALERT_EXPIRE} key={message}
+                          TransitionComponent={Slide} sx={{width: '60%'}}
+                          TransitionProps={{
+                              direction: 'right', in: true,
+                              mountOnEnter: true, unmountOnExit: true}}>
+                    <Alert variant='filled' severity={severity} sx={{width: '100%'}}>{message}</Alert>
+                </Snackbar>
         )
     }
 
