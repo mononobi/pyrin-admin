@@ -106,9 +106,16 @@ export class FormBase extends BaseComponent {
                         }
                     }).then(error => {
                         if (error) {
-                            this.setState({
-                                error: error
-                            })
+                            if (error.data && Object.keys(error.data).length > 0) {
+                                for (const [name, message] of Object.entries(error.data)) {
+                                    setFieldError(name, message);
+                                }
+                            }
+                            else {
+                                this.setState({
+                                    error: error
+                                })
+                            }
                         }})
                     setSubmitting(false);
                 }}
