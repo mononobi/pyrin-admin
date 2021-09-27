@@ -10,6 +10,7 @@ import { getListPage } from '../../services/url';
 import { TargetEnum } from '../../core/enumerations';
 import { DELETE_BUTTON_COLOR, DELETE_TEXT_COLOR } from '../controls/globals/constants';
 import { ServerFormFieldTypeEnum } from '../controls/globals/enumerations';
+import { delete_ } from '../../services/data';
 import './base.css'
 
 
@@ -122,10 +123,10 @@ export class FormBase extends BaseComponent {
                             else {
                                 this.setState({
                                     error: json
-                                })
+                                });
                             }
                         }
-                    })
+                    });
                 }}
             >
                 {(props) => (
@@ -156,6 +157,21 @@ export class FormBase extends BaseComponent {
                                         style={{backgroundColor: DELETE_BUTTON_COLOR, color: DELETE_TEXT_COLOR}}
                                         variant='contained'
                                         type='button'
+                                        onClick={() => {
+                                            let result = delete_(this.props.register_name, this.props.pk);
+                                            result.then(([json, ok]) => {
+                                                this._removeAlerts();
+                                                if (ok) {
+                                                    window.open(getListPage(this.props.register_name),
+                                                        TargetEnum.SAME_TAB);
+                                                }
+                                                else {
+                                                    this.setState({
+                                                        error: json
+                                                    });
+                                                }
+                                            });
+                                        }}
                                         disabled={props.isSubmitting || !this.props.hasDeletePermission}
                                         size='large'>
                                         Delete

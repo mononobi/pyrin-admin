@@ -48,3 +48,28 @@ export function get(registerName, pk) {
     let url = `${registerName}/${pk}/`;
     return request.get(url);
 }
+
+export function delete_(registerName, pk) {
+    let url = `${registerName}/${pk}/`;
+    return request.delete_(url);
+}
+
+export function deleteAll(registerName) {
+    let url = `${registerName}/`;
+    return request.delete_(url);
+}
+
+export function deleteBulk(registerName, primaryKeys) {
+    let url = `${registerName}/bulk/?`;
+    let pk = '';
+    for (let i = 0; i < primaryKeys.length; i++) {
+        if (i === 0) {
+            pk = `${pk}pk=${primaryKeys[i]}`;
+        }
+        else {
+            pk = `${pk}&pk=${primaryKeys[i]}`;
+        }
+    }
+    url = `${url}${pk}`;
+    return request.delete_(url);
+}

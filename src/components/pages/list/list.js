@@ -4,7 +4,7 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import MaterialTable from 'material-table';
 import Link from '@material-ui/core/Link';
 import { getFindMetadata } from '../../../services/metadata';
-import { find } from '../../../services/data';
+import { deleteAll, deleteBulk, find } from '../../../services/data';
 import { getCreatePage, getUpdatePage } from '../../../services/url';
 import { BaseComplexPage } from '../base/base';
 import { TargetEnum } from '../../../core/enumerations';
@@ -94,10 +94,13 @@ export class ListComponent extends BaseComplexPage {
     }
 
     _finalRender() {
-        const tableRef = React.createRef();
+        if (!this.state.tableRef) {
+            this.state.tableRef = React.createRef();
+        }
+
         return (
             <MaterialTable
-                tableRef={tableRef}
+                tableRef={this.state.tableRef}
                 options={
                     {
                         debounceInterval: this.state.metadata.search_debounce_interval,
@@ -146,8 +149,10 @@ export class ListComponent extends BaseComplexPage {
                         tooltip: 'Refresh Data',
                         isFreeAction: true,
                         onClick: event => {
-                            if (tableRef.current && tableRef.current.state) {
-                                tableRef.current.onQueryChange(tableRef.current.state.query);
+                            this._removeAlerts();
+                            if (this.state.tableRef && this.state.tableRef.current &&
+                                this.state.tableRef.current.state) {
+                                this.state.tableRef.current.onQueryChange(this.state.tableRef.current.state.query);
                             }
                         }
                     },
@@ -169,7 +174,27 @@ export class ListComponent extends BaseComplexPage {
                         hidden: !this.state.metadata.has_remove_all_permission,
                         isFreeAction: true,
                         onClick: event => {
-                            alert(`Deleting All Users`);
+                            this._removeAlerts();
+                            let result = deleteAll(this.state.metadata.register_name);
+                            result.then(([json, ok]) => {
+                                if (ok) {
+                                    if (this.state.tableRef && this.state.tableRef.current &&
+                                        this.state.tableRef.current.state) {
+                                        this.state.tableRef.current.onQueryChange(
+                                            this.state.tableRef.current.state.query);
+                                    }
+
+                                    this.setState({
+                                        success:
+                                            `All ${this._getPluralName()} have been deleted successfully.`
+                                    });
+                                }
+                                else {
+                                    this.setState({
+                                        error: json
+                                    });
+                                }
+                            });
                         }
                     },
                     {
@@ -178,7 +203,36 @@ export class ListComponent extends BaseComplexPage {
                         position: 'toolbarOnSelect',
                         hidden: !this.state.metadata.has_remove_permission,
                         onClick: (event, rowData) => {
-                            alert(`Deleting User ${rowData[0][this.state.metadata.pk_name]}`);
+                            this._removeAlerts();
+                            let pk = [];
+                            for (let i=0; i < rowData.length; i++) {
+                                pk.push(rowData[i][this.state.metadata.pk_name]);
+                            }
+                            let result = deleteBulk(this.state.metadata.register_name, pk);
+                            result.then(([json, ok]) => {
+                                if (ok) {
+                                    if (this.state.tableRef && this.state.tableRef.current &&
+                                        this.state.tableRef.current.state) {
+                                        this.state.tableRef.current.onQueryChange(
+                                            this.state.tableRef.current.state.query);
+                                    }
+
+                                    let count = pk.length;
+                                    let name = `${count} ${this._getPluralName()} have`;
+                                    if (count <= 1) {
+                                        name = `${count} ${this.state.metadata.name} has`;
+                                    }
+                                    this.setState({
+                                        success:
+                                            `${name} been deleted successfully.`
+                                    });
+                                }
+                                else {
+                                    this.setState({
+                                        error: json
+                                    });
+                                }
+                            });
                         }
                     },
                     {

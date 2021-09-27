@@ -29,3 +29,7 @@ export function patch(url, data) {
 export function get(url) {
     return fetchResponse(axios.get(url));
 }
+
+export function delete_(url) {
+    return fetchResponse(axios.delete(url));
+}
