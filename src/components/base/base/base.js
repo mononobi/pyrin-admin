@@ -16,8 +16,6 @@ export class BaseComponent extends Component {
         throw new NotImplementedError();
     }
 
-    _prepareRendering() {}
-
     _componentDidMount() {}
 
     componentDidMount() {
@@ -50,7 +48,6 @@ export class BaseComponent extends Component {
     }
 
     render() {
-        this._prepareRendering();
         return (
             <>
                 {

@@ -93,7 +93,7 @@ export class ListComponent extends BaseComplexPage {
         }
     }
 
-    _render() {
+    _finalRender() {
         const tableRef = React.createRef();
         return (
             <MaterialTable
@@ -127,12 +127,17 @@ export class ListComponent extends BaseComplexPage {
                             query.pageSize, query.orderBy, query.orderDirection, query.search
                         )
 
-                        response.then(json => {
-                            resolve({
-                                data: json.results,
-                                page: query.page,
-                                totalCount: json.count_total
-                            })
+                        response.then(([json, ok]) => {
+                            if (!ok) {
+                                reject(json.message || 'Can not fetch data.')
+                            }
+                            else {
+                                resolve({
+                                    data: json.results,
+                                    page: query.page,
+                                    totalCount: json.count_total
+                                })
+                            }
                         })
                     })
                 }

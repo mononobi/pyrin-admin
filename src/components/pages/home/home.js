@@ -84,7 +84,7 @@ export class HomeComponent extends BaseComplexPage {
         return json.results;
     }
 
-    _render() {
+    _finalRender() {
         if (this.state.metadata.length <= 0) {
             return <h3>No admin pages are registered on the server!</h3>
         }

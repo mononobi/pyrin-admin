@@ -33,7 +33,7 @@ export class EditComponent extends BaseComplexPage {
         return result;
     }
 
-    _render() {
+    _finalRender() {
         return (
             <Paper variant='elevation' elevation={3}>
                 <UpdateForm register_name={this.state.metadata.register_name}

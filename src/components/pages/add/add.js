@@ -18,7 +18,7 @@ export class AddComponent extends BaseComplexPage {
         return getCreateMetadata(this.props.match.params.register_name);
     }
 
-    _render() {
+    _finalRender() {
         return (
             <Paper variant='elevation' elevation={3}>
                 <CreateForm register_name={this.state.metadata.register_name}

@@ -1,22 +1,19 @@
-import { CONFIGS } from '../core/configs';
+import axios from 'axios';
+import { fetchResponse } from './request';
 
 
 export function getMainMetadata() {
-    return fetch(`${CONFIGS.admin_api}metadata/`)
-        .then(response => response.json());
+    return fetchResponse(axios.get('metadata/'));
 }
 
 export function getCreateMetadata(registerName) {
-    return fetch(`${CONFIGS.admin_api}metadata/${registerName}/create/`)
-        .then(response => response.json());
+    return fetchResponse(axios.get(`metadata/${registerName}/create/`));
 }
 
 export function getUpdateMetadata(registerName) {
-    return fetch(`${CONFIGS.admin_api}metadata/${registerName}/update/`)
-        .then(response => response.json());
+    return fetchResponse(axios.get(`metadata/${registerName}/update/`));
 }
 
 export function getFindMetadata(registerName) {
-    return fetch(`${CONFIGS.admin_api}metadata/${registerName}/find/`)
-        .then(response => response.json());
+    return fetchResponse(axios.get(`metadata/${registerName}/find/`));
 }

@@ -96,27 +96,24 @@ export class FormBase extends BaseComponent {
                         return;
                     }
                     let result = this._callService(values);
-                    result.then(response => {
-                        if (response.ok) {
+                    result.then(([json, ok]) => {
+                        if (ok) {
                             window.open(getListPage(this.props.register_name), TargetEnum.SAME_TAB);
                             return null;
                         }
                         else {
-                            return response.json();
-                        }
-                    }).then(error => {
-                        if (error) {
-                            if (error.data && Object.keys(error.data).length > 0) {
-                                for (const [name, message] of Object.entries(error.data)) {
+                            if (json.data && Object.keys(json.data).length > 0) {
+                                for (const [name, message] of Object.entries(json.data)) {
                                     setFieldError(name, message);
                                 }
                             }
                             else {
                                 this.setState({
-                                    error: error
+                                    error: json
                                 })
                             }
-                        }})
+                        }
+                    })
                     setSubmitting(false);
                 }}
             >

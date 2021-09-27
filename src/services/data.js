@@ -1,10 +1,12 @@
+import axios from 'axios';
 import { CONFIGS } from '../core/configs';
+import { fetchResponse, getRequestHeaders } from './request';
 
 
 export function find(registerName, page=null,
                      pageSize=null, orderBy=null,
                      orderDirection='asc', search=null) {
-    let url = `${CONFIGS.admin_api}${registerName}/?${CONFIGS.page_key}=${page}&${CONFIGS.page_size_key}=${pageSize}`;
+    let url = `${registerName}/?${CONFIGS.page_key}=${page}&${CONFIGS.page_size_key}=${pageSize}`;
     if (orderBy) {
         let name = orderBy.field;
         if (name) {
@@ -20,39 +22,30 @@ export function find(registerName, page=null,
         url = `${url}&${CONFIGS.query_param}=${search}`
     }
 
-    return fetch(url).then(response => response.json());
+    return fetchResponse(axios.get(url));
 }
-
 
 export function create(registerName, inputs) {
-    let url = `${CONFIGS.admin_api}${registerName}/`;
+    let url = `${registerName}/`;
     const data = new FormData();
     for (const [key, value] of Object.entries(inputs)) {
         data.append(key, value);
     }
 
-    return fetch(url, {
-        method: 'POST',
-        body: data
-    });
+    return fetchResponse(axios.post(url, data, { headers: getRequestHeaders()}));
 }
-
 
 export function update(registerName, pk, inputs) {
-    let url = `${CONFIGS.admin_api}${registerName}/${pk}/`;
+    let url = `${registerName}/${pk}/`;
     const data = new FormData();
     for (const [key, value] of Object.entries(inputs)) {
         data.append(key, value);
     }
 
-    return fetch(url, {
-        method: 'PATCH',
-        body: data
-    });
+    return fetchResponse(axios.patch(url, data, { headers: getRequestHeaders()}));
 }
 
-
 export function get(registerName, pk) {
-    let url = `${CONFIGS.admin_api}${registerName}/${pk}/`;
-    return fetch(url).then(response => response.json());
+    let url = `${registerName}/${pk}/`;
+    return fetchResponse(axios.get(url));
 }
