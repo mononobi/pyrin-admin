@@ -1,11 +1,11 @@
 import React from 'react';
 import { FormControlLabel } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
-import { BaseControl } from '../base/base';
+import { BaseInput } from '../base/base';
 import '../globals/styles/inputs.css';
 
 
-export class CheckBox extends BaseControl {
+export class CheckBox extends BaseInput {
 
     _renderControl() {
         return (

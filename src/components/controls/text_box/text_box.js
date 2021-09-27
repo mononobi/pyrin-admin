@@ -1,6 +1,6 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
-import { BaseControl } from '../base/base';
+import { BaseInput } from '../base/base';
 import { AutoCompleteEnum, ClientFormFieldTypeEnum } from '../globals/enumerations';
 import { HELPER_TEXT_STYLE } from '../globals/styles/inputs';
 import {
@@ -9,7 +9,7 @@ import {
 import '../globals/styles/inputs.css';
 
 
-export class TextBox extends BaseControl {
+export class TextBox extends BaseInput {
 
     TYPE = ClientFormFieldTypeEnum.TEXT;
     MULTILINE = false;

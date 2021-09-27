@@ -1,13 +1,13 @@
 import React from 'react';
 import Select from '@material-ui/core/Select';
 import { FormControl, InputLabel, MenuItem } from '@material-ui/core';
-import { BaseControl } from '../base/base';
+import { BaseInput } from '../base/base';
 import { INPUT_MARGIN, INPUT_SIZE, INPUT_VARIANT } from '../globals/constants';
 import '../globals/styles/inputs.css';
 import '../dropdown/dropdown.css'
 
 
-export class DropDown extends BaseControl {
+export class DropDown extends BaseInput {
 
     CONTAINER_CLASS_NAME = 'dropdown-container';
 

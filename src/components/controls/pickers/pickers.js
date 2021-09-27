@@ -4,7 +4,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import {
     MuiPickersUtilsProvider, KeyboardDatePicker, KeyboardDateTimePicker, KeyboardTimePicker
 } from '@material-ui/pickers';
-import { BaseControl } from '../base/base';
+import { BaseInput } from '../base/base';
 import { AutoCompleteEnum } from '../globals/enumerations';
 import { INPUT_MARGIN, INPUT_VARIANT } from '../globals/constants';
 import { HELPER_TEXT_STYLE } from '../globals/styles/inputs';
@@ -17,7 +17,7 @@ import {
 import '../globals/styles/inputs.css';
 
 
-export class DatePicker extends BaseControl {
+export class DatePicker extends BaseInput {
 
     _renderControl() {
         return (
@@ -53,7 +53,7 @@ export class DatePicker extends BaseControl {
     }
 }
 
-export class TimePicker extends BaseControl {
+export class TimePicker extends BaseInput {
 
     _renderControl() {
         return (
@@ -90,7 +90,7 @@ export class TimePicker extends BaseControl {
     }
 }
 
-export class DateTimePicker extends BaseControl {
+export class DateTimePicker extends BaseInput {
 
     _renderControl() {
         return (

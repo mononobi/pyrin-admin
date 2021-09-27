@@ -1,10 +1,10 @@
 import React from 'react';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { BaseComponent } from '../../base/base/base';
+import { BaseControl } from '../base/base';
 import './progress.css'
 
 
-export class ProgressBar extends BaseComponent {
+export class ProgressBar extends BaseControl {
 
     _render() {
         return (

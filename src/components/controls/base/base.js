@@ -5,7 +5,9 @@ import { NotImplementedError } from '../../../core/exceptions';
 import { ErrorMessage } from 'formik';
 
 
-export class BaseControl extends BaseComponent {
+export class BaseControl extends BaseComponent {}
+
+export class BaseInput extends BaseControl {
 
     FIXED_LENGTH = null;
     CONTAINER_CLASS_NAME = 'input-container';
