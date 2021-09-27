@@ -101,8 +101,8 @@ export class FormBase extends BaseComponent {
                 onSubmit={(values, {setSubmitting, setFieldError}) => {
                     values = this._getFilledValues(values);
                     if (!this._isAnythingChanged(values)) {
-                        this._setInfo('No changes have been made.')
                         setSubmitting(false);
+                        this._setInfo('No changes have been made.')
                         return;
                     }
                     let result = this._callService(values);
