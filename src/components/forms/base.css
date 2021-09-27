@@ -1,5 +1,11 @@
-.save-button {
+.button-container {
+    padding: 10px;
+    background-color: rgba(228,233,245,0.46);
+    display: flex;
+    justify-content: flex-end
+}
+
+.button {
     height: 34px;
     width: 100px;
-    margin: 70px;
 }

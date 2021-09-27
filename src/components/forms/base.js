@@ -1,12 +1,14 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
 import { Button } from '@material-ui/core';
+import { Stack } from '@mui/material';
 import { createControl } from '../controls/provider';
 import { BaseComponent } from '../base/base/base';
 import { getValidator } from '../../validators/provider';
 import { NotImplementedError } from '../../core/exceptions';
 import { getListPage } from '../../services/url';
 import { TargetEnum } from '../../core/enumerations';
+import { DELETE_BUTTON_COLOR, DELETE_TEXT_COLOR } from '../controls/globals/constants';
 import './base.css'
 
 
@@ -137,16 +139,30 @@ export class FormBase extends BaseComponent {
                                 )
                             })
                         }
-                        <Button
-                            className='save-button'
-                            variant='contained'
-                            color='primary'
-                            type='submit'
-                            disabled={props.isSubmitting || !this.props.hasSavePermission}
-                            size='large'
-                        >
-                            Save
-                        </Button>
+                        <Stack direction='row' spacing={2} className='button-container'>
+                            {
+                                this.FOR_UPDATE && this.props.hasDeletePermission && (
+                                    <Button
+                                        className='button'
+                                        style={{backgroundColor: DELETE_BUTTON_COLOR, color: DELETE_TEXT_COLOR}}
+                                        variant='contained'
+                                        type='button'
+                                        disabled={props.isSubmitting || !this.props.hasDeletePermission}
+                                        size='large'>
+                                        Delete
+                                    </Button>
+                                )
+                            }
+                            <Button
+                                className='button'
+                                variant='contained'
+                                color='primary'
+                                type='submit'
+                                disabled={props.isSubmitting || !this.props.hasSavePermission}
+                                size='large'>
+                                Save
+                            </Button>
+                        </Stack>
                     </Form>
                 )}
             </Formik>

@@ -42,7 +42,7 @@ export class EditComponent extends BaseComplexPage {
                             pk={this.props.match.params.pk}
                             initialValues={this._prepareData(this.state.data)}
                             hasSavePermission={this.state.metadata.has_update_permission}
-                />
+                            hasDeletePermission={this.state.metadata.has_remove_permission}/>
             </Paper>
         )
     }
