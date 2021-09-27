@@ -5,8 +5,8 @@ import { ValidatorBase } from './base';
 export class StringValidator extends ValidatorBase {
 
     TYPE = JSTypeEnum.STRING;
-    SINGLE_QUOTE_REGEX = RegExp('^[\'].*[\']$');
-    DOUBLE_QUOTE_REGEX = RegExp('^[\"].*[\"]$');
+    SINGLE_QUOTE_REGEX = RegExp("^['].*[']$");
+    DOUBLE_QUOTE_REGEX = RegExp('^["].*["]$');
 
     constructor(info, forUpdate) {
         super(info, forUpdate);

@@ -5,6 +5,8 @@ import { createControl } from '../controls/provider';
 import { BaseComponent } from '../base/base/base';
 import { getValidator } from '../../validators/provider';
 import { NotImplementedError } from '../../core/exceptions';
+import { getListPage } from '../../services/url';
+import { TargetEnum } from '../../core/enumerations';
 import './base.css'
 
 
@@ -13,7 +15,7 @@ export class FormBase extends BaseComponent {
     FOR_UPDATE = false;
 
     state = {
-        initialValues: {}
+        initialValues: this._getInitialValues(this.props.initialValues)
     }
 
     _callService(values) {
@@ -48,6 +50,10 @@ export class FormBase extends BaseComponent {
         return result;
     }
 
+    _isAnythingChanged(values) {
+        return Object.keys(values).length > 0;
+    }
+
     _getInitialValues(initialValues) {
         for (const [key, value] of Object.entries(initialValues)) {
             if (value === null || value === undefined) {
@@ -55,12 +61,6 @@ export class FormBase extends BaseComponent {
             }
         }
         return initialValues;
-    }
-
-    _componentDidMount() {
-        this.setState({
-            initialValues: this._getInitialValues(this.props.initialValues)
-        })
     }
 
     _render() {
@@ -87,7 +87,28 @@ export class FormBase extends BaseComponent {
                 enableReinitialize={true}
                 onSubmit={(values, {setSubmitting, setFieldError, resetForm}) => {
                     values = this._getFilledValues(values);
-                    this._callService(values);
+                    if (!this._isAnythingChanged(values)) {
+                        this.setState({
+                            info: 'No changes have been made to data.'
+                        })
+                        setSubmitting(false);
+                        return;
+                    }
+                    let result = this._callService(values);
+                    result.then(response => {
+                        if (response.ok) {
+                            window.open(getListPage(this.props.register_name), TargetEnum.SAME_TAB);
+                            return null;
+                        }
+                        else {
+                            return response.json();
+                        }
+                    }).then(error => {
+                        if (error) {
+                            this.setState({
+                                error: error
+                            })
+                        }})
                     setSubmitting(false);
                 }}
             >

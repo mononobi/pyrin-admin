@@ -155,7 +155,7 @@ export class ListComponent extends BaseComplexPage {
                         isFreeAction: true,
                         onClick: event => {
                             let url = getCreatePage(this.state.metadata.register_name);
-                            window.open(url);
+                            window.open(url, TargetEnum.SAME_TAB);
                         }
                     },
                     {
