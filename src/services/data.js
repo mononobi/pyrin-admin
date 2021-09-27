@@ -1,6 +1,5 @@
-import axios from 'axios';
 import { CONFIGS } from '../core/configs';
-import { fetchResponse, getRequestHeaders } from './request';
+import * as request from './request';
 
 
 export function find(registerName, page=null,
@@ -22,7 +21,7 @@ export function find(registerName, page=null,
         url = `${url}&${CONFIGS.query_param}=${search}`
     }
 
-    return fetchResponse(axios.get(url));
+    return request.get(url);
 }
 
 export function create(registerName, inputs) {
@@ -32,7 +31,7 @@ export function create(registerName, inputs) {
         data.append(key, value);
     }
 
-    return fetchResponse(axios.post(url, data, { headers: getRequestHeaders()}));
+    return request.post(url, data);
 }
 
 export function update(registerName, pk, inputs) {
@@ -42,10 +41,10 @@ export function update(registerName, pk, inputs) {
         data.append(key, value);
     }
 
-    return fetchResponse(axios.patch(url, data, { headers: getRequestHeaders()}));
+    return request.patch(url, data);
 }
 
 export function get(registerName, pk) {
     let url = `${registerName}/${pk}/`;
-    return fetchResponse(axios.get(url));
+    return request.get(url);
 }
