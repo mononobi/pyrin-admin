@@ -88,7 +88,7 @@ export class BaseInput extends BaseControl {
 
         this.setState({
             length: length
-        })
+        });
     }
 
     _renderControl() {

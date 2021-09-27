@@ -2,15 +2,14 @@ import { Component } from 'react';
 import { Alert } from '@material-ui/lab';
 import { Slide } from '@material-ui/core';
 import { NotImplementedError } from '../../../core/exceptions';
+import { JSTypeEnum } from '../../../validators/enumerations';
+import { AlertSeverityEnum } from '../../../core/enumerations';
 
 
 export class BaseComponent extends Component {
 
     state = {
-        error: null,
-        warning: null,
-        info: null,
-        success: null
+        alert: null
     }
 
     _render() {
@@ -23,13 +22,18 @@ export class BaseComponent extends Component {
         this._componentDidMount();
     }
 
-    _removeAlerts() {
-        this.setState({
-            error: null,
-            warning: null,
-            info: null,
-            success: null
-        })
+    _getAlertInfo(alert, severity) {
+        let message = alert;
+        let data = null;
+        if (typeof alert === JSTypeEnum.OBJECT) {
+            message = alert.message;
+            data = alert.data;
+        }
+        return {
+            severity: severity,
+            message: message,
+            data: data
+        };
     }
 
     _createAlert(message, severity) {
@@ -51,22 +55,41 @@ export class BaseComponent extends Component {
     }
 
     _hasError() {
-        return !!this.state.error;
+        if (this.state.alert)
+        {
+            return this.state.alert.severity === AlertSeverityEnum.ERROR;
+        }
+
+        return false;
+    }
+
+    _setAlert(alert, severity) {
+        this.setState({
+            alert: this._getAlertInfo(alert, severity)
+        });
+    }
+
+    _setError(alert) {
+        this._setAlert(alert, AlertSeverityEnum.ERROR);
+    }
+
+    _setWarning(alert) {
+        this._setAlert(alert, AlertSeverityEnum.WARNING);
+    }
+
+    _setInfo(alert) {
+        this._setAlert(alert, AlertSeverityEnum.INFO);
+    }
+
+    _setSuccess(alert) {
+        this._setAlert(alert, AlertSeverityEnum.SUCCESS);
     }
 
     _getAlert() {
-        if (this.state.error) {
-            return this._createAlert(this.state.error.message, 'error');
+        if (this.state.alert) {
+            return this._createAlert(this.state.alert.message, this.state.alert.severity);
         }
-        else if (this.state.warning) {
-            return this._createAlert(this.state.warning, 'warning');
-        }
-        else if (this.state.success) {
-            return this._createAlert(this.state.success, 'success');
-        }
-        else if (this.state.info) {
-            return this._createAlert(this.state.info, 'info');
-        }
+
         return null;
     }
 

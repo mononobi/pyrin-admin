@@ -45,30 +45,30 @@ export class ComplexComponent extends BaseComponent {
         metadata.then(([json, ok]) => {
             if (!ok) {
                 this.setState({
-                    error: json,
                     isMetadataLoaded: false
-                })
+                });
+                this._setError(json);
             }
             else {
                 this.setState({
                     metadata: this._getMetadata(json),
                     isMetadataLoaded: true
-                })
+                });
 
                 if (this.REQUIRES_DATA && this._hasPermission()) {
                     let data = this._fetchData();
                     data.then(([json, ok]) => {
                         if (!ok) {
                             this.setState({
-                                error: json,
                                 isDataLoaded: false
-                            })
+                            });
+                            this._setError(json);
                         }
                         else {
                             this.setState({
                                 data: this._getData(json),
                                 isDataLoaded: true
-                            })
+                            });
                         }
                     })
                 }

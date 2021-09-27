@@ -99,12 +99,9 @@ export class FormBase extends BaseComponent {
                 }}
                 enableReinitialize={true}
                 onSubmit={(values, {setSubmitting, setFieldError}) => {
-                    this._removeAlerts();
                     values = this._getFilledValues(values);
                     if (!this._isAnythingChanged(values)) {
-                        this.setState({
-                            info: 'No changes have been made.'
-                        })
+                        this._setInfo('No changes have been made.')
                         setSubmitting(false);
                         return;
                     }
@@ -121,9 +118,7 @@ export class FormBase extends BaseComponent {
                                 }
                             }
                             else {
-                                this.setState({
-                                    error: json
-                                });
+                                this._setError(json);
                             }
                         }
                     });
@@ -160,15 +155,12 @@ export class FormBase extends BaseComponent {
                                         onClick={() => {
                                             let result = delete_(this.props.register_name, this.props.pk);
                                             result.then(([json, ok]) => {
-                                                this._removeAlerts();
                                                 if (ok) {
                                                     window.open(getListPage(this.props.register_name),
                                                         TargetEnum.SAME_TAB);
                                                 }
                                                 else {
-                                                    this.setState({
-                                                        error: json
-                                                    });
+                                                    this._setError(json);
                                                 }
                                             });
                                         }}

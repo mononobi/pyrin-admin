@@ -22,7 +22,6 @@ export class CheckBox extends BaseInput {
                         value={this.props.value || false}
                         checked={this.props.value || false}
                         onChange={this.props.onChange}
-                        error={this.props.error}
                     />
                 }
             />

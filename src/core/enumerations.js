@@ -4,3 +4,12 @@ export const TargetEnum = {
 };
 
 Object.freeze(TargetEnum);
+
+export const AlertSeverityEnum = {
+    ERROR: 'error',
+    WARNING: 'warning',
+    INFO: 'info',
+    SUCCESS: 'success'
+};
+
+Object.freeze(AlertSeverityEnum);

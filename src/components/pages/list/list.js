@@ -94,13 +94,10 @@ export class ListComponent extends BaseComplexPage {
     }
 
     _finalRender() {
-        if (!this.state.tableRef) {
-            this.state.tableRef = React.createRef();
-        }
-
+        const tableRef = React.createRef();
         return (
             <MaterialTable
-                tableRef={this.state.tableRef}
+                tableRef={tableRef}
                 options={
                     {
                         debounceInterval: this.state.metadata.search_debounce_interval,
@@ -149,10 +146,9 @@ export class ListComponent extends BaseComplexPage {
                         tooltip: 'Refresh Data',
                         isFreeAction: true,
                         onClick: event => {
-                            this._removeAlerts();
-                            if (this.state.tableRef && this.state.tableRef.current &&
-                                this.state.tableRef.current.state) {
-                                this.state.tableRef.current.onQueryChange(this.state.tableRef.current.state.query);
+                            if (tableRef && tableRef.current &&
+                                tableRef.current.state) {
+                                tableRef.current.onQueryChange(tableRef.current.state.query);
                             }
                         }
                     },
@@ -174,25 +170,20 @@ export class ListComponent extends BaseComplexPage {
                         hidden: !this.state.metadata.has_remove_all_permission,
                         isFreeAction: true,
                         onClick: event => {
-                            this._removeAlerts();
                             let result = deleteAll(this.state.metadata.register_name);
                             result.then(([json, ok]) => {
                                 if (ok) {
-                                    if (this.state.tableRef && this.state.tableRef.current &&
-                                        this.state.tableRef.current.state) {
-                                        this.state.tableRef.current.onQueryChange(
-                                            this.state.tableRef.current.state.query);
+                                    if (tableRef && tableRef.current &&
+                                        tableRef.current.state) {
+                                        tableRef.current.onQueryChange(
+                                            tableRef.current.state.query);
                                     }
 
-                                    this.setState({
-                                        success:
-                                            `All ${this._getPluralName()} have been deleted successfully.`
-                                    });
+                                    this._setSuccess(
+                                        `All ${this._getPluralName()} have been deleted successfully.`);
                                 }
                                 else {
-                                    this.setState({
-                                        error: json
-                                    });
+                                    this._setError(json);
                                 }
                             });
                         }
@@ -203,7 +194,6 @@ export class ListComponent extends BaseComplexPage {
                         position: 'toolbarOnSelect',
                         hidden: !this.state.metadata.has_remove_permission,
                         onClick: (event, rowData) => {
-                            this._removeAlerts();
                             let pk = [];
                             for (let i=0; i < rowData.length; i++) {
                                 pk.push(rowData[i][this.state.metadata.pk_name]);
@@ -211,10 +201,10 @@ export class ListComponent extends BaseComplexPage {
                             let result = deleteBulk(this.state.metadata.register_name, pk);
                             result.then(([json, ok]) => {
                                 if (ok) {
-                                    if (this.state.tableRef && this.state.tableRef.current &&
-                                        this.state.tableRef.current.state) {
-                                        this.state.tableRef.current.onQueryChange(
-                                            this.state.tableRef.current.state.query);
+                                    if (tableRef && tableRef.current &&
+                                        tableRef.current.state) {
+                                        tableRef.current.onQueryChange(
+                                            tableRef.current.state.query);
                                     }
 
                                     let count = pk.length;
@@ -222,15 +212,10 @@ export class ListComponent extends BaseComplexPage {
                                     if (count <= 1) {
                                         name = `${count} ${this.state.metadata.name} has`;
                                     }
-                                    this.setState({
-                                        success:
-                                            `${name} been deleted successfully.`
-                                    });
+                                    this._setSuccess(`${name} been deleted successfully.`);
                                 }
                                 else {
-                                    this.setState({
-                                        error: json
-                                    });
+                                    this._setError(json);
                                 }
                             });
                         }
