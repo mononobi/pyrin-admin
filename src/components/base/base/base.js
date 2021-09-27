@@ -57,8 +57,15 @@ export class BaseComponent extends Component {
         )
     }
 
+    _isAlertExpired() {
+        if (this.state.alert) {
+            return Date.now() - this.state.alert.created > this.ALERT_EXPIRE;
+        }
+        return true;
+    }
+
     _hasError() {
-        if (this.state.alert)
+        if (!this._isAlertExpired())
         {
             return this.state.alert.severity === AlertSeverityEnum.ERROR;
         }
@@ -89,7 +96,7 @@ export class BaseComponent extends Component {
     }
 
     _getAlert() {
-        if (this.state.alert && Date.now() - this.state.alert.created < this.ALERT_EXPIRE) {
+        if (!this._isAlertExpired()) {
             return this._createAlert(this.state.alert.message, this.state.alert.severity);
         }
 
