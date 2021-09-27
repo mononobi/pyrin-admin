@@ -8,6 +8,8 @@ import { AlertSeverityEnum } from '../../../core/enumerations';
 
 export class BaseComponent extends Component {
 
+    ALERT_EXPIRE = 5000;
+
     state = {
         alert: null
     }
@@ -32,7 +34,8 @@ export class BaseComponent extends Component {
         return {
             severity: severity,
             message: message,
-            data: data
+            data: data,
+            created: Date.now()
         };
     }
 
@@ -86,7 +89,7 @@ export class BaseComponent extends Component {
     }
 
     _getAlert() {
-        if (this.state.alert) {
+        if (this.state.alert && Date.now() - this.state.alert.created < this.ALERT_EXPIRE) {
             return this._createAlert(this.state.alert.message, this.state.alert.severity);
         }
 
