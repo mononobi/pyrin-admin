@@ -8,8 +8,8 @@ export class BaseComponent extends Component {
     state = {
         error: null,
         warning: null,
-        success: null,
-        info: null
+        info: null,
+        success: null
     }
 
     _render() {
@@ -22,6 +22,15 @@ export class BaseComponent extends Component {
 
     componentDidMount() {
         this._componentDidMount();
+    }
+
+    _removeAlerts() {
+        this.setState({
+            error: null,
+            warning: null,
+            info: null,
+            success: null
+        })
     }
 
     _getAlert() {
