@@ -40,12 +40,14 @@ export class BaseComponent extends Component {
             message = `${message}.`;
         }
         return (
-            <Slide direction='down' in={true} mountOnEnter unmountOnExit>
-                <Alert variant='filled' severity={severity}>
-                    <AlertTitle>{title}</AlertTitle>
-                    {message}
-                </Alert>
-            </Slide>
+            <>
+                <Slide direction='down' in={true} mountOnEnter unmountOnExit>
+                    <Alert variant='filled' severity={severity}>
+                        <AlertTitle>{title}</AlertTitle>
+                        {message}
+                    </Alert>
+                </Slide>
+            </>
         )
     }
 
