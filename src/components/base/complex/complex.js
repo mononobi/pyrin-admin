@@ -1,8 +1,7 @@
 import React from 'react';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import { NotImplementedError } from '../../../core/exceptions';
 import { BaseComponent } from '../base/base';
-import './complex.css'
+import { ProgressBar } from '../../controls/progress/progress';
 
 
 export class ComplexComponent extends BaseComponent {
@@ -55,26 +54,26 @@ export class ComplexComponent extends BaseComponent {
                     metadata: this._getMetadata(json),
                     isMetadataLoaded: true
                 })
+
+                if (this.REQUIRES_DATA && this._hasPermission()) {
+                    let data = this._fetchData();
+                    data.then(([json, ok]) => {
+                        if (!ok) {
+                            this.setState({
+                                error: json,
+                                isDataLoaded: false
+                            })
+                        }
+                        else {
+                            this.setState({
+                                data: this._getData(json),
+                                isDataLoaded: true
+                            })
+                        }
+                    })
+                }
             }
         })
-
-        if (this.REQUIRES_DATA) {
-            let data = this._fetchData();
-            data.then(([json, ok]) => {
-                if (!ok) {
-                    this.setState({
-                        error: json,
-                        isDataLoaded: false
-                    })
-                }
-                else {
-                    this.setState({
-                        data: this._getData(json),
-                        isDataLoaded: true
-                    })
-                }
-            })
-        }
 
         super._componentDidMount();
     }
@@ -86,22 +85,30 @@ export class ComplexComponent extends BaseComponent {
     }
 
     _render() {
-        if (this.state.isMetadataLoaded && (!this.REQUIRES_DATA || this.state.isDataLoaded))
-        {
+        if (this.state.isMetadataLoaded) {
             if (this._hasPermission()) {
-                this._prepareRendering();
-                return this._finalRender();
+                if (!this.REQUIRES_DATA || this.state.isDataLoaded) {
+                    this._prepareRendering();
+                    return this._finalRender();
+                }
+                else if (!this._hasError()) {
+                    return <ProgressBar/>
+                }
+                else {
+                    return null;
+                }
             }
             else {
-                return <h3>You are not allowed to {this.OPERATION_NAME} {this._getPluralName()}!</h3>;
+                return this._createAlert(
+                    `You are not allowed to ${this.OPERATION_NAME} ${this._getPluralName()}`,
+                    'warning');
             }
         }
+        else if (!this._hasError()) {
+            return <ProgressBar/>
+        }
         else {
-            return (
-                <div className='page-loading'>
-                    <LinearProgress color='primary'/>
-                </div>
-            )
+            return null;
         }
     }
 }

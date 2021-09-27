@@ -50,6 +50,10 @@ export class BaseComponent extends Component {
         )
     }
 
+    _hasError() {
+        return !!this.state.error;
+    }
+
     _getAlert() {
         if (this.state.error) {
             return this._createAlert(this.state.error.message, 'error');
