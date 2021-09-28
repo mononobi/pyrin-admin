@@ -21,10 +21,6 @@ export class BaseComponent extends Component {
 
     _componentDidMount() {}
 
-    componentDidMount() {
-        this._componentDidMount();
-    }
-
     _getAlertInfo(alert, severity) {
         let message = alert;
         let data = null;
@@ -40,6 +36,14 @@ export class BaseComponent extends Component {
         };
     }
 
+    _removeAlert() {
+        if (this.state.alert) {
+            this.setState({
+                alert: null
+            });
+        }
+    }
+
     _createAlert(message, severity) {
         if (!message) {
             message = 'An error has been occurred.';
@@ -50,12 +54,18 @@ export class BaseComponent extends Component {
         }
 
         return (
-                <Snackbar open={true} autoHideDuration={this.ALERT_EXPIRE} key={message}
+                <Snackbar open={Boolean(this.state.alert)} autoHideDuration={this.ALERT_EXPIRE} key={'alert-toast'}
                           TransitionComponent={Slide} sx={{width: '60%'}}
+                          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                          onClose={() => {
+                              this._removeAlert();
+                          }}
                           TransitionProps={{
-                              direction: 'right', in: true,
+                              direction: 'up', in: true,
                               mountOnEnter: true, unmountOnExit: true}}>
-                    <Alert variant='filled' severity={severity} sx={{width: '100%'}}>{message}</Alert>
+                    <Alert variant='filled' severity={severity} sx={{width: '100%'}}>
+                        {message}
+                    </Alert>
                 </Snackbar>
         )
     }
@@ -104,6 +114,10 @@ export class BaseComponent extends Component {
         }
 
         return null;
+    }
+
+    componentDidMount() {
+        this._componentDidMount();
     }
 
     render() {

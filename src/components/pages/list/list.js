@@ -119,11 +119,11 @@ export class ListComponent extends BaseComplexPage {
                                 this.SELECTED_ROW_COLOR : '' })
                     }
                 }
-                title={this.state.metadata.plural_name}
+                title={this._getPluralName()}
                 columns={this.state.metadata.datasource_info}
                 data={query =>
                     new Promise((resolve, reject) => {
-                        let response = find(this.state.metadata.register_name, query.page + 1,
+                        let response = find(this._getRegisterName(), query.page + 1,
                             query.pageSize, query.orderBy, query.orderDirection, query.search);
 
                         response.then(([json, ok]) => {
@@ -154,23 +154,23 @@ export class ListComponent extends BaseComplexPage {
                     },
                     {
                         icon: 'add',
-                        tooltip: `Add ${this.state.metadata.name}`,
+                        tooltip: `Add ${this._getName()}`,
                         position: 'toolbar',
                         hidden: !this.state.metadata.has_create_permission,
                         isFreeAction: true,
                         onClick: event => {
-                            let url = getCreatePage(this.state.metadata.register_name);
+                            let url = getCreatePage(this._getRegisterName());
                             window.open(url, TargetEnum.SAME_TAB);
                         }
                     },
                     {
                         icon: 'delete',
-                        tooltip: `Delete All ${this.state.metadata.plural_name}`,
+                        tooltip: `Delete All ${this._getPluralName()}`,
                         position: 'toolbar',
                         hidden: !this.state.metadata.has_remove_all_permission,
                         isFreeAction: true,
                         onClick: event => {
-                            let result = deleteAll(this.state.metadata.register_name);
+                            let result = deleteAll(this._getRegisterName());
                             result.then(([json, ok]) => {
                                 if (ok) {
                                     if (tableRef && tableRef.current &&
@@ -178,19 +178,18 @@ export class ListComponent extends BaseComplexPage {
                                         tableRef.current.onQueryChange(
                                             tableRef.current.state.query);
                                     }
-
-                                    this._setSuccess(
-                                        `All ${this._getPluralName()} have been deleted successfully.`);
+                                    // this._setSuccess(
+                                    //     `All ${this._getPluralName()} have been deleted successfully.`);
                                 }
                                 else {
-                                    this._setError(json);
+                                    // this._setError(json);
                                 }
                             });
                         }
                     },
                     {
                         icon: 'delete',
-                        tooltip: `Delete Selected ${this.state.metadata.plural_name}`,
+                        tooltip: `Delete Selected ${this._getPluralName()}`,
                         position: 'toolbarOnSelect',
                         hidden: !this.state.metadata.has_remove_permission,
                         onClick: (event, rowData) => {
@@ -198,7 +197,7 @@ export class ListComponent extends BaseComplexPage {
                             for (let i=0; i < rowData.length; i++) {
                                 pk.push(rowData[i][this.state.metadata.pk_name]);
                             }
-                            let result = deleteBulk(this.state.metadata.register_name, pk);
+                            let result = deleteBulk(this._getRegisterName(), pk);
                             result.then(([json, ok]) => {
                                 if (ok) {
                                     if (tableRef && tableRef.current &&
@@ -210,12 +209,12 @@ export class ListComponent extends BaseComplexPage {
                                     let count = pk.length;
                                     let name = `${count} ${this._getPluralName()} have`;
                                     if (count <= 1) {
-                                        name = `${count} ${this.state.metadata.name} has`;
+                                        name = `${count} ${this._getName()} has`;
                                     }
-                                    this._setSuccess(`${name} been deleted successfully.`);
+                                    // this._setSuccess(`${name} been deleted successfully.`);
                                 }
                                 else {
-                                    this._setError(json);
+                                    // this._setError(json);
                                 }
                             });
                         }
@@ -223,11 +222,11 @@ export class ListComponent extends BaseComplexPage {
                     {
                         icon: 'edit',
                         iconProps: {fontSize: 'inherit', color: 'action'},
-                        tooltip: `View ${this.state.metadata.name}`,
+                        tooltip: `View ${this._getName()}`,
                         position: 'row',
                         hidden: !this.state.metadata.has_get_permission,
                         onClick: (event, rowData) => {
-                            let url = getUpdatePage(this.state.metadata.register_name,
+                            let url = getUpdatePage(this._getRegisterName(),
                                 rowData[this.state.metadata.pk_name]);
                             window.open(url, TargetEnum.SAME_TAB);
                         }

@@ -20,6 +20,14 @@ export class ComplexComponent extends BaseComponent {
         return true;
     }
 
+    _getName() {
+        throw new NotImplementedError();
+    }
+
+    _getRegisterName() {
+        throw new NotImplementedError();
+    }
+
     _getPluralName() {
         throw new NotImplementedError();
     }
