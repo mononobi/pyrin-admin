@@ -54,11 +54,13 @@ export class BaseComponent extends Component {
         }
 
         return (
-                <Snackbar open={Boolean(this.state.alert)} autoHideDuration={this.ALERT_EXPIRE} key={'alert-toast'}
+                <Snackbar open={Boolean(this.state.alert)} autoHideDuration={null} key={'alert-toast'}
                           TransitionComponent={Slide} sx={{width: '60%'}}
                           anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-                          onClose={() => {
-                              this._removeAlert();
+                          onClose={(event, reason) => {
+                              if (reason === 'clickaway') {
+                                  this._removeAlert();
+                              }
                           }}
                           TransitionProps={{
                               direction: 'up', in: true,
