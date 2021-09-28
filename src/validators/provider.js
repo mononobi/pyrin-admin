@@ -1,4 +1,4 @@
-import { ServerFormFieldTypeEnum } from '../components/controls/globals/enumerations';
+import { ServerFormFieldTypeEnum } from '../components/controls/inputs/globals/enumerations';
 import { StringValidator } from './string';
 import { IntegerValidator, NumberValidator } from './number';
 import { EmailValidator } from './email';

@@ -2,14 +2,14 @@ import React from 'react';
 import { Formik, Form } from 'formik';
 import { Button } from '@material-ui/core';
 import { Stack } from '@mui/material';
-import { createControl } from '../controls/provider';
+import { createControl } from '../controls/inputs/provider';
 import { BaseComponent } from '../base/base/base';
 import { getValidator } from '../../validators/provider';
 import { NotImplementedError } from '../../core/exceptions';
 import { getListPage } from '../../services/url';
 import { TargetEnum } from '../../core/enumerations';
-import { DELETE_BUTTON_COLOR, DELETE_TEXT_COLOR } from '../controls/globals/constants';
-import { ServerFormFieldTypeEnum } from '../controls/globals/enumerations';
+import { DELETE_BUTTON_COLOR, DELETE_TEXT_COLOR } from '../controls/inputs/globals/constants';
+import { ServerFormFieldTypeEnum } from '../controls/inputs/globals/enumerations';
 import { delete_ } from '../../services/data';
 import './base.css'
 
@@ -17,6 +17,7 @@ import './base.css'
 export class FormBase extends BaseComponent {
 
     FOR_UPDATE = false;
+    CHECKBOX_DEFAULT = false;
 
     state = {
         initialValues: this._getInitialValues(this.props.initialValues)
@@ -47,6 +48,10 @@ export class FormBase extends BaseComponent {
         return value === null || value === undefined;
     }
 
+    _isNullOrEmpty(value) {
+        return this._isNull(value) || this._isEmpty(value);
+    }
+
     _getFilledValues(values) {
         let result = {};
         for (const [name, value] of Object.entries(values)) {
@@ -66,8 +71,8 @@ export class FormBase extends BaseComponent {
         for (const [name, value] of Object.entries(initialValues)) {
             let info = this.props.dataFieldsDict[name]
             if (info && info.form_field_type === ServerFormFieldTypeEnum.BOOLEAN &&
-                info.required && (this._isNull(value) || value === '')) {
-                initialValues[name] = false;
+                this._isNullOrEmpty(value)) {
+                initialValues[name] = this.CHECKBOX_DEFAULT;
             }
             else if (this._isNull(value)) {
                 initialValues[name] = '';
