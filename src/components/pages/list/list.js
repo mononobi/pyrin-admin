@@ -107,6 +107,7 @@ export class ListComponent extends BaseComplexPage {
                         columnsButton: this.state.metadata.column_selection || this.state.metadata.enable_export,
                         exportButton: this.state.metadata.enable_export,
                         padding: this.state.metadata.table_type,
+                        headerSelectionProps: {size: this.state.metadata.table_type === 'dense'? 'small': 'medium'},
                         paging: this.state.metadata.paged,
                         pageSize: this.state.metadata.page_size,
                         pageSizeOptions: this.state.metadata.page_size_options,
@@ -178,11 +179,11 @@ export class ListComponent extends BaseComplexPage {
                                         tableRef.current.onQueryChange(
                                             tableRef.current.state.query);
                                     }
-                                    // this._setSuccess(
-                                    //     `All ${this._getPluralName()} have been deleted successfully.`);
+                                    this._setSuccess(
+                                        `All ${this._getPluralName()} have been deleted successfully.`);
                                 }
                                 else {
-                                    // this._setError(json);
+                                    this._setError(json);
                                 }
                             });
                         }
@@ -211,10 +212,10 @@ export class ListComponent extends BaseComplexPage {
                                     if (count <= 1) {
                                         name = `${count} ${this._getName()} has`;
                                     }
-                                    // this._setSuccess(`${name} been deleted successfully.`);
+                                    this._setSuccess(`${name} been deleted successfully.`);
                                 }
                                 else {
-                                    // this._setError(json);
+                                    this._setError(json);
                                 }
                             });
                         }
