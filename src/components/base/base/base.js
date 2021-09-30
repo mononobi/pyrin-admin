@@ -1,15 +1,10 @@
 import { Component } from 'react';
-import { Alert } from '@material-ui/lab';
-import { Slide } from '@material-ui/core';
-import { Snackbar } from '@mui/material';
 import { NotImplementedError } from '../../../core/exceptions';
-import { JSTypeEnum } from '../../../validators/enumerations';
-import { AlertSeverityEnum } from '../../../core/enumerations';
+import { AlertSeverityEnum, AlertTypeEnum } from '../../../core/enumerations';
+import { getAlert, getAlertInfo } from '../../controls/alert/provider';
 
 
 export class BaseComponent extends Component {
-
-    ALERT_EXPIRE = 5000;
 
     state = {
         alert: null
@@ -21,21 +16,6 @@ export class BaseComponent extends Component {
 
     _componentDidMount() {}
 
-    _getAlertInfo(alert, severity) {
-        let message = alert;
-        let data = null;
-        if (typeof alert === JSTypeEnum.OBJECT) {
-            message = alert.message;
-            data = alert.data;
-        }
-        return {
-            severity: severity,
-            message: message,
-            data: data,
-            created: Date.now()
-        };
-    }
-
     _removeAlert() {
         if (this.state.alert) {
             this.setState({
@@ -44,43 +24,8 @@ export class BaseComponent extends Component {
         }
     }
 
-    _createAlert(message, severity) {
-        if (!message) {
-            message = 'An error has been occurred.';
-        }
-
-        if (message.slice(-1) !== '.') {
-            message = `${message}.`;
-        }
-
-        return (
-                <Snackbar open={Boolean(this.state.alert)} autoHideDuration={null} key={'alert-toast'}
-                          TransitionComponent={Slide} sx={{width: '60%'}}
-                          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-                          onClose={(event, reason) => {
-                              if (reason === 'clickaway') {
-                                  this._removeAlert();
-                              }
-                          }}
-                          TransitionProps={{
-                              direction: 'up', in: true,
-                              mountOnEnter: true, unmountOnExit: true}}>
-                    <Alert variant='filled' severity={severity} sx={{width: '100%'}}>
-                        {message}
-                    </Alert>
-                </Snackbar>
-        )
-    }
-
-    _isAlertExpired() {
-        if (this.state.alert) {
-            return Date.now() - this.state.alert.created > this.ALERT_EXPIRE;
-        }
-        return true;
-    }
-
     _hasError() {
-        if (!this._isAlertExpired())
+        if (this.state.alert)
         {
             return this.state.alert.severity === AlertSeverityEnum.ERROR;
         }
@@ -88,31 +33,24 @@ export class BaseComponent extends Component {
         return false;
     }
 
-    _setAlert(alert, severity) {
+    _setToastNotification(alert, severity) {
         this.setState({
-            alert: this._getAlertInfo(alert, severity)
+            alert: getAlertInfo(alert, severity, AlertTypeEnum.TOAST)
         });
     }
 
-    _setError(alert) {
-        this._setAlert(alert, AlertSeverityEnum.ERROR);
-    }
-
-    _setWarning(alert) {
-        this._setAlert(alert, AlertSeverityEnum.WARNING);
-    }
-
-    _setInfo(alert) {
-        this._setAlert(alert, AlertSeverityEnum.INFO);
-    }
-
-    _setSuccess(alert) {
-        this._setAlert(alert, AlertSeverityEnum.SUCCESS);
+    _setBannerNotification(alert, severity) {
+        this.setState({
+            alert: getAlertInfo(alert, severity, AlertTypeEnum.BANNER)
+        });
     }
 
     _getAlert() {
-        if (!this._isAlertExpired()) {
-            return this._createAlert(this.state.alert.message, this.state.alert.severity);
+        if (this.state.alert) {
+            return getAlert(this.state.alert,
+                () => {
+                this._removeAlert();
+            })
         }
 
         return null;

@@ -13,3 +13,10 @@ export const AlertSeverityEnum = {
 };
 
 Object.freeze(AlertSeverityEnum);
+
+export const AlertTypeEnum = {
+    TOAST: 'toast',
+    BANNER: 'banner'
+};
+
+Object.freeze(AlertTypeEnum);

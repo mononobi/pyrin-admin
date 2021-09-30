@@ -7,7 +7,7 @@ import { BaseComponent } from '../base/base/base';
 import { getValidator } from '../../validators/provider';
 import { NotImplementedError } from '../../core/exceptions';
 import { getListPage } from '../../services/url';
-import { TargetEnum } from '../../core/enumerations';
+import { AlertSeverityEnum, TargetEnum } from '../../core/enumerations';
 import { DELETE_BUTTON_COLOR, DELETE_TEXT_COLOR } from '../controls/inputs/globals/constants';
 import { ServerFormFieldTypeEnum } from '../controls/inputs/globals/enumerations';
 import { delete_ } from '../../services/data';
@@ -111,7 +111,7 @@ export class FormBase extends BaseComponent {
                     values = this._getFilledValues(values);
                     if (!this._isAnythingChanged(values)) {
                         setSubmitting(false);
-                        this._setInfo('No changes have been made.')
+                        this._setToastNotification('No changes have been made.', AlertSeverityEnum.INFO);
                         return;
                     }
                     let result = this._callService(values);
@@ -127,7 +127,7 @@ export class FormBase extends BaseComponent {
                                 }
                             }
                             else {
-                                this._setError(json);
+                                this._setToastNotification(json, AlertSeverityEnum.ERROR);
                             }
                         }
                     });
@@ -169,7 +169,7 @@ export class FormBase extends BaseComponent {
                                                         TargetEnum.SAME_TAB);
                                                 }
                                                 else {
-                                                    this._setError(json);
+                                                    this._setToastNotification(json, AlertSeverityEnum.ERROR);
                                                 }
                                             });
                                         }}

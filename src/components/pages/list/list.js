@@ -7,7 +7,7 @@ import { getFindMetadata } from '../../../services/metadata';
 import { deleteAll, deleteBulk, find } from '../../../services/data';
 import { getCreatePage, getUpdatePage } from '../../../services/url';
 import { BaseComplexPage } from '../base/base';
-import { TargetEnum } from '../../../core/enumerations';
+import { AlertSeverityEnum, TargetEnum } from '../../../core/enumerations';
 import './list.css'
 
 
@@ -21,13 +21,13 @@ export class ListComponent extends BaseComplexPage {
         return getFindMetadata(this.props.match.params.register_name);
     }
 
-    _renderPK(info) {
+    _renderPK(info, metadata) {
         info.cellStyle = {
             fontWeight: 'bold',
             color: this.LINK_COLOR
         }
 
-        if (this.state.metadata.link_pk) {
+        if (metadata.link_pk) {
             info.render = rowData => {
                 let value = rowData[info.field];
                 if (info.lookup) {
@@ -43,12 +43,12 @@ export class ListComponent extends BaseComplexPage {
         }
     }
 
-    _renderFK(info) {
+    _renderFK(info, metadata) {
         info.cellStyle = {
             color: this.LINK_COLOR
         }
 
-        if (this.state.metadata.link_fk) {
+        if (metadata.link_fk) {
             info.render = rowData => {
                 let value = rowData[info.field];
                 if (info.lookup) {
@@ -64,7 +64,7 @@ export class ListComponent extends BaseComplexPage {
         }
     }
 
-    _renderBoolean(info) {
+    _renderBoolean(info, metadata) {
         info.render = rowData => {
             let checked = rowData[info.field];
             if (checked) {
@@ -76,18 +76,18 @@ export class ListComponent extends BaseComplexPage {
         }
     }
 
-    _prepareRendering() {
-        for (let i = 0; i < this.state.metadata.datasource_info.length; i++) {
-            let info = this.state.metadata.datasource_info[i];
+    _prepareMetadata(metadata) {
+        for (let i = 0; i < metadata.datasource_info.length; i++) {
+            let info = metadata.datasource_info[i];
             if (!info.hidden) {
                 if (info.is_pk) {
-                    this._renderPK(info);
+                    this._renderPK(info, metadata);
                 }
                 else if (info.is_fk) {
-                    this._renderFK(info);
+                    this._renderFK(info, metadata);
                 }
                 else if (info.type === 'boolean') {
-                    this._renderBoolean(info);
+                    this._renderBoolean(info, metadata);
                 }
             }
         }
@@ -116,8 +116,9 @@ export class ListComponent extends BaseComplexPage {
                         draggable: this.state.metadata.column_ordering,
                         selection: this.state.metadata.has_remove_permission,
                         emptyRowsWhenPaging: false,
-                        rowStyle: rowData => ({ backgroundColor: rowData.tableData.checked ?
-                                this.SELECTED_ROW_COLOR : '' })
+                        // TODO: there is a bug in material table when setting row style.
+                        // rowStyle: rowData => ({ backgroundColor: rowData.tableData.checked ?
+                        //         this.SELECTED_ROW_COLOR : '' })
                     }
                 }
                 title={this._getPluralName()}
@@ -179,11 +180,12 @@ export class ListComponent extends BaseComplexPage {
                                         tableRef.current.onQueryChange(
                                             tableRef.current.state.query);
                                     }
-                                    this._setSuccess(
-                                        `All ${this._getPluralName()} have been deleted successfully.`);
+                                    this._setToastNotification(
+                                        `All ${this._getPluralName()} have been deleted successfully.`,
+                                        AlertSeverityEnum.SUCCESS);
                                 }
                                 else {
-                                    this._setError(json);
+                                    this._setToastNotification(json, AlertSeverityEnum.ERROR);
                                 }
                             });
                         }
@@ -212,10 +214,11 @@ export class ListComponent extends BaseComplexPage {
                                     if (count <= 1) {
                                         name = `${count} ${this._getName()} has`;
                                     }
-                                    this._setSuccess(`${name} been deleted successfully.`);
+                                    this._setToastNotification(
+                                        `${name} been deleted successfully.`, AlertSeverityEnum.SUCCESS);
                                 }
                                 else {
-                                    this._setError(json);
+                                    this._setToastNotification(json, AlertSeverityEnum.ERROR);
                                 }
                             });
                         }

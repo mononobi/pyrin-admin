@@ -2,6 +2,8 @@ import React from 'react';
 import { NotImplementedError } from '../../../core/exceptions';
 import { BaseComponent } from '../base/base';
 import { ProgressBar } from '../../controls/progress/progress';
+import { AlertSeverityEnum, AlertTypeEnum } from '../../../core/enumerations';
+import { getAlert, getAlertInfo } from '../../controls/alert/provider';
 
 
 export class ComplexComponent extends BaseComponent {
@@ -55,11 +57,13 @@ export class ComplexComponent extends BaseComponent {
                 this.setState({
                     isMetadataLoaded: false
                 });
-                this._setError(json);
+                this._setToastNotification(json, AlertSeverityEnum.ERROR);
             }
             else {
+                let info = this._getMetadata(json);
+                this._prepareMetadata(info);
                 this.setState({
-                    metadata: this._getMetadata(json),
+                    metadata: info,
                     isMetadataLoaded: true
                 });
 
@@ -70,7 +74,7 @@ export class ComplexComponent extends BaseComponent {
                             this.setState({
                                 isDataLoaded: false
                             });
-                            this._setError(json);
+                            this._setToastNotification(json, AlertSeverityEnum.ERROR);
                         }
                         else {
                             this.setState({
@@ -86,7 +90,7 @@ export class ComplexComponent extends BaseComponent {
         super._componentDidMount();
     }
 
-    _prepareRendering() {}
+    _prepareMetadata(metadata) {}
 
     _finalRender() {
         throw new NotImplementedError();
@@ -96,7 +100,6 @@ export class ComplexComponent extends BaseComponent {
         if (this.state.isMetadataLoaded) {
             if (this._hasPermission()) {
                 if (!this.REQUIRES_DATA || this.state.isDataLoaded) {
-                    this._prepareRendering();
                     return this._finalRender();
                 }
                 else if (!this._hasError()) {
@@ -107,9 +110,10 @@ export class ComplexComponent extends BaseComponent {
                 }
             }
             else {
-                return this._createAlert(
-                    `You are not allowed to ${this.OPERATION_NAME} ${this._getPluralName()}`,
-                    'warning');
+                let alert = getAlertInfo(
+                    `You are not allowed to ${this.OPERATION_NAME} ${this._getPluralName()}.`,
+                    AlertSeverityEnum.WARNING, AlertTypeEnum.BANNER);
+                return getAlert(alert);
             }
         }
         else if (!this._hasError()) {
