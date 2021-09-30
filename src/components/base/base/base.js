@@ -27,7 +27,8 @@ export class BaseComponent extends Component {
     _hasError() {
         if (this.state.alert)
         {
-            return this.state.alert.severity === AlertSeverityEnum.ERROR;
+            return this.state.alert.severity === AlertSeverityEnum.ERROR ||
+                this.state.alert.type === AlertTypeEnum.BANNER;
         }
 
         return false;

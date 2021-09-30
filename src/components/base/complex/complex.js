@@ -2,8 +2,7 @@ import React from 'react';
 import { NotImplementedError } from '../../../core/exceptions';
 import { BaseComponent } from '../base/base';
 import { ProgressBar } from '../../controls/progress/progress';
-import { AlertSeverityEnum, AlertTypeEnum } from '../../../core/enumerations';
-import { getAlert, getAlertInfo } from '../../controls/alert/provider';
+import { AlertSeverityEnum } from '../../../core/enumerations';
 
 
 export class ComplexComponent extends BaseComponent {
@@ -57,35 +56,43 @@ export class ComplexComponent extends BaseComponent {
                 this.setState({
                     isMetadataLoaded: false
                 });
-                this._setToastNotification(json, AlertSeverityEnum.ERROR);
+                this._setBannerNotification(json, AlertSeverityEnum.ERROR);
             }
             else {
                 let info = this._getMetadata(json);
                 this._prepareMetadata(info);
-                this.setState({
-                    metadata: info,
-                    isMetadataLoaded: true
-                });
+                // we should set metadata directly to prevent early re-rendering.
+                this.state.metadata = info;
+                if (!this._hasPermission()) {
+                    this._setBannerNotification(
+                        `You are not allowed to ${this.OPERATION_NAME} ${this._getPluralName()}.`,
+                        AlertSeverityEnum.WARNING)
+                }
+                else {
+                    this.setState({
+                        isMetadataLoaded: true
+                    });
 
-                if (this.REQUIRES_DATA && this._hasPermission()) {
-                    let data = this._fetchData();
-                    data.then(([json, ok]) => {
-                        if (!ok) {
-                            this.setState({
-                                isDataLoaded: false
-                            });
-                            this._setToastNotification(json, AlertSeverityEnum.ERROR);
-                        }
-                        else {
-                            this.setState({
-                                data: this._getData(json),
-                                isDataLoaded: true
-                            });
-                        }
-                    })
+                    if (this.REQUIRES_DATA) {
+                        let data = this._fetchData();
+                        data.then(([json, ok]) => {
+                            if (!ok) {
+                                this.setState({
+                                    isDataLoaded: false
+                                });
+                                this._setBannerNotification(json, AlertSeverityEnum.ERROR);
+                            }
+                            else {
+                                this.setState({
+                                    data: this._getData(json),
+                                    isDataLoaded: true
+                                });
+                            }
+                        })
+                    }
                 }
             }
-        })
+        });
 
         super._componentDidMount();
     }
@@ -98,22 +105,14 @@ export class ComplexComponent extends BaseComponent {
 
     _render() {
         if (this.state.isMetadataLoaded) {
-            if (this._hasPermission()) {
-                if (!this.REQUIRES_DATA || this.state.isDataLoaded) {
-                    return this._finalRender();
-                }
-                else if (!this._hasError()) {
-                    return <ProgressBar/>
-                }
-                else {
-                    return null;
-                }
+            if (!this.REQUIRES_DATA || this.state.isDataLoaded) {
+                return this._finalRender();
+            }
+            else if (!this._hasError()) {
+                return <ProgressBar/>
             }
             else {
-                let alert = getAlertInfo(
-                    `You are not allowed to ${this.OPERATION_NAME} ${this._getPluralName()}.`,
-                    AlertSeverityEnum.WARNING, AlertTypeEnum.BANNER);
-                return getAlert(alert);
+                return null;
             }
         }
         else if (!this._hasError()) {
