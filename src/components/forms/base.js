@@ -162,16 +162,20 @@ export class FormBase extends BaseComponent {
                                         variant='contained'
                                         type='button'
                                         onClick={() => {
-                                            let result = delete_(this.props.register_name, this.props.pk);
-                                            result.then(([json, ok]) => {
-                                                if (ok) {
-                                                    window.open(getListPage(this.props.register_name),
-                                                        TargetEnum.SAME_TAB);
-                                                }
-                                                else {
-                                                    this._setToastNotification(json, AlertSeverityEnum.ERROR);
-                                                }
-                                            });
+                                            this._setConfirmDeleteDialog(
+                                                `Delete ${this.props.name} with primary key [${this.props.pk}]?`,
+                                                () => {
+                                                    let result = delete_(this.props.register_name, this.props.pk);
+                                                    result.then(([json, ok]) => {
+                                                        if (ok) {
+                                                            window.open(getListPage(this.props.register_name),
+                                                                TargetEnum.SAME_TAB);
+                                                        }
+                                                        else {
+                                                            this._setToastNotification(json, AlertSeverityEnum.ERROR);
+                                                        }
+                                                    });
+                                                })
                                         }}
                                         disabled={props.isSubmitting || !this.props.hasDeletePermission}
                                         size='large'>

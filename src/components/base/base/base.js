@@ -2,12 +2,15 @@ import { Component } from 'react';
 import { NotImplementedError } from '../../../core/exceptions';
 import { AlertSeverityEnum, AlertTypeEnum } from '../../../core/enumerations';
 import { getAlert, getAlertInfo } from '../../controls/alert/provider';
+import { getConfirmDialog, getConfirmDialogInfo } from '../../controls/dialogs/provider';
+import { ConfirmDeleteDialog } from '../../controls/dialogs/confirm';
 
 
 export class BaseComponent extends Component {
 
     state = {
-        alert: null
+        alert: null,
+        confirmDialog: null
     }
 
     _render() {
@@ -24,6 +27,14 @@ export class BaseComponent extends Component {
         }
     }
 
+    _removeConfirmDialog() {
+        if (this.state.confirmDialog) {
+            this.setState({
+                confirmDialog: null
+            });
+        }
+    }
+
     _hasError() {
         if (this.state.alert)
         {
@@ -32,6 +43,24 @@ export class BaseComponent extends Component {
         }
 
         return false;
+    }
+
+    _setConfirmDialog(dialogInfo) {
+        this.setState({
+            confirmDialog: dialogInfo
+        });
+    }
+
+    _setConfirmDeleteDialog(title, handleAccept) {
+        let dialogInfo = getConfirmDialogInfo(
+            title, () => {
+                this._removeConfirmDialog();
+                handleAccept();
+            }, () => {
+                this._removeConfirmDialog();
+            },
+            ConfirmDeleteDialog);
+        this._setConfirmDialog(dialogInfo);
     }
 
     _setToastNotification(alert, severity) {
@@ -57,6 +86,14 @@ export class BaseComponent extends Component {
         return null;
     }
 
+    _getConfirmDialog() {
+        if (this.state.confirmDialog) {
+            return getConfirmDialog(this.state.confirmDialog);
+        }
+
+        return null;
+    }
+
     componentDidMount() {
         this._componentDidMount();
     }
@@ -66,6 +103,9 @@ export class BaseComponent extends Component {
             <>
                 {
                     this._getAlert()
+                }
+                {
+                    this._getConfirmDialog()
                 }
                 {
                     this._render()
