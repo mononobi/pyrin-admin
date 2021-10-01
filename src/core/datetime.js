@@ -1,20 +1,17 @@
-import { CONFIGS } from './configs';
-
-
 function getClientTimezone() {
-    return Intl.DateTimeFormat().resolvedOptions().timeZone;
+    return Intl.DateTimeFormat().resolvedOptions().timeZone || undefined;
 }
 
-export function formatDateTime(dateTime) {
-    let options = {...CONFIGS.dateTimeFormat, timeZone: getClientTimezone()};
-    return new Date(dateTime).toLocaleString([], options);
+export function formatDateTime(dateTime, format, locale) {
+    let options = {...format, timeZone: getClientTimezone()};
+    return new Date(dateTime).toLocaleString(locale || [], options);
 }
 
-export function formatDate(date) {
-    return new Date(date).toLocaleDateString([], CONFIGS.dateFormat);
+export function formatDate(date, format, locale) {
+    return new Date(date).toLocaleDateString(locale || [], format);
 }
 
-export function formatTime(time) {
-    let options = {...CONFIGS.timeFormat, timeZone: getClientTimezone()};
-    return new Date(time).toLocaleTimeString([], options);
+export function formatTime(time, format, locale) {
+    let options = {...format, timeZone: getClientTimezone()};
+    return new Date(time).toLocaleTimeString(locale || [], options);
 }

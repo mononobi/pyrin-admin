@@ -103,21 +103,21 @@ export class ListComponent extends BaseComplexPage {
     _renderDateTime(info, metadata) {
         info.render = rowData => {
             let value = rowData[info.field];
-            return formatDateTime(value);
+            return formatDateTime(value, metadata.datetime_format, metadata.locale);
         }
     }
 
     _renderDate(info, metadata) {
         info.render = rowData => {
             let value = rowData[info.field];
-            return formatDate(value);
+            return formatDate(value, metadata.date_format, metadata.locale);
         }
     }
 
     _renderTime(info, metadata) {
         info.render = rowData => {
             let value = rowData[info.field];
-            return formatTime(value);
+            return formatTime(value, metadata.time_format, metadata.locale);
         }
     }
 

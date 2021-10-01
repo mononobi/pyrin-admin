@@ -21,7 +21,7 @@ tbody tr:hover {
 tbody tr {
     /* the font-family must be set here to make all numbers english even if browser's font is not. */
     font-family: Roboto, "Open Sans", sans-serif;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 tr:nth-child(even) {

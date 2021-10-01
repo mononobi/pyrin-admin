@@ -8,25 +8,5 @@
   "ordering_key": "order_by",
   "query_param": "_query_",
   "locale_key": "lc",
-  "timezone_key": "tz",
-  "dateTimeFormat": {
-    "year": "numeric",
-    "month": "short",
-    "day": "numeric",
-    "hour": "2-digit",
-    "minute": "2-digit",
-    "second": "2-digit",
-    "hour12": false
-  },
-  "dateFormat": {
-    "year": "numeric",
-    "month": "short",
-    "day": "numeric"
-  },
-  "timeFormat": {
-    "hour": "2-digit",
-    "minute": "2-digit",
-    "second": "2-digit",
-    "hour12": false
-  }
+  "timezone_key": "tz"
 }
