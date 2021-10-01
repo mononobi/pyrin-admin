@@ -14,10 +14,13 @@ import { formatDate, formatDateTime, formatTime } from '../../../core/datetime';
 import './list.css';
 
 
+const setCheckedRowColor = (data, index, level) => {
+    return { backgroundColor: data.tableData.checked ? 'rgba(185,215,232,0.44)' : '' };
+}
+
 export class ListComponent extends BaseComplexPage {
 
     LINK_COLOR = '#12558d';
-    SELECTED_ROW_COLOR = 'rgba(185,215,232,0.44)';
     TABLE_REF = React.createRef();
 
     _fetchMetadata()
@@ -160,7 +163,7 @@ export class ListComponent extends BaseComplexPage {
                         columnsButton: this.state.metadata.column_selection || this.state.metadata.enable_export,
                         exportButton: this.state.metadata.enable_export,
                         padding: this.state.metadata.table_type,
-                        headerSelectionProps: {size: this.state.metadata.table_type === 'dense'? 'small': 'medium'},
+                        headerSelectionProps: {size: this.state.metadata.table_type === 'dense' ? 'small': 'medium'},
                         paging: this.state.metadata.paged,
                         pageSize: this.state.metadata.page_size,
                         pageSizeOptions: this.state.metadata.page_size_options,
@@ -169,9 +172,7 @@ export class ListComponent extends BaseComplexPage {
                         draggable: this.state.metadata.column_ordering,
                         selection: this.state.metadata.has_remove_permission,
                         emptyRowsWhenPaging: false,
-                        // TODO: there is a bug in material table when setting row style.
-                        // rowStyle: rowData => ({ backgroundColor: rowData.tableData.checked ?
-                        //         this.SELECTED_ROW_COLOR : '' })
+                        rowStyle: setCheckedRowColor
                     }
                 }
                 title={this._getPluralName()}
@@ -243,7 +244,7 @@ export class ListComponent extends BaseComplexPage {
                                     }
                                 });
                             });
-                        },
+                        }
                     },
                     {
                         icon: 'delete',
@@ -252,7 +253,7 @@ export class ListComponent extends BaseComplexPage {
                         hidden: !this.state.metadata.has_remove_permission,
                         onClick: (event, rowData) => {
                             let count = rowData.length;
-                            let name = count > 1? this._getPluralName(): this._getName();
+                            let name = count > 1 ? this._getPluralName(): this._getName();
                             this._setConfirmDeleteDialog(`Delete ${count} selected ${name}?`,
                                 () => {
                                 let pk = [];
@@ -267,7 +268,7 @@ export class ListComponent extends BaseComplexPage {
                                             this.TABLE_REF.current.onQueryChange(
                                                 this.TABLE_REF.current.state.query);
                                         }
-                                        let message = count > 1? `${count} ${name} have`: `${count} ${name} has`;
+                                        let message = count > 1 ? `${count} ${name} have`: `${count} ${name} has`;
                                         this._setToastNotification(
                                             `${message} been deleted successfully.`, AlertSeverityEnum.SUCCESS);
                                     }
@@ -276,7 +277,7 @@ export class ListComponent extends BaseComplexPage {
                                     }
                                 });
                             });
-                        },
+                        }
                     },
                     {
                         icon: 'edit',
@@ -296,7 +297,7 @@ export class ListComponent extends BaseComplexPage {
                     },
                     toolbar: {
                         nRowsSelected: count => {
-                            return count > 1? `${count} rows selected`: `${count} row selected`;
+                            return count > 1 ? `${count} rows selected`: `${count} row selected`;
                         }
                     }
                 }}
