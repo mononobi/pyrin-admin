@@ -16,9 +16,7 @@ export const ToastNotification = (props) => {
                   TransitionComponent={Slide} sx={{width: '60%'}}
                   anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
                   onClose={(event, reason) => {
-                      if (reason === 'clickaway') {
-                          props.closeHandler();
-                      }
+                      props.closeHandler();
                   }}
                   TransitionProps={{
                       direction: 'up', in: true,

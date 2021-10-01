@@ -18,7 +18,7 @@ export const ConfirmDialog = props => {
 
     return (
         <div>
-            <Dialog open={true} TransitionComponent={Transition}>
+            <Dialog open={true} TransitionComponent={Transition} maxWidth='md'>
                 <DialogTitle>{props.title}</DialogTitle>
                 {
                     props.description && (

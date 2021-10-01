@@ -15,6 +15,7 @@ export class ListComponent extends BaseComplexPage {
 
     LINK_COLOR = '#12558d';
     SELECTED_ROW_COLOR = 'rgba(185,215,232,0.44)';
+    TABLE_REF = React.createRef();
 
     _fetchMetadata()
     {
@@ -94,10 +95,9 @@ export class ListComponent extends BaseComplexPage {
     }
 
     _finalRender() {
-        const tableRef = React.createRef();
         return (
             <MaterialTable
-                tableRef={tableRef}
+                tableRef={this.TABLE_REF}
                 options={
                     {
                         debounceInterval: this.state.metadata.search_debounce_interval,
@@ -148,9 +148,9 @@ export class ListComponent extends BaseComplexPage {
                         tooltip: 'Refresh Data',
                         isFreeAction: true,
                         onClick: event => {
-                            if (tableRef && tableRef.current &&
-                                tableRef.current.state) {
-                                tableRef.current.onQueryChange(tableRef.current.state.query);
+                            if (this.TABLE_REF && this.TABLE_REF.current &&
+                                this.TABLE_REF.current.state) {
+                                this.TABLE_REF.current.onQueryChange(this.TABLE_REF.current.state.query);
                             }
                         }
                     },
@@ -172,23 +172,26 @@ export class ListComponent extends BaseComplexPage {
                         hidden: !this.state.metadata.has_remove_all_permission,
                         isFreeAction: true,
                         onClick: event => {
-                            let result = deleteAll(this._getRegisterName());
-                            result.then(([json, ok]) => {
-                                if (ok) {
-                                    if (tableRef && tableRef.current &&
-                                        tableRef.current.state) {
-                                        tableRef.current.onQueryChange(
-                                            tableRef.current.state.query);
+                            this._setConfirmDeleteDialog(`Delete all ${this._getPluralName()}?`,
+                                () => {
+                                let result = deleteAll(this._getRegisterName());
+                                result.then(([json, ok]) => {
+                                    if (ok) {
+                                        if (this.TABLE_REF && this.TABLE_REF.current &&
+                                            this.TABLE_REF.current.state) {
+                                            this.TABLE_REF.current.onQueryChange(
+                                                this.TABLE_REF.current.state.query);
+                                        }
+                                        this._setToastNotification(
+                                            `All ${this._getPluralName()} have been deleted successfully.`,
+                                            AlertSeverityEnum.SUCCESS);
                                     }
-                                    this._setToastNotification(
-                                        `All ${this._getPluralName()} have been deleted successfully.`,
-                                        AlertSeverityEnum.SUCCESS);
-                                }
-                                else {
-                                    this._setToastNotification(json, AlertSeverityEnum.ERROR);
-                                }
+                                    else {
+                                        this._setToastNotification(json, AlertSeverityEnum.ERROR);
+                                    }
+                                });
                             });
-                        }
+                        },
                     },
                     {
                         icon: 'delete',
@@ -196,32 +199,32 @@ export class ListComponent extends BaseComplexPage {
                         position: 'toolbarOnSelect',
                         hidden: !this.state.metadata.has_remove_permission,
                         onClick: (event, rowData) => {
-                            let pk = [];
-                            for (let i=0; i < rowData.length; i++) {
-                                pk.push(rowData[i][this.state.metadata.pk_name]);
-                            }
-                            let result = deleteBulk(this._getRegisterName(), pk);
-                            result.then(([json, ok]) => {
-                                if (ok) {
-                                    if (tableRef && tableRef.current &&
-                                        tableRef.current.state) {
-                                        tableRef.current.onQueryChange(
-                                            tableRef.current.state.query);
-                                    }
-
-                                    let count = pk.length;
-                                    let name = `${count} ${this._getPluralName()} have`;
-                                    if (count <= 1) {
-                                        name = `${count} ${this._getName()} has`;
-                                    }
-                                    this._setToastNotification(
-                                        `${name} been deleted successfully.`, AlertSeverityEnum.SUCCESS);
+                            let count = rowData.length;
+                            let name = count > 1? this._getPluralName(): this._getName();
+                            this._setConfirmDeleteDialog(`Delete ${count} selected ${name}?`,
+                                () => {
+                                let pk = [];
+                                for (let i=0; i < rowData.length; i++) {
+                                    pk.push(rowData[i][this.state.metadata.pk_name]);
                                 }
-                                else {
-                                    this._setToastNotification(json, AlertSeverityEnum.ERROR);
-                                }
+                                let result = deleteBulk(this._getRegisterName(), pk);
+                                result.then(([json, ok]) => {
+                                    if (ok) {
+                                        if (this.TABLE_REF && this.TABLE_REF.current &&
+                                            this.TABLE_REF.current.state) {
+                                            this.TABLE_REF.current.onQueryChange(
+                                                this.TABLE_REF.current.state.query);
+                                        }
+                                        let message = count > 1? `${name} have`: `${name} has`;
+                                        this._setToastNotification(
+                                            `${message} been deleted successfully.`, AlertSeverityEnum.SUCCESS);
+                                    }
+                                    else {
+                                        this._setToastNotification(json, AlertSeverityEnum.ERROR);
+                                    }
+                                });
                             });
-                        }
+                        },
                     },
                     {
                         icon: 'edit',

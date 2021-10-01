@@ -175,7 +175,7 @@ export class FormBase extends BaseComponent {
                                                             this._setToastNotification(json, AlertSeverityEnum.ERROR);
                                                         }
                                                     });
-                                                })
+                                                });
                                         }}
                                         disabled={props.isSubmitting || !this.props.hasDeletePermission}
                                         size='large'>
