@@ -107,7 +107,6 @@ export class FormBase extends BaseComponent {
                 validateOnChange={false}
                 validateOnBlur={false}
                 validateOnMount={false}
-                isInitialValid={true}
                 onSubmit={(values, {setSubmitting, setFieldError}) => {
                     values = this._getFilledValues(values);
                     if (!this._isAnythingChanged(values)) {

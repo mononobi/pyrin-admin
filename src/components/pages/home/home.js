@@ -5,10 +5,10 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Link from '@material-ui/core/Link';
-import { v4 as uuidv4 } from 'uuid'
 import { getMainMetadata } from '../../../services/metadata';
 import { getListPage, getCreatePage } from '../../../services/url';
 import { BaseComplexPage, BasePage } from '../base/base';
+import { AlertSeverityEnum } from '../../../core/enumerations';
 import './home.css';
 
 
@@ -47,10 +47,10 @@ class PageListComponent extends BasePage {
 
     _render() {
         return (
-            this.props.pages.map(category => {
+            this.props.pages.map((category, index) => {
                 let category_name = Object.keys(category)[0];
                 return (
-                    <div className='pages' key={uuidv4()}>
+                    <div className='pages' key={index}>
                         <div className='category'>{category_name}</div>
                         <List component='nav' dense={true}>
                             {
@@ -84,11 +84,14 @@ export class HomeComponent extends BaseComplexPage {
         return json.results;
     }
 
-    _finalRender() {
-        if (this.state.metadata.length <= 0) {
-            return <h3>No admin pages are registered on the server!</h3>
+    _prepareMetadata(metadata) {
+        if (metadata.length <= 0) {
+            this._setBannerNotification('No admin pages are registered on the server!',
+                AlertSeverityEnum.INFO)
         }
+    }
 
+    _finalRender() {
         return <PageListComponent pages={this.state.metadata}/>
     }
 }
