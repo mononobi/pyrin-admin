@@ -3,7 +3,7 @@ import { STATE_KEY_HOLDER } from '../core/state';
 
 
 export function getListPage(registerName, stateKey=null) {
-    return `${CONFIGS.panel_home_path}/${registerName}${Boolean(stateKey)? `?${STATE_KEY_HOLDER}=${stateKey}`: ''}`;
+    return `${CONFIGS.panel_home_path}/${registerName}${Boolean(stateKey) ? `?${STATE_KEY_HOLDER}=${stateKey}`: ''}`;
 }
 
 export function getCreatePage(registerName) {
