@@ -36,6 +36,7 @@ export class ListComponent extends BaseComplexPage {
         if (query[STATE_KEY_HOLDER] !== undefined) {
             let currentURL = `${this.props.location.pathname}${this.props.location.search}`;
             let originalURL = QUERY_STRING.exclude(currentURL, [STATE_KEY_HOLDER]);
+            this.props.history.replace(originalURL, currentURL);
             this.props.history.push(originalURL);
         }
     }
@@ -236,7 +237,7 @@ export class ListComponent extends BaseComplexPage {
                                             this.TABLE_REF.current.onQueryChange(
                                                 this.TABLE_REF.current.state.query);
                                         }
-                                        let message = count > 1? `${name} have`: `${name} has`;
+                                        let message = count > 1? `${count} ${name} have`: `${count} ${name} has`;
                                         this._setToastNotification(
                                             `${message} been deleted successfully.`, AlertSeverityEnum.SUCCESS);
                                     }
