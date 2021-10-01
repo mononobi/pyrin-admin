@@ -12,7 +12,7 @@ export class App extends BaseComponent {
   }
 
   _render() {
-    return (
+      return (
         <BrowserRouter>
           <Switch>
             <Route key='-1' exact path='/'>
