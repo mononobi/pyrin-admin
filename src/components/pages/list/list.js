@@ -7,8 +7,10 @@ import { getFindMetadata } from '../../../services/metadata';
 import { deleteAll, deleteBulk, find } from '../../../services/data';
 import { getCreatePage, getUpdatePage } from '../../../services/url';
 import { BaseComplexPage } from '../base/base';
-import { AlertSeverityEnum, TargetEnum } from '../../../core/enumerations';
-import './list.css'
+import { AlertSeverityEnum } from '../../../core/enumerations';
+import { QUERY_STRING } from '../../../core/helpers';
+import { getGlobalState, STATE_KEY_HOLDER } from '../../../core/state';
+import './list.css';
 
 
 export class ListComponent extends BaseComplexPage {
@@ -20,6 +22,22 @@ export class ListComponent extends BaseComplexPage {
     _fetchMetadata()
     {
         return getFindMetadata(this.props.match.params.register_name);
+    }
+
+    _componentDidMount() {
+        let query = QUERY_STRING.parse(this.props.location.search);
+        if (query && query[STATE_KEY_HOLDER]) {
+            let message = getGlobalState(query[STATE_KEY_HOLDER]);
+            if (message) {
+                this._setToastNotification(message, AlertSeverityEnum.SUCCESS);
+            }
+        }
+
+        if (query[STATE_KEY_HOLDER] !== undefined) {
+            let currentURL = `${this.props.location.pathname}${this.props.location.search}`;
+            let originalURL = QUERY_STRING.exclude(currentURL, [STATE_KEY_HOLDER]);
+            this.props.history.push(originalURL);
+        }
     }
 
     _renderPK(info, metadata) {
@@ -35,8 +53,10 @@ export class ListComponent extends BaseComplexPage {
                     value = info.lookup[value];
                 }
                 return (
-                    <Link component='a' underline='hover' target={TargetEnum.SAME_TAB}
-                          href={getUpdatePage(info.pk_register_name, rowData[info.field])}>
+                    <Link component='a' underline='hover' className='link'
+                          onClick={() => {
+                              this.props.history.push(getUpdatePage(info.pk_register_name, rowData[info.field]));
+                          }}>
                         {value}
                     </Link>
                 )
@@ -56,8 +76,10 @@ export class ListComponent extends BaseComplexPage {
                     value = info.lookup[value]
                 }
                 return (
-                    <Link component='a' underline='hover' target={TargetEnum.SAME_TAB}
-                          href={getUpdatePage(info.fk_register_name, rowData[info.field])}>
+                    <Link component='a' underline='hover' className='link'
+                          onClick={() => {
+                              this.props.history.push(getUpdatePage(info.fk_register_name, rowData[info.field]));
+                          }}>
                         {value}
                     </Link>
                 )
@@ -161,8 +183,7 @@ export class ListComponent extends BaseComplexPage {
                         hidden: !this.state.metadata.has_create_permission,
                         isFreeAction: true,
                         onClick: event => {
-                            let url = getCreatePage(this._getRegisterName());
-                            window.open(url, TargetEnum.SAME_TAB);
+                            this.props.history.push(getCreatePage(this._getRegisterName()));
                         }
                     },
                     {
@@ -233,9 +254,8 @@ export class ListComponent extends BaseComplexPage {
                         position: 'row',
                         hidden: !this.state.metadata.has_get_permission,
                         onClick: (event, rowData) => {
-                            let url = getUpdatePage(this._getRegisterName(),
-                                rowData[this.state.metadata.pk_name]);
-                            window.open(url, TargetEnum.SAME_TAB);
+                            let url = getUpdatePage(this._getRegisterName(), rowData[this.state.metadata.pk_name]);
+                            this.props.history.push(url);
                         }
                     }
                 ]}

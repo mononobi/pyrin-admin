@@ -94,7 +94,7 @@ export class ComplexComponent extends BaseComponent {
             }
         });
 
-        super._componentDidMount();
+        this._componentDidMount();
     }
 
     _prepareMetadata(metadata) {}

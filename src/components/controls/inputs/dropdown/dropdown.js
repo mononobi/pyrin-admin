@@ -4,7 +4,7 @@ import { FormControl, InputLabel, MenuItem } from '@material-ui/core';
 import { BaseInput } from '../base/base';
 import { INPUT_MARGIN, INPUT_SIZE, INPUT_VARIANT } from '../globals/constants';
 import '../globals/styles/inputs.css';
-import './dropdown.css'
+import './dropdown.css';
 
 
 export class DropDown extends BaseInput {

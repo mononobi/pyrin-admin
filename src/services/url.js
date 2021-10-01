@@ -1,8 +1,9 @@
 import { CONFIGS } from '../core/configs';
+import { STATE_KEY_HOLDER } from '../core/state';
 
 
-export function getListPage(registerName) {
-    return `${CONFIGS.panel_home_path}/${registerName}`;
+export function getListPage(registerName, stateKey=null) {
+    return `${CONFIGS.panel_home_path}/${registerName}${Boolean(stateKey)? `?${STATE_KEY_HOLDER}=${stateKey}`: ''}`;
 }
 
 export function getCreatePage(registerName) {

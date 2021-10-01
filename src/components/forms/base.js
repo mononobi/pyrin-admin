@@ -7,11 +7,12 @@ import { BaseComponent } from '../base/base/base';
 import { getValidator } from '../../validators/provider';
 import { NotImplementedError } from '../../core/exceptions';
 import { getListPage } from '../../services/url';
-import { AlertSeverityEnum, TargetEnum } from '../../core/enumerations';
+import { AlertSeverityEnum } from '../../core/enumerations';
 import { DELETE_BUTTON_COLOR, DELETE_TEXT_COLOR } from '../controls/inputs/globals/constants';
 import { ServerFormFieldTypeEnum } from '../controls/inputs/globals/enumerations';
 import { delete_ } from '../../services/data';
-import './base.css'
+import { setGlobalState } from '../../core/state';
+import './base.css';
 
 
 export class FormBase extends BaseComponent {
@@ -118,7 +119,15 @@ export class FormBase extends BaseComponent {
                     setSubmitting(false);
                     result.then(([json, ok]) => {
                         if (ok) {
-                            window.open(getListPage(this.props.register_name), TargetEnum.SAME_TAB);
+                            let message = null;
+                            if (this.FOR_UPDATE) {
+                                message = `${this.props.name} [${this.props.pk}] has been updated successfully.`;
+                            }
+                            else {
+                                message = `A new ${this.props.name} has been added successfully.`;
+                            }
+                            let key = setGlobalState(message);
+                            this.props.history.push(getListPage(this.props.register_name, key));
                         }
                         else {
                             if (json.data && Object.keys(json.data).length > 0) {
@@ -168,8 +177,10 @@ export class FormBase extends BaseComponent {
                                                     let result = delete_(this.props.register_name, this.props.pk);
                                                     result.then(([json, ok]) => {
                                                         if (ok) {
-                                                            window.open(getListPage(this.props.register_name),
-                                                                TargetEnum.SAME_TAB);
+                                                            let key =
+                                                                setGlobalState(
+                                                                    `${this.props.name} [${this.props.pk}] has been deleted successfully.`);
+                                                            this.props.history.push(getListPage(this.props.register_name, key));
                                                         }
                                                         else {
                                                             this._setToastNotification(json, AlertSeverityEnum.ERROR);
