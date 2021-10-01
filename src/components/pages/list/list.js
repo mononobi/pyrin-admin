@@ -37,7 +37,6 @@ export class ListComponent extends BaseComplexPage {
             let currentURL = `${this.props.location.pathname}${this.props.location.search}`;
             let originalURL = QUERY_STRING.exclude(currentURL, [STATE_KEY_HOLDER]);
             this.props.history.replace(originalURL, currentURL);
-            this.props.history.push(originalURL);
         }
     }
 

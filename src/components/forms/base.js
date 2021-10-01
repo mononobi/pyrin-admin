@@ -179,7 +179,9 @@ export class FormBase extends BaseComponent {
                                                             let key =
                                                                 setGlobalState(
                                                                     `${this.props.name} [${this.props.pk}] has been deleted successfully.`);
-                                                            this.props.history.push(getListPage(this.props.register_name, key));
+                                                            this.props.history.replace(
+                                                                getListPage(this.props.register_name, key),
+                                                                this.props.location.pathname);
                                                         }
                                                         else {
                                                             this._setToastNotification(json, AlertSeverityEnum.ERROR);

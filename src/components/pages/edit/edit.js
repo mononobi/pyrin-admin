@@ -39,6 +39,7 @@ export class EditComponent extends BaseComplexPage {
                 <UpdateForm register_name={this._getRegisterName()}
                             name={this._getName()}
                             history={this.props.history}
+                            location={this.props.location}
                             dataFields={this.state.metadata.data_fields}
                             dataFieldsDict={this.state.metadata.data_fields_dict}
                             pk={this.props.match.params.pk}
