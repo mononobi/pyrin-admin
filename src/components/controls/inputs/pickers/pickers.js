@@ -1,6 +1,7 @@
 import React from 'react';
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
+import { Schedule } from '@material-ui/icons';
 import {
     MuiPickersUtilsProvider, KeyboardDatePicker, KeyboardDateTimePicker, KeyboardTimePicker
 } from '@material-ui/pickers';
@@ -101,6 +102,7 @@ export class TimePicker extends BasePicker {
                     error={this.props.error}
                     helperText={this.props.helperText}
                     FormHelperTextProps={{style: HELPER_TEXT_STYLE, margin: 'dense'}}
+                    keyboardIcon={<Schedule fontSize={'medium'}/>}
                 />
             </MuiPickersUtilsProvider>
         );
