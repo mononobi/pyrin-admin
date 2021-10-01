@@ -13,3 +13,15 @@ export const AlertTypeEnum = {
 };
 
 Object.freeze(AlertTypeEnum);
+
+export const ListFieldTypeEnum = {
+    BOOLEAN: 'boolean',
+    NUMERIC: 'numeric',
+    DATE: 'date',
+    DATETIME: 'datetime',
+    TIME: 'time',
+    STRING: 'string',
+    CURRENCY: 'currency'
+};
+
+Object.freeze(ListFieldTypeEnum);

@@ -7,9 +7,10 @@ import { getFindMetadata } from '../../../services/metadata';
 import { deleteAll, deleteBulk, find } from '../../../services/data';
 import { getCreatePage, getUpdatePage } from '../../../services/url';
 import { BaseComplexPage } from '../base/base';
-import { AlertSeverityEnum } from '../../../core/enumerations';
+import { AlertSeverityEnum, ListFieldTypeEnum } from '../../../core/enumerations';
 import { QUERY_STRING } from '../../../core/helpers';
 import { getGlobalState, STATE_KEY_HOLDER } from '../../../core/state';
+import { formatDate, formatDateTime, formatTime } from '../../../core/datetime';
 import './list.css';
 
 
@@ -99,6 +100,27 @@ export class ListComponent extends BaseComplexPage {
         }
     }
 
+    _renderDateTime(info, metadata) {
+        info.render = rowData => {
+            let value = rowData[info.field];
+            return formatDateTime(value);
+        }
+    }
+
+    _renderDate(info, metadata) {
+        info.render = rowData => {
+            let value = rowData[info.field];
+            return formatDate(value);
+        }
+    }
+
+    _renderTime(info, metadata) {
+        info.render = rowData => {
+            let value = rowData[info.field];
+            return formatTime(value);
+        }
+    }
+
     _prepareMetadata(metadata) {
         for (let i = 0; i < metadata.datasource_info.length; i++) {
             let info = metadata.datasource_info[i];
@@ -109,8 +131,17 @@ export class ListComponent extends BaseComplexPage {
                 else if (info.is_fk) {
                     this._renderFK(info, metadata);
                 }
-                else if (info.type === 'boolean') {
+                else if (info.type === ListFieldTypeEnum.BOOLEAN) {
                     this._renderBoolean(info, metadata);
+                }
+                else if (info.type === ListFieldTypeEnum.DATETIME) {
+                    this._renderDateTime(info, metadata);
+                }
+                else if (info.type === ListFieldTypeEnum.DATE) {
+                    this._renderDate(info, metadata);
+                }
+                else if (info.type === ListFieldTypeEnum.TIME) {
+                    this._renderTime(info, metadata);
                 }
             }
         }
@@ -263,6 +294,11 @@ export class ListComponent extends BaseComplexPage {
                     header: {
                         actions: ''
                     },
+                    toolbar: {
+                        nRowsSelected: count => {
+                            return count > 1? `${count} rows selected`: `${count} row selected`;
+                        }
+                    }
                 }}
             />
         )
