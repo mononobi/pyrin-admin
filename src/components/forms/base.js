@@ -155,7 +155,7 @@ export class FormBase extends BaseComponent {
                                                 props.touched[info.field] && Boolean(props.errors[info.field]),
                                                 props.touched[info.field] && props.errors[info.field],
                                                 props.isSubmitting || !this.props.hasSavePermission,
-                                                this.FOR_UPDATE)
+                                                this.FOR_UPDATE, props.setFieldValue)
                                         }
                                     </div>
                                 )

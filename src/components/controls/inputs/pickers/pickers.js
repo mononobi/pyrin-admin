@@ -17,7 +17,14 @@ import {
 import '../globals/styles/inputs.css';
 
 
-export class DatePicker extends BaseInput {
+class BasePicker extends BaseInput {
+
+    _getValue() {
+        return this.props.value || null;
+    }
+}
+
+export class DatePicker extends BasePicker {
 
     _renderControl() {
         return (
@@ -40,20 +47,25 @@ export class DatePicker extends BaseInput {
                     InputProps={{
                         autoComplete: AutoCompleteEnum.OFF
                     }}
+                    InputLabelProps={{
+                        shrink: this._getValue() ? true : undefined,
+                    }}
                     disabled={this._isReadOnly()}
                     name={this._getFieldName()}
-                    value={this.props.value}
-                    onChange={this.props.onChange}
+                    value={this._getValue()}
+                    onChange={(date, string) => {
+                        this.props.setFieldValue(this._getFieldName(), date);
+                    }}
                     error={this.props.error}
                     helperText={this.props.helperText}
                     FormHelperTextProps={{style: HELPER_TEXT_STYLE, margin: 'dense'}}
                 />
             </MuiPickersUtilsProvider>
-        )
+        );
     }
 }
 
-export class TimePicker extends BaseInput {
+export class TimePicker extends BasePicker {
 
     _renderControl() {
         return (
@@ -77,20 +89,25 @@ export class TimePicker extends BaseInput {
                     InputProps={{
                         autoComplete: AutoCompleteEnum.OFF
                     }}
+                    InputLabelProps={{
+                        shrink: this._getValue() ? true : undefined,
+                    }}
                     disabled={this._isReadOnly()}
                     name={this._getFieldName()}
-                    value={this.props.value}
-                    onChange={this.props.onChange}
+                    value={this._getValue()}
+                    onChange={(time, string) => {
+                        this.props.setFieldValue(this._getFieldName(), time);
+                    }}
                     error={this.props.error}
                     helperText={this.props.helperText}
                     FormHelperTextProps={{style: HELPER_TEXT_STYLE, margin: 'dense'}}
                 />
             </MuiPickersUtilsProvider>
-        )
+        );
     }
 }
 
-export class DateTimePicker extends BaseInput {
+export class DateTimePicker extends BasePicker {
 
     _renderControl() {
         return (
@@ -114,15 +131,20 @@ export class DateTimePicker extends BaseInput {
                     InputProps={{
                         autoComplete: AutoCompleteEnum.OFF
                     }}
+                    InputLabelProps={{
+                        shrink: this._getValue() ? true : undefined,
+                    }}
                     disabled={this._isReadOnly()}
                     name={this._getFieldName()}
-                    value={this.props.value}
-                    onChange={this.props.onChange}
+                    value={this._getValue()}
+                    onChange={(datetime, string) => {
+                        this.props.setFieldValue(this._getFieldName(), datetime);
+                    }}
                     error={this.props.error}
                     helperText={this.props.helperText}
                     FormHelperTextProps={{style: HELPER_TEXT_STYLE, margin: 'dense'}}
                 />
             </MuiPickersUtilsProvider>
-        )
+        );
     }
 }
