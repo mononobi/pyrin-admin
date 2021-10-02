@@ -12,6 +12,7 @@ import { DELETE_BUTTON_COLOR, DELETE_TEXT_COLOR } from '../controls/inputs/globa
 import { ServerFormFieldTypeEnum } from '../controls/inputs/globals/enumerations';
 import { delete_ } from '../../services/data';
 import { setGlobalState } from '../../core/state';
+import { JSTypeEnum } from '../../validators/enumerations';
 import './base.css';
 
 
@@ -42,6 +43,9 @@ export class FormBase extends BaseComponent {
             return true;
         }
         let oldValue = this.state.initialValues[name];
+        if (typeof oldValue === JSTypeEnum.NUMBER && typeof value === JSTypeEnum.STRING) {
+            return oldValue.toString() !== value;
+        }
         return oldValue !== value;
     }
 
@@ -101,6 +105,10 @@ export class FormBase extends BaseComponent {
                             }
                         }
                     }
+                    if(Object.keys(result).length > 0) {
+                        this._setToastNotification('Please correct the specified values.',
+                            AlertSeverityEnum.ERROR);
+                    }
                     return result;
                 }}
                 enableReinitialize={false}
@@ -133,6 +141,8 @@ export class FormBase extends BaseComponent {
                                 for (const [name, message] of Object.entries(json.data)) {
                                     setFieldError(name, message);
                                 }
+                                this._setToastNotification('Please correct the specified values.',
+                                    AlertSeverityEnum.ERROR);
                             }
                             else {
                                 this._setToastNotification(json, AlertSeverityEnum.ERROR);
