@@ -1,5 +1,5 @@
 .button-container {
-    padding: 10px;
+    padding: 20px 30px;
     background-color: rgba(228,233,245,0.46);
     display: flex;
     justify-content: flex-end
@@ -8,4 +8,9 @@
 .button {
     height: 34px;
     width: 100px;
+}
+
+.form-controls-container {
+    padding-top: 12px;
+    padding-bottom: 14px;
 }

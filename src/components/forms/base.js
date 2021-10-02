@@ -143,6 +143,7 @@ export class FormBase extends BaseComponent {
             >
                 {(props) => (
                     <Form onSubmit={props.handleSubmit}>
+                        <div className='form-controls-container'>
                         {
                             this.props.dataFields.map(info => {
                                 return (
@@ -161,6 +162,7 @@ export class FormBase extends BaseComponent {
                                 )
                             })
                         }
+                        </div>
                         <Stack direction='row' spacing={2} className='button-container'>
                             {
                                 this.FOR_UPDATE && this.props.hasDeletePermission && (
