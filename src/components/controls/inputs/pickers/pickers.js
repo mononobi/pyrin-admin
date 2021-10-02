@@ -8,6 +8,7 @@ import {
 import { BaseInput } from '../base/base';
 import { AutoCompleteEnum } from '../globals/enumerations';
 import { INPUT_MARGIN, INPUT_VARIANT } from '../globals/constants';
+import { isValidDate } from '../../../../core/datetime';
 import { HELPER_TEXT_STYLE } from '../globals/styles/inputs';
 import {
     INPUT_DATE_FORMAT, INPUT_DATETIME_FORMAT, INPUT_PICKER_VARIANT, INPUT_TIME_FORMAT,
@@ -55,7 +56,8 @@ export class DatePicker extends BasePicker {
                     name={this._getFieldName()}
                     value={this._getValue()}
                     onChange={(date, string) => {
-                        this.props.setFieldValue(this._getFieldName(), date);
+                        let value = isValidDate(date) ? date.toDateString() : string;
+                        this.props.setFieldValue(this._getFieldName(), value);
                     }}
                     error={this.props.error}
                     helperText={this.props.helperText}
@@ -97,7 +99,8 @@ export class TimePicker extends BasePicker {
                     name={this._getFieldName()}
                     value={this._getValue()}
                     onChange={(time, string) => {
-                        this.props.setFieldValue(this._getFieldName(), time);
+                        let value = isValidDate(time) ? time.toTimeString() : string;
+                        this.props.setFieldValue(this._getFieldName(), value);
                     }}
                     error={this.props.error}
                     helperText={this.props.helperText}
@@ -140,7 +143,8 @@ export class DateTimePicker extends BasePicker {
                     name={this._getFieldName()}
                     value={this._getValue()}
                     onChange={(datetime, string) => {
-                        this.props.setFieldValue(this._getFieldName(), datetime);
+                        let value = isValidDate(datetime) ? datetime.toISOString() : string;
+                        this.props.setFieldValue(this._getFieldName(), value);
                     }}
                     error={this.props.error}
                     helperText={this.props.helperText}

@@ -15,3 +15,16 @@ export function formatTime(time, format, locale) {
     let options = {...format, timeZone: getClientTimezone()};
     return new Date(time).toLocaleTimeString(locale || [], options);
 }
+
+export function isValidDate(value) {
+    if (!value) {
+        return false;
+    }
+
+    if (Object.prototype.toString.call(value) === '[object Date]') {
+        return !isNaN(value.getTime());
+    }
+    else {
+        return false;
+    }
+}
