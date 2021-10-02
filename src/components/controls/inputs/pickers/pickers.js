@@ -8,7 +8,7 @@ import {
 import { BaseInput } from '../base/base';
 import { AutoCompleteEnum } from '../globals/enumerations';
 import { INPUT_MARGIN, INPUT_VARIANT } from '../globals/constants';
-import { isValidDate } from '../../../../core/datetime';
+import { getDateString, getDateTimeString, isValidDate } from '../../../../core/datetime';
 import { HELPER_TEXT_STYLE } from '../globals/styles/inputs';
 import {
     INPUT_DATE_FORMAT, INPUT_DATETIME_FORMAT, INPUT_PICKER_VARIANT, INPUT_TIME_FORMAT,
@@ -56,7 +56,7 @@ export class DatePicker extends BasePicker {
                     name={this._getFieldName()}
                     value={this._getValue()}
                     onChange={(date, string) => {
-                        let value = isValidDate(date) ? date.toDateString() : string;
+                        let value = isValidDate(date) ? getDateString(date) : string;
                         this.props.setFieldValue(this._getFieldName(), value);
                     }}
                     error={this.props.error}
@@ -99,7 +99,7 @@ export class TimePicker extends BasePicker {
                     name={this._getFieldName()}
                     value={this._getValue()}
                     onChange={(time, string) => {
-                        let value = isValidDate(time) ? time.toTimeString() : string;
+                        let value = isValidDate(time) ? time : string;
                         this.props.setFieldValue(this._getFieldName(), value);
                     }}
                     error={this.props.error}
@@ -143,7 +143,7 @@ export class DateTimePicker extends BasePicker {
                     name={this._getFieldName()}
                     value={this._getValue()}
                     onChange={(datetime, string) => {
-                        let value = isValidDate(datetime) ? datetime.toISOString() : string;
+                        let value = isValidDate(datetime) ? getDateTimeString(datetime) : string;
                         this.props.setFieldValue(this._getFieldName(), value);
                     }}
                     error={this.props.error}

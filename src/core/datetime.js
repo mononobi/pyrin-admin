@@ -1,4 +1,4 @@
-function getClientTimezone() {
+export function getClientTimezone() {
     return Intl.DateTimeFormat().resolvedOptions().timeZone || undefined;
 }
 
@@ -27,4 +27,16 @@ export function isValidDate(value) {
     else {
         return false;
     }
+}
+
+export function getTimeString(time) {
+    return `${time.getHours().toString().padStart(2, '0')}:${time.getMinutes().toString().padStart(2, '0')}:${time.getSeconds().toString().padStart(2, '0')}`;
+}
+
+export function getDateString(date) {
+    return `${date.getFullYear().toString().padStart(4, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+}
+
+export function getDateTimeString(datetime) {
+    return `${getDateString(datetime)}T${getTimeString(datetime)}`;
 }

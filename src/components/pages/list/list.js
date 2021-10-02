@@ -8,7 +8,7 @@ import { deleteAll, deleteBulk, find } from '../../../services/data';
 import { getCreatePage, getUpdatePage } from '../../../services/url';
 import { BaseComplexPage } from '../base/base';
 import { AlertSeverityEnum, ListFieldTypeEnum } from '../../../core/enumerations';
-import { QUERY_STRING } from '../../../core/helpers';
+import { QUERY_STRING } from '../../../core/query_string';
 import { getGlobalState, STATE_KEY_HOLDER } from '../../../core/state';
 import { formatDate, formatDateTime, formatTime } from '../../../core/datetime';
 import './list.css';
