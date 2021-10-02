@@ -23,7 +23,7 @@ function fetchResponse(request) {
     });
 }
 
-export function loadConfigs() {
+function loadConfigs() {
     let response = fetchResponse(axios.get('metadata/configs/'));
     response.then(([json, ok]) => {
         if (!ok) {
