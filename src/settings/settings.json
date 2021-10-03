@@ -3,10 +3,5 @@
   "panel_name": "Admin Panel",
   "admin_api": "http://127.0.0.1:5000/admin/api/",
   "api_timeout": 5000,
-  "page_key": "page",
-  "page_size_key": "page_size",
-  "ordering_key": "order_by",
-  "query_param": "_query_",
-  "locale_key": "lc",
-  "timezone_key": "tz"
+  "api_locale": "en"
 }
