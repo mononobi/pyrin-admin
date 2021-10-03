@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { addTimezoneQueryParam } from '../core/query_string';
+import { addCommonQueryParams } from '../core/query_string';
 
 
 function fetchResponse(request) {
@@ -19,30 +19,30 @@ function getRequestHeaders() {
     return {'Content-Type': 'multipart/form-data'};
 }
 
-export function post(url, data, addTimezone=true) {
-    if (addTimezone) {
-        url = addTimezoneQueryParam(url);
+export function post(url, data, addCommonQuery=true) {
+    if (addCommonQuery) {
+        url = addCommonQueryParams(url);
     }
     return fetchResponse(axios.post(url, data, { headers: getRequestHeaders()}));
 }
 
-export function patch(url, data, addTimezone=true) {
-    if (addTimezone) {
-        url = addTimezoneQueryParam(url);
+export function patch(url, data, addCommonQuery=true) {
+    if (addCommonQuery) {
+        url = addCommonQueryParams(url);
     }
     return fetchResponse(axios.patch(url, data, { headers: getRequestHeaders()}));
 }
 
-export function get(url, addTimezone=true) {
-    if (addTimezone) {
-        url = addTimezoneQueryParam(url);
+export function get(url, addCommonQuery=true) {
+    if (addCommonQuery) {
+        url = addCommonQueryParams(url);
     }
     return fetchResponse(axios.get(url));
 }
 
-export function delete_(url, addTimezone=true) {
-    if (addTimezone) {
-        url = addTimezoneQueryParam(url);
+export function delete_(url, addCommonQuery=true) {
+    if (addCommonQuery) {
+        url = addCommonQueryParams(url);
     }
     return fetchResponse(axios.delete(url));
 }

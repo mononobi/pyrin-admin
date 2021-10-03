@@ -1,11 +1,14 @@
-import { CONFIGS } from '../core/configs';
 import * as request from './request';
+import { addOrderingQueryParam, addPagingQueryParam,
+    addQueryParams, addSearchQueryParam
+} from '../core/query_string';
 
 
 export function find(registerName, page=null,
                      pageSize=null, orderBy=null,
                      orderDirection='asc', search=null) {
-    let url = `${registerName}/?${CONFIGS.page_key}=${page}&${CONFIGS.page_size_key}=${pageSize}`;
+    let url = `${registerName}/`;
+    url = addPagingQueryParam(url, page, pageSize);
     if (orderBy) {
         let name = orderBy.field;
         if (name) {
@@ -14,11 +17,11 @@ export function find(registerName, page=null,
                 sign = '-';
             }
             name = `${sign}${name}`;
-            url = `${url}&${CONFIGS.ordering_key}=${name}`;
+            url = addOrderingQueryParam(url, name);
         }
     }
     if (search) {
-        url = `${url}&${CONFIGS.query_param}=${search}`
+        url = addSearchQueryParam(url, search);
     }
 
     return request.get(url);
@@ -60,16 +63,8 @@ export function deleteAll(registerName) {
 }
 
 export function deleteBulk(registerName, primaryKeys) {
-    let url = `${registerName}/bulk/?`;
-    let pk = '';
-    for (let i = 0; i < primaryKeys.length; i++) {
-        if (i === 0) {
-            pk = `${pk}pk=${primaryKeys[i]}`;
-        }
-        else {
-            pk = `${pk}&pk=${primaryKeys[i]}`;
-        }
-    }
-    url = `${url}${pk}`;
+    let url = `${registerName}/bulk/`;
+    let query = {pk: primaryKeys};
+    url = addQueryParams(url, query);
     return request.delete_(url);
 }
