@@ -258,7 +258,7 @@ export class ListComponent extends BaseComplexPage {
                                 () => {
                                 let pk = [];
                                 for (let i=0; i < rowData.length; i++) {
-                                    pk.push(rowData[i][this.state.metadata.pk_name]);
+                                    pk.push(rowData[i][this.state.metadata.configs.hidden_pk_name]);
                                 }
                                 let result = deleteBulk(this._getRegisterName(), pk);
                                 result.then(([json, ok]) => {
@@ -286,7 +286,8 @@ export class ListComponent extends BaseComplexPage {
                         position: 'row',
                         hidden: !this.state.metadata.has_get_permission,
                         onClick: (event, rowData) => {
-                            let url = getUpdatePage(this._getRegisterName(), rowData[this.state.metadata.pk_name]);
+                            let url = getUpdatePage(this._getRegisterName(),
+                                rowData[this.state.metadata.configs.hidden_pk_name]);
                             this.props.history.push(url);
                         }
                     }

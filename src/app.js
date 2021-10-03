@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import { CONFIGS, getConfigs } from './core/configs';
+import { CONFIGS } from './core/configs';
 import { ROUTES } from './routing/routes';
 import { BaseComponent } from './components/base/base/base';
 
@@ -9,10 +9,6 @@ export class App extends BaseComponent {
 
   state = {
       authenticated: true
-  }
-
-  _componentDidMount() {
-      getConfigs();
   }
 
   _render() {

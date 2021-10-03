@@ -1,4 +1,5 @@
 import axios from 'axios';
+import * as storage from './local_storage';
 
 
 const CONFIGS_KEY = 'configs';
@@ -30,26 +31,26 @@ function loadConfigs() {
             console.error(`Failed to fetch configs from server: ${JSON.stringify(json)}`);
         }
         else {
-            localStorage.setItem(CONFIGS_KEY, JSON.stringify(json));
+            storage.set(CONFIGS_KEY, JSON.stringify(json));
         }
     });
 }
 
 export function getConfigs() {
-    let configs = localStorage.getItem(CONFIGS_KEY);
-    if (!configs) {
-        loadConfigs();
-        return {};
-    }
-    else {
+    let configs = storage.get(CONFIGS_KEY);
+    if (configs) {
         try {
             configs = JSON.parse(configs);
             return configs;
         }
         catch (error) {
-            console.error(`Failed to load configs from local storage: ${error}`);
-            loadConfigs();
+            console.error(`Failed to parse configs from local storage: ${error}`);
         }
     }
+    loadConfigs();
     return {};
+}
+
+export function setConfigs(configs) {
+    storage.set(CONFIGS_KEY, JSON.stringify(configs));
 }

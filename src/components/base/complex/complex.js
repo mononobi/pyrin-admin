@@ -3,6 +3,7 @@ import { NotImplementedError } from '../../../core/exceptions';
 import { BaseComponent } from '../base/base';
 import { ProgressBar } from '../../controls/progress/progress';
 import { AlertSeverityEnum } from '../../../core/enumerations';
+import { setConfigs } from '../../../core/configs';
 
 
 export class ComplexComponent extends BaseComponent {
@@ -59,6 +60,7 @@ export class ComplexComponent extends BaseComponent {
                 this._setBannerNotification(json, AlertSeverityEnum.ERROR);
             }
             else {
+                setConfigs(json.configs);
                 let info = this._getMetadata(json);
                 this._prepareMetadata(info);
                 // we should set metadata directly to prevent early re-rendering.

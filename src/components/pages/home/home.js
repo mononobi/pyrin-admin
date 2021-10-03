@@ -69,29 +69,19 @@ class PageListComponent extends BasePage {
 
 export class HomeComponent extends BaseComplexPage {
 
-    state = {
-        metadata: [],
-        isMetadataLoaded: false
-    }
-
     _fetchMetadata()
     {
         return getMainMetadata();
     }
 
-    _getMetadata(json)
-    {
-        return json.results;
-    }
-
     _prepareMetadata(metadata) {
-        if (metadata.length <= 0) {
+        if (metadata.pages.length <= 0) {
             this._setBannerNotification('No admin pages are registered on the server!',
                 AlertSeverityEnum.INFO)
         }
     }
 
     _finalRender() {
-        return <PageListComponent pages={this.state.metadata}/>
+        return <PageListComponent pages={this.state.metadata.pages}/>
     }
 }

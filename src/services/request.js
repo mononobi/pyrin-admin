@@ -19,22 +19,30 @@ function getRequestHeaders() {
     return {'Content-Type': 'multipart/form-data'};
 }
 
-export function post(url, data) {
-    url = addTimezoneQueryParam(url);
+export function post(url, data, addTimezone=true) {
+    if (addTimezone) {
+        url = addTimezoneQueryParam(url);
+    }
     return fetchResponse(axios.post(url, data, { headers: getRequestHeaders()}));
 }
 
-export function patch(url, data) {
-    url = addTimezoneQueryParam(url);
+export function patch(url, data, addTimezone=true) {
+    if (addTimezone) {
+        url = addTimezoneQueryParam(url);
+    }
     return fetchResponse(axios.patch(url, data, { headers: getRequestHeaders()}));
 }
 
-export function get(url) {
-    url = addTimezoneQueryParam(url);
+export function get(url, addTimezone=true) {
+    if (addTimezone) {
+        url = addTimezoneQueryParam(url);
+    }
     return fetchResponse(axios.get(url));
 }
 
-export function delete_(url) {
-    url = addTimezoneQueryParam(url);
+export function delete_(url, addTimezone=true) {
+    if (addTimezone) {
+        url = addTimezoneQueryParam(url);
+    }
     return fetchResponse(axios.delete(url));
 }
