@@ -3,13 +3,13 @@ import { StringValidator } from './string';
 import { IntegerValidator, NumberValidator } from './number';
 import { EmailValidator } from './email';
 import { IPV4Validator, IPV6Validator } from './ip';
+import { DateTimeValidator, DateValidator, TimeValidator } from './datetime';
 
 
 const VALIDATOR_MAP = {};
-VALIDATOR_MAP[ServerFormFieldTypeEnum.BOOLEAN] = null;
-VALIDATOR_MAP[ServerFormFieldTypeEnum.DATE] = null;
-VALIDATOR_MAP[ServerFormFieldTypeEnum.DATETIME] = null;
-VALIDATOR_MAP[ServerFormFieldTypeEnum.TIME] = null;
+VALIDATOR_MAP[ServerFormFieldTypeEnum.DATE] = DateValidator;
+VALIDATOR_MAP[ServerFormFieldTypeEnum.DATETIME] = DateTimeValidator;
+VALIDATOR_MAP[ServerFormFieldTypeEnum.TIME] = TimeValidator;
 VALIDATOR_MAP[ServerFormFieldTypeEnum.EMAIL] = EmailValidator;
 VALIDATOR_MAP[ServerFormFieldTypeEnum.FILE] = null;
 VALIDATOR_MAP[ServerFormFieldTypeEnum.NUMBER] = NumberValidator;
@@ -32,6 +32,5 @@ export function getValidator(info, forUpdate) {
     if (validator) {
         return new validator(info, forUpdate);
     }
-
     return null;
 }
