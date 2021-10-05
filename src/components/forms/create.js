@@ -6,7 +6,7 @@ import { ServerFormFieldTypeEnum } from '../controls/inputs/globals/enumerations
 export class CreateForm extends FormBase {
 
     _callService(values) {
-        return create(this.props.register_name, values);
+        return create(this.props.registerName, values);
     }
 
     _getInitialValues(initialValues) {

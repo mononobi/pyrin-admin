@@ -1,3 +1,5 @@
+const CONSTANT_DATE = '2050-06-06';
+
 export function getClientTimezone() {
     return Intl.DateTimeFormat().resolvedOptions().timeZone || undefined;
 }
@@ -39,4 +41,8 @@ export function getDateString(date) {
 
 export function getDateTimeString(datetime) {
     return `${getDateString(datetime)}T${getTimeString(datetime)}`;
+}
+
+export function fillWithDate(time) {
+    return `${CONSTANT_DATE}T${time}`;
 }

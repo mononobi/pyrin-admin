@@ -21,7 +21,7 @@ export class AddComponent extends BaseComplexPage {
     _finalRender() {
         return (
             <Paper variant='elevation' elevation={3}>
-                <CreateForm register_name={this._getRegisterName()}
+                <CreateForm registerName={this._getRegisterName()}
                             name={this._getName()}
                             history={this.props.history}
                             dataFields={this.state.metadata.data_fields}

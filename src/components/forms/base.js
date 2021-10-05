@@ -10,6 +10,7 @@ import { getListPage } from '../../services/url';
 import { AlertSeverityEnum } from '../../core/enumerations';
 import { DELETE_BUTTON_COLOR, DELETE_TEXT_COLOR } from '../controls/inputs/globals/constants';
 import { ServerFormFieldTypeEnum } from '../controls/inputs/globals/enumerations';
+import { fillWithDate, getDateTimeString, getTimeString, isValidDate } from '../../core/datetime';
 import { delete_ } from '../../services/data';
 import { setGlobalState } from '../../core/state';
 import { JSTypeEnum } from '../../validators/enumerations';
@@ -57,12 +58,44 @@ export class FormBase extends BaseComponent {
         return this._isNull(value) || this._isEmpty(value);
     }
 
+    _getFixedValue(value, form_field_type) {
+        if (form_field_type === ServerFormFieldTypeEnum.DATETIME &&
+            typeof value === JSTypeEnum.STRING) {
+            let datetime = new Date(value);
+            if (isValidDate(datetime)) {
+                return getDateTimeString(datetime);
+            }
+        }
+        else if (form_field_type === ServerFormFieldTypeEnum.TIME &&
+            typeof value === JSTypeEnum.STRING) {
+            let datetime = fillWithDate(value);
+            if (isValidDate(new Date(datetime))) {
+                return datetime;
+            }
+        }
+        return value;
+    }
+
     _getFilledValues(values) {
         let result = {};
         for (const [name, value] of Object.entries(values)) {
-            if (!this._isEmpty(value) && !this._isReadOnly(name) &&
-                this._isDirty(name, value)) {
-                result[name] = value;
+            let info = this.props.dataFieldsDict[name];
+            let fixedValue = value;
+            let isTime = false;
+            if (!this._isEmpty(fixedValue) && !this._isReadOnly(name)) {
+                if (info && info.form_field_type === ServerFormFieldTypeEnum.TIME &&
+                    isValidDate(fixedValue)) {
+                    fixedValue = fillWithDate(getTimeString(fixedValue));
+                    isTime = true;
+                }
+                if (this._isDirty(name, fixedValue)) {
+                    if (isTime) {
+                        result[name] = getTimeString(new Date(fixedValue));
+                    }
+                    else {
+                        result[name] = fixedValue;
+                    }
+                }
             }
         }
         return result;
@@ -75,12 +108,20 @@ export class FormBase extends BaseComponent {
     _getInitialValues(initialValues) {
         for (const [name, value] of Object.entries(initialValues)) {
             let info = this.props.dataFieldsDict[name]
+            let fixedValue = value;
+            if (info) {
+                fixedValue = this._getFixedValue(value, info.form_field_type);
+            }
+
             if (info && info.form_field_type === ServerFormFieldTypeEnum.BOOLEAN &&
-                this._isNullOrEmpty(value)) {
+                this._isNullOrEmpty(fixedValue)) {
                 initialValues[name] = this.CHECKBOX_DEFAULT;
             }
-            else if (this._isNull(value)) {
+            else if (this._isNull(fixedValue)) {
                 initialValues[name] = '';
+            }
+            else {
+                initialValues[name] = fixedValue;
             }
         }
         return initialValues;
@@ -134,7 +175,7 @@ export class FormBase extends BaseComponent {
                                 message = `A new ${this.props.name} has been added successfully.`;
                             }
                             let key = setGlobalState(message);
-                            this.props.history.push(getListPage(this.props.register_name, key));
+                            this.props.history.push(getListPage(this.props.registerName, key));
                         }
                         else {
                             if (json.data && Object.keys(json.data).length > 0) {
@@ -185,14 +226,14 @@ export class FormBase extends BaseComponent {
                                             this._setConfirmDeleteDialog(
                                                 `Delete ${this.props.name} with primary key [${this.props.pk}]?`,
                                                 () => {
-                                                    let result = delete_(this.props.register_name, this.props.pk);
+                                                    let result = delete_(this.props.registerName, this.props.pk);
                                                     result.then(([json, ok]) => {
                                                         if (ok) {
                                                             let key =
                                                                 setGlobalState(
                                                                     `${this.props.name} [${this.props.pk}] has been deleted successfully.`);
                                                             this.props.history.replace(
-                                                                getListPage(this.props.register_name, key),
+                                                                getListPage(this.props.registerName, key),
                                                                 this.props.location.pathname);
                                                         }
                                                         else {
