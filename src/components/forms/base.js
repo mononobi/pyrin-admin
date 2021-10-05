@@ -80,21 +80,13 @@ export class FormBase extends BaseComponent {
         let result = {};
         for (const [name, value] of Object.entries(values)) {
             let info = this.props.dataFieldsDict[name];
-            let fixedValue = value;
-            let isTime = false;
-            if (!this._isEmpty(fixedValue) && !this._isReadOnly(name)) {
+            if (!this._isEmpty(value) &&
+                !this._isReadOnly(name) && this._isDirty(name, value)) {
                 if (info && info.form_field_type === ServerFormFieldTypeEnum.TIME) {
-                    fixedValue = new Date(fixedValue);
-                    fixedValue = fillWithDate(getTimeString(fixedValue));
-                    isTime = true;
+                    result[name] = getTimeString(new Date(value));
                 }
-                if (this._isDirty(name, fixedValue)) {
-                    if (isTime) {
-                        result[name] = getTimeString(new Date(fixedValue));
-                    }
-                    else {
-                        result[name] = fixedValue;
-                    }
+                else {
+                    result[name] = value;
                 }
             }
         }
