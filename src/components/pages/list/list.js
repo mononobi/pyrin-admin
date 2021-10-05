@@ -23,24 +23,32 @@ export class ListComponent extends BaseComplexPage {
     LINK_COLOR = '#12558d';
     TABLE_REF = React.createRef();
 
+    _rowClicked = (event, rowData, toggleDetailPanel) => {
+        if (this._isForSelect()) {
+            this._setSelectedPK(rowData[this.state.metadata.configs.hidden_pk_name]);
+        }
+    }
+
     _fetchMetadata()
     {
         return getFindMetadata(this.props.match.params.register_name);
     }
 
     _componentDidMount() {
-        let query = QUERY_STRING.parse(this.props.location.search);
-        if (query && query[STATE_KEY_HOLDER]) {
-            let message = getGlobalState(query[STATE_KEY_HOLDER]);
-            if (message) {
-                this._setToastNotification(message, AlertSeverityEnum.SUCCESS);
+        if (!this._isForSelect()) {
+            let query = QUERY_STRING.parse(this.props.location.search);
+            if (query && query[STATE_KEY_HOLDER]) {
+                let message = getGlobalState(query[STATE_KEY_HOLDER]);
+                if (message) {
+                    this._setToastNotification(message, AlertSeverityEnum.SUCCESS);
+                }
             }
-        }
 
-        if (query[STATE_KEY_HOLDER] !== undefined) {
-            let currentURL = `${this.props.location.pathname}${this.props.location.search}`;
-            let originalURL = QUERY_STRING.exclude(currentURL, [STATE_KEY_HOLDER]);
-            this.props.history.replace(originalURL, currentURL);
+            if (query[STATE_KEY_HOLDER] !== undefined) {
+                let currentURL = `${this.props.location.pathname}${this.props.location.search}`;
+                let originalURL = QUERY_STRING.exclude(currentURL, [STATE_KEY_HOLDER]);
+                this.props.history.replace(originalURL, currentURL);
+            }
         }
     }
 
@@ -50,7 +58,7 @@ export class ListComponent extends BaseComplexPage {
             color: this.LINK_COLOR
         }
 
-        if (metadata.link_pk) {
+        if (metadata.link_pk && !this._isForSelect()) {
             info.render = rowData => {
                 let value = rowData[info.field];
                 if (info.lookup) {
@@ -73,7 +81,7 @@ export class ListComponent extends BaseComplexPage {
             color: this.LINK_COLOR
         }
 
-        if (metadata.link_fk) {
+        if (metadata.link_fk && !this._isForSelect()) {
             info.render = rowData => {
                 let value = rowData[info.field];
                 if (info.lookup) {
@@ -159,9 +167,10 @@ export class ListComponent extends BaseComplexPage {
                         debounceInterval: this.state.metadata.search_debounce_interval,
                         search: this.state.metadata.search,
                         searchAutoFocus: this.state.metadata.search,
-                        grouping: this.state.metadata.grouping,
-                        columnsButton: this.state.metadata.column_selection || this.state.metadata.enable_export,
-                        exportButton: this.state.metadata.enable_export,
+                        grouping: this.state.metadata.grouping && !this._isForSelect(),
+                        columnsButton: (this.state.metadata.column_selection ||
+                            this.state.metadata.enable_export) && !this._isForSelect(),
+                        exportButton: this.state.metadata.enable_export && !this._isForSelect(),
                         padding: this.state.metadata.table_type,
                         headerSelectionProps: {size: this.state.metadata.table_type === 'default' ? 'medium': 'small'},
                         paging: this.state.metadata.paged,
@@ -169,14 +178,15 @@ export class ListComponent extends BaseComplexPage {
                         pageSizeOptions: this.state.metadata.page_size_options,
                         paginationType: this.state.metadata.pagination_type,
                         paginationPosition: this.state.metadata.pagination_position,
-                        draggable: this.state.metadata.column_ordering,
-                        selection: this.state.metadata.has_remove_permission,
+                        draggable: this.state.metadata.column_ordering && !this._isForSelect(),
+                        selection: this.state.metadata.has_remove_permission && !this._isForSelect(),
                         emptyRowsWhenPaging: false,
                         rowStyle: setCheckedRowColor
                     }
                 }
                 title={this._getPluralName()}
                 columns={this.state.metadata.datasource_info}
+                onRowClick={this._isForSelect() ? this._rowClicked : undefined}
                 data={query =>
                     new Promise((resolve, reject) => {
                         let response = find(this._getRegisterName(), query.page + 1,
@@ -222,7 +232,7 @@ export class ListComponent extends BaseComplexPage {
                         icon: 'delete',
                         tooltip: `Delete All ${this._getPluralName()}`,
                         position: 'toolbar',
-                        hidden: !this.state.metadata.has_remove_all_permission,
+                        hidden: !this.state.metadata.has_remove_all_permission || this._isForSelect(),
                         isFreeAction: true,
                         onClick: event => {
                             this._setConfirmDeleteDialog(`Delete all ${this._getPluralName()}?`,
@@ -250,7 +260,7 @@ export class ListComponent extends BaseComplexPage {
                         icon: 'delete',
                         tooltip: `Delete Selected ${this._getPluralName()}`,
                         position: 'toolbarOnSelect',
-                        hidden: !this.state.metadata.has_remove_permission,
+                        hidden: !this.state.metadata.has_remove_permission || this._isForSelect(),
                         onClick: (event, rowData) => {
                             let count = rowData.length;
                             let name = count > 1 ? this._getPluralName(): this._getName();
@@ -284,7 +294,7 @@ export class ListComponent extends BaseComplexPage {
                         iconProps: {fontSize: 'inherit', color: 'action'},
                         tooltip: `View ${this._getName()}`,
                         position: 'row',
-                        hidden: !this.state.metadata.has_get_permission,
+                        hidden: !this.state.metadata.has_get_permission || this._isForSelect(),
                         onClick: (event, rowData) => {
                             let url = getUpdatePage(this._getRegisterName(),
                                 rowData[this.state.metadata.configs.hidden_pk_name]);

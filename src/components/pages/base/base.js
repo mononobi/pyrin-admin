@@ -17,4 +17,12 @@ export class BaseComplexPage extends ComplexComponent {
     _getPluralName() {
         return this.state.metadata.plural_name;
     }
+
+    _isForSelect() {
+        return this.props.forSelect;
+    }
+
+    _setSelectedPK(pk) {
+        this.props.setSelectedPK(pk);
+    }
 }
