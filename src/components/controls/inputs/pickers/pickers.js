@@ -8,8 +8,9 @@ import {
 import { BaseInput } from '../base/base';
 import { AutoCompleteEnum } from '../globals/enumerations';
 import { INPUT_MARGIN, INPUT_VARIANT } from '../globals/constants';
-import { getDateString, getDateTimeString, isValidDate } from '../../../../core/datetime';
 import { HELPER_TEXT_STYLE } from '../globals/styles/inputs';
+import { fillWithDate, getDateString, getDateTimeString, getTimeString, isValidDate
+} from '../../../../core/datetime';
 import {
     INPUT_DATE_FORMAT, INPUT_DATETIME_FORMAT, INPUT_PICKER_VARIANT, INPUT_TIME_FORMAT,
     INVALID_DATE_MESSAGE, INVALID_DATETIME_MESSAGE, INVALID_TIME_MESSAGE, MAX_DATE_MESSAGE,
@@ -99,7 +100,7 @@ export class TimePicker extends BasePicker {
                     name={this._getFieldName()}
                     value={this._getValue()}
                     onChange={(time, string) => {
-                        let value = isValidDate(time) ? time : string;
+                        let value = isValidDate(time) ? fillWithDate(getTimeString(time)) : string;
                         this.props.setFieldValue(this._getFieldName(), value);
                     }}
                     error={this.props.error}

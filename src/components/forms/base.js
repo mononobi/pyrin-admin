@@ -83,8 +83,8 @@ export class FormBase extends BaseComponent {
             let fixedValue = value;
             let isTime = false;
             if (!this._isEmpty(fixedValue) && !this._isReadOnly(name)) {
-                if (info && info.form_field_type === ServerFormFieldTypeEnum.TIME &&
-                    isValidDate(fixedValue)) {
+                if (info && info.form_field_type === ServerFormFieldTypeEnum.TIME) {
+                    fixedValue = new Date(fixedValue);
                     fixedValue = fillWithDate(getTimeString(fixedValue));
                     isTime = true;
                 }
