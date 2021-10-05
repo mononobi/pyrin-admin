@@ -163,7 +163,7 @@ export class ListComponent extends BaseComplexPage {
                         columnsButton: this.state.metadata.column_selection || this.state.metadata.enable_export,
                         exportButton: this.state.metadata.enable_export,
                         padding: this.state.metadata.table_type,
-                        headerSelectionProps: {size: this.state.metadata.table_type === 'dense' ? 'small': 'medium'},
+                        headerSelectionProps: {size: this.state.metadata.table_type === 'default' ? 'medium': 'small'},
                         paging: this.state.metadata.paged,
                         pageSize: this.state.metadata.page_size,
                         pageSizeOptions: this.state.metadata.page_size_options,
