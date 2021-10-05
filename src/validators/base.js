@@ -104,10 +104,14 @@ export class ValidatorBase {
         return null;
     }
 
+    _shouldIgnoreNullForUpdate() {
+        return false;
+    }
+
     _validateRequired(value) {
         if (this.required) {
             if (this.forUpdate) {
-                if (this._isNull(value)) {
+                if (this._isNull(value) && !this._shouldIgnoreNullForUpdate()) {
                     return this.REQUIRED_MESSAGE;
                 }
             }

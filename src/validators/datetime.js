@@ -8,11 +8,17 @@ export class DateAndTimeBaseValidator extends ValidatorBase {
     TYPE = JSTypeEnum.OBJECT;
 
     _convert(value) {
-        let converted = new Date(value);
-        if (isValidDate(converted)) {
-            return converted;
+        if (!this._isNull(value)) {
+            let converted = new Date(value);
+            if (isValidDate(converted)) {
+                return converted;
+            }
         }
         return '';
+    }
+
+    _shouldIgnoreNullForUpdate() {
+        return true;
     }
 }
 

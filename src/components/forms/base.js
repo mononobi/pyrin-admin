@@ -60,14 +60,14 @@ export class FormBase extends BaseComponent {
 
     _getFixedValue(value, form_field_type) {
         if (form_field_type === ServerFormFieldTypeEnum.DATETIME &&
-            typeof value === JSTypeEnum.STRING) {
+            typeof value === JSTypeEnum.STRING && !this._isNullOrEmpty(value)) {
             let datetime = new Date(value);
             if (isValidDate(datetime)) {
                 return getDateTimeString(datetime);
             }
         }
         else if (form_field_type === ServerFormFieldTypeEnum.TIME &&
-            typeof value === JSTypeEnum.STRING) {
+            typeof value === JSTypeEnum.STRING && !this._isNullOrEmpty(value)) {
             let datetime = fillWithDate(value);
             if (isValidDate(new Date(datetime))) {
                 return datetime;
@@ -83,7 +83,15 @@ export class FormBase extends BaseComponent {
             if (!this._isEmpty(value) &&
                 !this._isReadOnly(name) && this._isDirty(name, value)) {
                 if (info && info.form_field_type === ServerFormFieldTypeEnum.TIME) {
-                    result[name] = getTimeString(new Date(value));
+                    if (!this._isNull(value)) {
+                        result[name] = getTimeString(new Date(value));
+                    }
+                }
+                else if (info && (info.form_field_type === ServerFormFieldTypeEnum.DATETIME ||
+                    info.form_field_type === ServerFormFieldTypeEnum.DATE)) {
+                    if (!this._isNull(value)) {
+                        result[name] = value;
+                    }
                 }
                 else {
                     result[name] = value;
