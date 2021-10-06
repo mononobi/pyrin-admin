@@ -189,8 +189,9 @@ export class ListComponent extends BaseComplexPage {
                 onRowClick={this._isForSelect() ? this._rowClicked : undefined}
                 data={query =>
                     new Promise((resolve, reject) => {
+                        let filters = QUERY_STRING.parse(this.props.location.search);
                         let response = find(this._getRegisterName(), query.page + 1,
-                            query.pageSize, query.orderBy, query.orderDirection, query.search);
+                            query.pageSize, query.orderBy, query.orderDirection, query.search, filters);
 
                         response.then(([json, ok]) => {
                             if (!ok) {
