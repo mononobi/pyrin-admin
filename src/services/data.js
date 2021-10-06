@@ -6,8 +6,12 @@ import { addOrderingQueryParam, addPagingQueryParam,
 
 export function find(registerName, page=null,
                      pageSize=null, orderBy=null,
-                     orderDirection='asc', search=null) {
+                     orderDirection='asc', search=null,
+                     filters=null) {
     let url = `${registerName}/`;
+    if (filters) {
+        url = addQueryParams(url, filters);
+    }
     url = addPagingQueryParam(url, page, pageSize);
     if (orderBy) {
         let name = orderBy.field;
