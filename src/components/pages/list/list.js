@@ -195,7 +195,13 @@ export class ListComponent extends BaseComplexPage {
 
                         response.then(([json, ok]) => {
                             if (!ok) {
-                                reject( json.message || 'Data Fetch Error');
+                                this._setToastNotification(json.message || 'Data Fetch Error',
+                                    AlertSeverityEnum.ERROR)
+                                resolve({
+                                    data: [],
+                                    page: 0,
+                                    totalCount: 0
+                                });
                             }
                             else {
                                 resolve({

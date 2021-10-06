@@ -5,6 +5,7 @@ import { ValidatorBase } from './base';
 export class NumberValidator extends ValidatorBase {
 
     TYPE = JSTypeEnum.NUMBER;
+    INCORRECT_TYPE_MESSAGE = 'Enter a valid number';
     REGEX = RegExp('^[-]?(0|([1-9]([0-9])*))[.]([0-9])+$|^(0|([-]?[1-9]([0-9])*))$');
 
     _convert(value) {

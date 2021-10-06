@@ -5,7 +5,7 @@ export class ValidatorBase {
 
     TYPE = '';
     REGEX = null;
-    INCORRECT_TYPE_MESSAGE = `Enter a valid ${this.TYPE || 'value'}`;
+    INCORRECT_TYPE_MESSAGE = 'Enter a valid value';
     REQUIRED_MESSAGE = 'This field is required';
 
     constructor(info, forUpdate) {
