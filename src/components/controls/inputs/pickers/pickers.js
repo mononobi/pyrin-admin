@@ -106,7 +106,7 @@ export class TimePicker extends BasePicker {
                     error={this.props.error}
                     helperText={this.props.helperText}
                     FormHelperTextProps={{style: HELPER_TEXT_STYLE, margin: 'dense'}}
-                    keyboardIcon={<Schedule fontSize={'medium'}/>}
+                    keyboardIcon={<Schedule fontSize='medium'/>}
                 />
             </MuiPickersUtilsProvider>
         );
