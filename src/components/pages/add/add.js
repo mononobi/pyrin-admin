@@ -15,7 +15,7 @@ export class AddComponent extends BaseComplexPage {
 
     _fetchMetadata()
     {
-        return getCreateMetadata(this.props.match.params.register_name);
+        return getCreateMetadata(this._getInitialRegisterName());
     }
 
     _finalRender() {

@@ -25,13 +25,13 @@ export class ListComponent extends BaseComplexPage {
 
     _rowClicked = (event, rowData, toggleDetailPanel) => {
         if (this._isForSelect()) {
-            this._setSelectedPK(rowData[this.state.metadata.configs.hidden_pk_name]);
+            this.props.setSelectedFK(rowData[this.state.metadata.configs.hidden_pk_name]);
         }
     }
 
     _fetchMetadata()
     {
-        return getFindMetadata(this.props.match.params.register_name);
+        return getFindMetadata(this._getInitialRegisterName());
     }
 
     _componentDidMount() {
@@ -189,7 +189,10 @@ export class ListComponent extends BaseComplexPage {
                 onRowClick={this._isForSelect() ? this._rowClicked : undefined}
                 data={query =>
                     new Promise((resolve, reject) => {
-                        let filters = QUERY_STRING.parse(this.props.location.search);
+                        let filters = {};
+                        if (!this._isForSelect()) {
+                            filters = QUERY_STRING.parse(this.props.location.search);
+                        }
                         let response = find(this._getRegisterName(), query.page + 1,
                             query.pageSize, query.orderBy, query.orderDirection, query.search, filters);
 

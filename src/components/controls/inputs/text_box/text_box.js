@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import { BaseInput } from '../base/base';
 import { AutoCompleteEnum, ClientFormFieldTypeEnum } from '../globals/enumerations';
 import { HELPER_TEXT_STYLE } from '../globals/styles/inputs';
+import { getFKButton } from '../globals/helpers';
 import {
     INPUT_FILL, INPUT_MARGIN, INPUT_SIZE, INPUT_VARIANT, VERY_LONG_INPUT_LENGTH
 } from '../globals/constants';
@@ -31,6 +32,7 @@ export class TextBox extends BaseInput {
                 inputProps={{
                     inputMode: this.INPUT_MODE
                 }}
+                InputProps={getFKButton(this.props.info, this.props.openFKDialog)}
                 type={this.props.type || this.TYPE}
                 style={{width: INPUT_FILL}}
                 disabled={this._isReadOnly()}

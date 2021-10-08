@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,27 +12,13 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction='up' ref={ref} {...props} />;
 });
 
-
 export const SelectDialog = props => {
-    const [open, setOpen] = React.useState(false);
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
 
     return (
         <div>
-            <Button variant='outlined' onClick={handleClickOpen}>
-                Open full-screen dialog
-            </Button>
             <Dialog
                 fullScreen
-                open={open}
-                onClose={handleClose}
+                open={props.open}
                 TransitionComponent={Transition}
             >
                 <AppBar sx={{position: 'relative'}}>
@@ -41,13 +26,14 @@ export const SelectDialog = props => {
                         <IconButton
                             edge='end'
                             color='inherit'
-                            onClick={handleClose}
+                            onClick={props.closeFKDialog}
                         >
                             <CloseIcon/>
                         </IconButton>
                     </Toolbar>
                 </AppBar>
-                <ListComponent forSelect={true} setSelectedPK={props.setSelectedPK}/>
+                <ListComponent forSelect={true} setSelectedFK={props.setSelectedFK}
+                               registerName={props.registerName}/>
             </Dialog>
         </div>
     );

@@ -51,13 +51,13 @@ export function getControl(info) {
 
 export function createControl(info, value, onChange, error,
                               helperText, disabled, forUpdate,
-                              setFieldValue) {
+                              setFieldValue, openFKDialog) {
     let control = getControl(info);
     return React.createElement(control,
         {
             info: info, value: value, onChange: onChange,
             error: error, helperText: helperText,
             disabled: disabled, forUpdate: forUpdate,
-            setFieldValue: setFieldValue
+            setFieldValue: setFieldValue, openFKDialog: openFKDialog
         });
 }

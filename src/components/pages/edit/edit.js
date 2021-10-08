@@ -16,12 +16,12 @@ export class EditComponent extends BaseComplexPage {
     }
 
     _fetchData() {
-        return get(this.props.match.params.register_name, this.props.match.params.pk)
+        return get(this._getInitialRegisterName(), this.props.match.params.pk)
     }
 
     _fetchMetadata()
     {
-        return getUpdateMetadata(this.props.match.params.register_name);
+        return getUpdateMetadata(this._getInitialRegisterName());
     }
 
     _prepareData(data) {

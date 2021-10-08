@@ -14,6 +14,7 @@ import { fillWithDate, getDateTimeString, getTimeString, isValidDate } from '../
 import { delete_ } from '../../services/data';
 import { setGlobalState } from '../../core/state';
 import { JSTypeEnum } from '../../validators/enumerations';
+import { SelectDialog } from '../controls/dialogs/select';
 import './base.css';
 
 
@@ -23,7 +24,25 @@ export class FormBase extends BaseComponent {
     CHECKBOX_DEFAULT = false;
 
     state = {
-        initialValues: this._getInitialValues(this.props.initialValues)
+        initialValues: this._getInitialValues(this.props.initialValues),
+        fkField: null,
+        fkRegisterName: null,
+        setFieldValue: null
+    }
+
+    _openFKDialog = (registerName, field) => {
+        this.setState({
+            fkField: field,
+            fkRegisterName: registerName
+        });
+    }
+
+    _setSelectedFK = fk => {
+        this.state.setFieldValue(this.state.fkField, fk);
+        this.setState({
+            fkField: null,
+            fkRegisterName: null
+        });
     }
 
     _callService(values) {
@@ -129,138 +148,147 @@ export class FormBase extends BaseComponent {
 
     _render() {
         return (
-            <Formik
-                initialValues={this.state.initialValues}
-                validate={values => {
-                    let result = {};
-                    for (const [name, value] of Object.entries(values)) {
-                        let info = this.props.dataFieldsDict[name];
-                        if (info) {
-                            let error = null;
-                            let validator = getValidator(info, this.FOR_UPDATE);
-                            if (validator) {
-                                error = validator.validate(value);
-                            }
-                            if (error) {
-                                result[name] = error;
-                            }
-                        }
-                    }
-                    if(Object.keys(result).length > 0) {
-                        this._setToastNotification('Please correct the specified values.',
-                            AlertSeverityEnum.ERROR);
-                    }
-                    return result;
-                }}
-                enableReinitialize={false}
-                validateOnChange={false}
-                validateOnBlur={false}
-                validateOnMount={false}
-                onSubmit={(values, {setSubmitting, setFieldError}) => {
-                    values = this._getFilledValues(values);
-                    if (!this._isAnythingChanged(values)) {
-                        setSubmitting(false);
-                        this._setToastNotification('No changes have been made.', AlertSeverityEnum.INFO);
-                        return;
-                    }
-                    let result = this._callService(values);
-                    setSubmitting(false);
-                    result.then(([json, ok]) => {
-                        if (ok) {
-                            let message = null;
-                            if (this.FOR_UPDATE) {
-                                message = `${this.props.name} [${this.props.pk}] has been updated successfully.`;
-                            }
-                            else {
-                                message = `A new ${this.props.name} has been added successfully.`;
-                            }
-                            let key = setGlobalState(message);
-                            this.props.history.push(getListPage(this.props.registerName, key));
-                        }
-                        else {
-                            if (json.data && Object.keys(json.data).length > 0) {
-                                for (const [name, message] of Object.entries(json.data)) {
-                                    setFieldError(name, message);
+            <div>
+                {
+                    Boolean(this.state.fkField) &&
+                    <SelectDialog
+                        setSelectedFK={this._setSelectedFK}
+                        open={Boolean(this.state.fkField)}
+                        registerName={this.state.fkRegisterName}
+                    />
+                }
+                <Formik
+                    initialValues={this.state.initialValues}
+                    validate={values => {
+                        let result = {};
+                        for (const [name, value] of Object.entries(values)) {
+                            let info = this.props.dataFieldsDict[name];
+                            if (info) {
+                                let error = null;
+                                let validator = getValidator(info, this.FOR_UPDATE);
+                                if (validator) {
+                                    error = validator.validate(value);
                                 }
-                                this._setToastNotification('Please correct the specified values.',
-                                    AlertSeverityEnum.ERROR);
-                            }
-                            else {
-                                this._setToastNotification(json, AlertSeverityEnum.ERROR);
+                                if (error) {
+                                    result[name] = error;
+                                }
                             }
                         }
-                    });
-                }}
-            >
-                {(props) => (
-                    <Form onSubmit={props.handleSubmit}>
-                        <div className='form-controls-container'>
-                        {
-                            this.props.dataFields.map(info => {
-                                return (
-                                    <div key={`${info.field}-form-field`}>
-                                        {
-                                            createControl(
-                                                info,
-                                                props.values[info.field],
-                                                props.handleChange,
-                                                props.touched[info.field] && Boolean(props.errors[info.field]),
-                                                props.touched[info.field] && props.errors[info.field],
-                                                props.isSubmitting || !this.props.hasSavePermission,
-                                                this.FOR_UPDATE, props.setFieldValue)
-                                        }
-                                    </div>
-                                )
-                            })
+                        if (Object.keys(result).length > 0) {
+                            this._setToastNotification('Please correct the specified values.',
+                                AlertSeverityEnum.ERROR);
                         }
-                        </div>
-                        <Stack direction='row' spacing={2} className='button-container'>
-                            {
-                                this.FOR_UPDATE && this.props.hasDeletePermission && (
+                        return result;
+                    }}
+                    enableReinitialize={false}
+                    validateOnChange={false}
+                    validateOnBlur={false}
+                    validateOnMount={false}
+                    onSubmit={(values, {setSubmitting, setFieldError}) => {
+                        values = this._getFilledValues(values);
+                        if (!this._isAnythingChanged(values)) {
+                            setSubmitting(false);
+                            this._setToastNotification('No changes have been made.', AlertSeverityEnum.INFO);
+                            return;
+                        }
+                        let result = this._callService(values);
+                        setSubmitting(false);
+                        result.then(([json, ok]) => {
+                            if (ok) {
+                                let message = null;
+                                if (this.FOR_UPDATE) {
+                                    message = `${this.props.name} [${this.props.pk}] has been updated successfully.`;
+                                } else {
+                                    message = `A new ${this.props.name} has been added successfully.`;
+                                }
+                                let key = setGlobalState(message);
+                                this.props.history.push(getListPage(this.props.registerName, key));
+                            } else {
+                                if (json.data && Object.keys(json.data).length > 0) {
+                                    for (const [name, message] of Object.entries(json.data)) {
+                                        setFieldError(name, message);
+                                    }
+                                    this._setToastNotification('Please correct the specified values.',
+                                        AlertSeverityEnum.ERROR);
+                                } else {
+                                    this._setToastNotification(json, AlertSeverityEnum.ERROR);
+                                }
+                            }
+                        });
+                    }}
+                >
+                    {(props) => {
+                        this.state.setFieldValue = props.setFieldValue;
+                        return (
+                            <Form onSubmit={props.handleSubmit}>
+                                <div className='form-controls-container'>
+                                    {
+                                        this.props.dataFields.map(info => {
+                                            return (
+                                                <div key={`${info.field}-form-field`}>
+                                                    {
+                                                        createControl(
+                                                            info,
+                                                            props.values[info.field],
+                                                            props.handleChange,
+                                                            props.touched[info.field] && Boolean(props.errors[info.field]),
+                                                            props.touched[info.field] && props.errors[info.field],
+                                                            props.isSubmitting || !this.props.hasSavePermission,
+                                                            this.FOR_UPDATE, props.setFieldValue, this._openFKDialog)
+                                                    }
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>
+                                <Stack direction='row' spacing={2} className='button-container'>
+                                    {
+                                        this.FOR_UPDATE && this.props.hasDeletePermission && (
+                                            <Button
+                                                className='button'
+                                                style={{backgroundColor: DELETE_BUTTON_COLOR, color: DELETE_TEXT_COLOR}}
+                                                variant='contained'
+                                                type='button'
+                                                onClick={() => {
+                                                    this._setConfirmDeleteDialog(
+                                                        `Delete ${this.props.name} with primary key [${this.props.pk}]?`,
+                                                        () => {
+                                                            let result = delete_(this.props.registerName, this.props.pk);
+                                                            result.then(([json, ok]) => {
+                                                                if (ok) {
+                                                                    let key =
+                                                                        setGlobalState(
+                                                                            `${this.props.name} [${this.props.pk}] has been deleted successfully.`);
+                                                                    this.props.history.replace(
+                                                                        getListPage(this.props.registerName, key),
+                                                                        this.props.location.pathname);
+                                                                } else {
+                                                                    this._setToastNotification(json, AlertSeverityEnum.ERROR);
+                                                                }
+                                                            });
+                                                        });
+                                                }}
+                                                disabled={props.isSubmitting || !this.props.hasDeletePermission}
+                                                size='large'>
+                                                Delete
+                                            </Button>
+                                        )
+                                    }
                                     <Button
                                         className='button'
-                                        style={{backgroundColor: DELETE_BUTTON_COLOR, color: DELETE_TEXT_COLOR}}
                                         variant='contained'
-                                        type='button'
-                                        onClick={() => {
-                                            this._setConfirmDeleteDialog(
-                                                `Delete ${this.props.name} with primary key [${this.props.pk}]?`,
-                                                () => {
-                                                    let result = delete_(this.props.registerName, this.props.pk);
-                                                    result.then(([json, ok]) => {
-                                                        if (ok) {
-                                                            let key =
-                                                                setGlobalState(
-                                                                    `${this.props.name} [${this.props.pk}] has been deleted successfully.`);
-                                                            this.props.history.replace(
-                                                                getListPage(this.props.registerName, key),
-                                                                this.props.location.pathname);
-                                                        }
-                                                        else {
-                                                            this._setToastNotification(json, AlertSeverityEnum.ERROR);
-                                                        }
-                                                    });
-                                                });
-                                        }}
-                                        disabled={props.isSubmitting || !this.props.hasDeletePermission}
+                                        color='primary'
+                                        type='submit'
+                                        disabled={props.isSubmitting || !this.props.hasSavePermission}
                                         size='large'>
-                                        Delete
+                                        Save
                                     </Button>
-                                )
-                            }
-                            <Button
-                                className='button'
-                                variant='contained'
-                                color='primary'
-                                type='submit'
-                                disabled={props.isSubmitting || !this.props.hasSavePermission}
-                                size='large'>
-                                Save
-                            </Button>
-                        </Stack>
-                    </Form>
-                )}
-            </Formik>
-        )
+                                </Stack>
+                            </Form>
+                        );
+                    }}
+                </Formik>
+            </div>
+        );
     }
 }

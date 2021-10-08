@@ -10,6 +10,13 @@ export class BaseComplexPage extends ComplexComponent {
         return this.state.metadata.name;
     }
 
+    _getInitialRegisterName() {
+        if (this._isForSelect()) {
+            return this.props.registerName;
+        }
+        return this.props.match.params.register_name;
+    }
+
     _getRegisterName() {
         return this.state.metadata.register_name;
     }
@@ -20,9 +27,5 @@ export class BaseComplexPage extends ComplexComponent {
 
     _isForSelect() {
         return this.props.forSelect;
-    }
-
-    _setSelectedPK(pk) {
-        this.props.setSelectedPK(pk);
     }
 }
