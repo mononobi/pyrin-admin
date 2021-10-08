@@ -235,7 +235,12 @@ export class ListComponent extends BaseComplexPage {
                         hidden: !this.state.metadata.has_create_permission,
                         isFreeAction: true,
                         onClick: event => {
-                            this.props.history.push(getCreatePage(this._getRegisterName()));
+                            if (!this._isForSelect()) {
+                                this.props.history.push(getCreatePage(this._getRegisterName()));
+                            }
+                            else {
+                                this.props.openFKCreateDialog();
+                            }
                         }
                     },
                     {

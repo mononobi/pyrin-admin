@@ -23,6 +23,8 @@ export class AddComponent extends BaseComplexPage {
             <Paper variant='elevation' elevation={3}>
                 <CreateForm registerName={this._getRegisterName()}
                             name={this._getName()}
+                            forSelect={this._isForSelect()}
+                            setSelectedFK={this.props.setSelectedFK}
                             history={this.props.history}
                             dataFields={this.state.metadata.data_fields}
                             dataFieldsDict={this.state.metadata.data_fields_dict}

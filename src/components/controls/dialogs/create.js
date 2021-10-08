@@ -5,20 +5,20 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
-import { ListComponent } from '../../pages/list/list';
+import { AddComponent } from '../../pages/add/add';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction='up' ref={ref} {...props} />;
 });
 
-export const SelectDialog = props => {
+export const CreateDialog = props => {
 
     return (
         <div>
             <Dialog
                 fullScreen
-                onClose={props.closeFKDialog}
+                onClose={props.closeFKCreateDialog}
                 open={props.open}
                 TransitionComponent={Transition}
             >
@@ -27,16 +27,15 @@ export const SelectDialog = props => {
                         <IconButton
                             edge='end'
                             color='inherit'
-                            onClick={props.closeFKDialog}
+                            onClick={props.closeFKCreateDialog}
                         >
                             <CloseIcon/>
                         </IconButton>
                     </Toolbar>
                 </AppBar>
-                <ListComponent forSelect={true}
-                               setSelectedFK={props.setSelectedFK}
-                               registerName={props.registerName}
-                               openFKCreateDialog={props.openFKCreateDialog}/>
+                <AddComponent forSelect={true}
+                              setSelectedFK={props.setSelectedFK}
+                              registerName={props.registerName}/>
             </Dialog>
         </div>
     );

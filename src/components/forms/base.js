@@ -15,6 +15,7 @@ import { delete_ } from '../../services/data';
 import { setGlobalState } from '../../core/state';
 import { JSTypeEnum } from '../../validators/enumerations';
 import { SelectDialog } from '../controls/dialogs/select';
+import { CreateDialog } from '../controls/dialogs/create';
 import './base.css';
 
 
@@ -25,13 +26,31 @@ export class FormBase extends BaseComponent {
 
     state = {
         initialValues: this._getInitialValues(this.props.initialValues),
+        fkCreate: false,
+        fkSelect: false,
         fkField: null,
         fkRegisterName: null,
         setFieldValue: null
     }
 
+    _openFKCreateDialog = () => {
+        this.setState({
+            fkCreate: true,
+            fkSelect: false
+        });
+    }
+
+    _closeFKCreateDialog = () => {
+        this.setState({
+            fkCreate: false,
+            fkSelect: true
+        });
+    }
+
     _openFKDialog = (registerName, field) => {
         this.setState({
+            fkSelect: true,
+            fkCreate: false,
             fkField: field,
             fkRegisterName: registerName
         });
@@ -39,14 +58,29 @@ export class FormBase extends BaseComponent {
 
     _closeFKDialog = () => {
         this.setState({
+            fkSelect: false,
+            fkCreate: false,
             fkField: null,
             fkRegisterName: null
         });
     }
 
     _setSelectedFK = fk => {
-        this.state.setFieldValue(this.state.fkField, fk);
-        this._closeFKDialog();
+        if (!this._isNull(fk)) {
+            this.state.setFieldValue(this.state.fkField, fk);
+            this.setState({
+                fkField: null,
+                fkRegisterName: null,
+                fkCreate: false,
+                fkSelect: false
+            });
+        }
+        else {
+            this.setState({
+                fkCreate: false,
+                fkSelect: true
+            });
+        }
     }
 
     _callService(values) {
@@ -154,11 +188,21 @@ export class FormBase extends BaseComponent {
         return (
             <div>
                 {
-                    Boolean(this.state.fkField) &&
+                    this.state.fkSelect &&
                     <SelectDialog
                         closeFKDialog={this._closeFKDialog}
+                        openFKCreateDialog={this._openFKCreateDialog}
                         setSelectedFK={this._setSelectedFK}
-                        open={Boolean(this.state.fkField)}
+                        open={this.state.fkSelect}
+                        registerName={this.state.fkRegisterName}
+                    />
+                }
+                {
+                    this.state.fkCreate &&
+                    <CreateDialog
+                        closeFKCreateDialog={this._closeFKCreateDialog}
+                        setSelectedFK={this._setSelectedFK}
+                        open={this.state.fkCreate}
                         registerName={this.state.fkRegisterName}
                     />
                 }
@@ -200,14 +244,20 @@ export class FormBase extends BaseComponent {
                         setSubmitting(false);
                         result.then(([json, ok]) => {
                             if (ok) {
-                                let message = null;
-                                if (this.FOR_UPDATE) {
-                                    message = `${this.props.name} [${this.props.pk}] has been updated successfully.`;
-                                } else {
-                                    message = `A new ${this.props.name} has been added successfully.`;
+                                if (!this.props.forSelect) {
+                                    let message = null;
+                                    if (this.FOR_UPDATE) {
+                                        message = `${this.props.name} [${this.props.pk}] has been updated successfully.`;
+                                    } else {
+                                        message = `A new ${this.props.name} has been added successfully.`;
+                                    }
+                                    let key = setGlobalState(message);
+                                    this.props.history.push(getListPage(this.props.registerName, key));
                                 }
-                                let key = setGlobalState(message);
-                                this.props.history.push(getListPage(this.props.registerName, key));
+                                else
+                                {
+                                    this.props.setSelectedFK(json?.value);
+                                }
                             } else {
                                 if (json.data && Object.keys(json.data).length > 0) {
                                     for (const [name, message] of Object.entries(json.data)) {
