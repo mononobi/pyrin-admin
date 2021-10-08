@@ -18,6 +18,7 @@ export const SelectDialog = props => {
         <div>
             <Dialog
                 fullScreen
+                onClose={props.closeFKDialog}
                 open={props.open}
                 TransitionComponent={Transition}
             >

@@ -37,12 +37,16 @@ export class FormBase extends BaseComponent {
         });
     }
 
-    _setSelectedFK = fk => {
-        this.state.setFieldValue(this.state.fkField, fk);
+    _closeFKDialog = () => {
         this.setState({
             fkField: null,
             fkRegisterName: null
         });
+    }
+
+    _setSelectedFK = fk => {
+        this.state.setFieldValue(this.state.fkField, fk);
+        this._closeFKDialog();
     }
 
     _callService(values) {
@@ -152,6 +156,7 @@ export class FormBase extends BaseComponent {
                 {
                     Boolean(this.state.fkField) &&
                     <SelectDialog
+                        closeFKDialog={this._closeFKDialog}
                         setSelectedFK={this._setSelectedFK}
                         open={Boolean(this.state.fkField)}
                         registerName={this.state.fkRegisterName}
