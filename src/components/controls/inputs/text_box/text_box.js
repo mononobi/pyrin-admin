@@ -32,7 +32,7 @@ export class TextBox extends BaseInput {
                 inputProps={{
                     inputMode: this.INPUT_MODE
                 }}
-                InputProps={getFKButton(this.props.info, this.props.openFKDialog)}
+                InputProps={getFKButton(this.props.info, this.props.openFKDialog, this._isReadOnly())}
                 type={this.props.type || this.TYPE}
                 style={{width: INPUT_FILL}}
                 disabled={this._isReadOnly()}
