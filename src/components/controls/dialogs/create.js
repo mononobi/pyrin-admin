@@ -33,9 +33,11 @@ export const CreateDialog = props => {
                         </IconButton>
                     </Toolbar>
                 </AppBar>
-                <AddComponent forSelect={true}
-                              setSelectedFK={props.setSelectedFK}
-                              registerName={props.registerName}/>
+                <div style={{overflowY: 'scroll'}}>
+                    <AddComponent forSelect={true}
+                                  setSelectedFK={props.setSelectedFK}
+                                  registerName={props.registerName}/>
+                </div>
             </Dialog>
         </div>
     );
