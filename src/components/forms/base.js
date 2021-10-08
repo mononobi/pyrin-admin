@@ -30,6 +30,7 @@ export class FormBase extends BaseComponent {
         fkSelect: false,
         fkField: null,
         fkRegisterName: null,
+        fkName: null,
         setFieldValue: null
     }
 
@@ -47,11 +48,12 @@ export class FormBase extends BaseComponent {
         });
     }
 
-    _openFKDialog = (registerName, field) => {
+    _openFKDialog = (registerName, field, name) => {
         this.setState({
             fkSelect: true,
             fkCreate: false,
             fkField: field,
+            fkName: name,
             fkRegisterName: registerName
         });
     }
@@ -61,6 +63,7 @@ export class FormBase extends BaseComponent {
             fkSelect: false,
             fkCreate: false,
             fkField: null,
+            fkName: null,
             fkRegisterName: null
         });
     }
@@ -70,6 +73,7 @@ export class FormBase extends BaseComponent {
             this.state.setFieldValue(this.state.fkField, fk);
             this.setState({
                 fkField: null,
+                fkName: null,
                 fkRegisterName: null,
                 fkCreate: false,
                 fkSelect: false
@@ -195,6 +199,7 @@ export class FormBase extends BaseComponent {
                         setSelectedFK={this._setSelectedFK}
                         open={this.state.fkSelect}
                         registerName={this.state.fkRegisterName}
+                        name={this.state.fkName}
                     />
                 }
                 {
@@ -204,6 +209,7 @@ export class FormBase extends BaseComponent {
                         setSelectedFK={this._setSelectedFK}
                         open={this.state.fkCreate}
                         registerName={this.state.fkRegisterName}
+                        name={this.state.fkName}
                     />
                 }
                 <Formik

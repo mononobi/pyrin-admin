@@ -4,7 +4,7 @@ import { SearchOutlined } from '@material-ui/icons';
 
 export function getFKButton(info, openFKDialog, disabled) {
     const OpenDialogWrapper = () => {
-        openFKDialog(info.fk_register_name, info.field);
+        openFKDialog(info.fk_register_name, info.field, info.fk_name);
     }
 
     if (info.is_fk) {

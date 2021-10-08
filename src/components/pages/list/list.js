@@ -184,7 +184,7 @@ export class ListComponent extends BaseComplexPage {
                         rowStyle: setCheckedRowColor
                     }
                 }
-                title={ this._isForSelect() ? `Select ${this._getName()}` : this._getPluralName()}
+                title={this._getPluralName()}
                 columns={this.state.metadata.datasource_info}
                 onRowClick={this._isForSelect() ? this._rowClicked : undefined}
                 data={query =>

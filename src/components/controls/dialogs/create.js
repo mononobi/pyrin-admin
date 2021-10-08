@@ -4,6 +4,7 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import { DialogContent, DialogTitle } from '@mui/material';
 import Slide from '@mui/material/Slide';
 import { AddComponent } from '../../pages/add/add';
 
@@ -18,6 +19,7 @@ export const CreateDialog = props => {
         <div>
             <Dialog
                 fullScreen
+                scroll={'paper'}
                 onClose={props.closeFKCreateDialog}
                 open={props.open}
                 TransitionComponent={Transition}
@@ -31,13 +33,14 @@ export const CreateDialog = props => {
                         >
                             <CloseIcon/>
                         </IconButton>
+                        <DialogTitle>{`Add ${props.name}`}</DialogTitle>
                     </Toolbar>
                 </AppBar>
-                <div style={{overflowY: 'scroll'}}>
+                <DialogContent dividers={true}>
                     <AddComponent forSelect={true}
                                   setSelectedFK={props.setSelectedFK}
                                   registerName={props.registerName}/>
-                </div>
+                </DialogContent>
             </Dialog>
         </div>
     );
