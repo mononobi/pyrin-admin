@@ -14,7 +14,7 @@ export class DateAndTimeBaseValidator extends ValidatorBase {
                 return converted;
             }
         }
-        return '';
+        return null;
     }
 
     _shouldIgnoreNullForUpdate() {
