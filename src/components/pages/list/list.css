@@ -15,7 +15,7 @@ th:nth-child(odd) {
 }
 
 tbody tr:hover {
-    background-color: #dadada;
+    background-color: #dadada !important;
 }
 
 tbody tr {
