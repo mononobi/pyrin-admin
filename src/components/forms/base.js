@@ -188,6 +188,13 @@ export class FormBase extends BaseComponent {
         return initialValues;
     }
 
+    _getMaxFormHeight() {
+        if (!this.props.forSelect) {
+            return `${window.screen.height - (0.26 * window.screen.height)}px`;
+        }
+        return `${window.screen.height - (0.325 * window.screen.height)}px`;
+    }
+
     _render() {
         return (
             <div>
@@ -282,7 +289,8 @@ export class FormBase extends BaseComponent {
                         this.state.setFieldValue = props.setFieldValue;
                         return (
                             <Form onSubmit={props.handleSubmit}>
-                                <div className='form-controls-container'>
+                                <div className='form-controls-container'
+                                     style={{maxHeight: this._getMaxFormHeight()}}>
                                     {
                                         this.props.dataFields.map(info => {
                                             return (
