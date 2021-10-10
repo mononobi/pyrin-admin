@@ -26,7 +26,8 @@ export const ListFieldTypeEnum = {
     DATETIME: 'datetime',
     TIME: 'time',
     STRING: 'string',
-    CURRENCY: 'currency'
+    CURRENCY: 'currency',
+    OBJECT: 'object'
 };
 
 Object.freeze(ListFieldTypeEnum);

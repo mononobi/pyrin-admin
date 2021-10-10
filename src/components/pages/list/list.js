@@ -66,7 +66,7 @@ export class ListComponent extends BaseComplexPage {
 
     _getJSON(value) {
         try {
-            return JSON.stringify(value);
+            return JSON.stringify(value, null, ' ');
         }
         catch (error) {
             return value;
@@ -177,6 +177,14 @@ export class ListComponent extends BaseComplexPage {
         };
     }
 
+    _renderJSON(info, metadata) {
+        info.type = ListFieldTypeEnum.STRING;
+        info.render = rowData => {
+            let value = rowData[info.field];
+            return this._getJSON(value);
+        };
+    }
+
     _renderUnknown(info, metadata) {
         info.render = rowData => {
             let value = rowData[info.field];
@@ -224,6 +232,9 @@ export class ListComponent extends BaseComplexPage {
                 }
                 else if (info.is_link) {
                     this._renderLink(info, metadata);
+                }
+                else if (info.type === ListFieldTypeEnum.OBJECT) {
+                    this._renderJSON(info, metadata);
                 }
                 else {
                     this._renderUnknown(info, metadata);
