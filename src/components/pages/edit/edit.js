@@ -35,18 +35,20 @@ export class EditComponent extends BaseComplexPage {
 
     _finalRender() {
         return (
-            <Paper variant='elevation' elevation={3}>
-                <UpdateForm registerName={this._getRegisterName()}
-                            name={this._getName()}
-                            history={this.props.history}
-                            location={this.props.location}
-                            dataFields={this.state.metadata.data_fields}
-                            dataFieldsDict={this.state.metadata.data_fields_dict}
-                            pk={this.props.match.params.pk}
-                            initialValues={this._prepareData(this.state.data)}
-                            hasSavePermission={this.state.metadata.has_update_permission}
-                            hasDeletePermission={this.state.metadata.has_remove_permission}/>
-            </Paper>
+            <div style={{padding: '6px'}}>
+                <Paper variant='elevation' elevation={3}>
+                    <UpdateForm registerName={this._getRegisterName()}
+                                name={this._getName()}
+                                history={this.props.history}
+                                location={this.props.location}
+                                dataFields={this.state.metadata.data_fields}
+                                dataFieldsDict={this.state.metadata.data_fields_dict}
+                                pk={this.props.match.params.pk}
+                                initialValues={this._prepareData(this.state.data)}
+                                hasSavePermission={this.state.metadata.has_update_permission}
+                                hasDeletePermission={this.state.metadata.has_remove_permission}/>
+                </Paper>
+            </div>
         )
     }
 }

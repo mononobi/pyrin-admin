@@ -20,16 +20,18 @@ export class AddComponent extends BaseComplexPage {
 
     _finalRender() {
         return (
-            <Paper variant='elevation' elevation={3}>
-                <CreateForm registerName={this._getRegisterName()}
-                            name={this._getName()}
-                            forSelect={this._isForSelect()}
-                            setSelectedFK={this.props.setSelectedFK}
-                            history={this.props.history}
-                            dataFields={this.state.metadata.data_fields}
-                            dataFieldsDict={this.state.metadata.data_fields_dict}
-                            hasSavePermission={this.state.metadata.has_create_permission}/>
-            </Paper>
+            <div style={{padding: '6px'}}>
+                <Paper variant='elevation' elevation={3}>
+                    <CreateForm registerName={this._getRegisterName()}
+                                name={this._getName()}
+                                forSelect={this._isForSelect()}
+                                setSelectedFK={this.props.setSelectedFK}
+                                history={this.props.history}
+                                dataFields={this.state.metadata.data_fields}
+                                dataFieldsDict={this.state.metadata.data_fields_dict}
+                                hasSavePermission={this.state.metadata.has_create_permission}/>
+                </Paper>
+            </div>
         )
     }
 }
