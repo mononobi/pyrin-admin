@@ -3,9 +3,10 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
 import MaterialTable from 'material-table';
 import Link from '@material-ui/core/Link';
+import { Button } from '@material-ui/core';
 import { getFindMetadata } from '../../../services/metadata';
 import { deleteAll, deleteBulk, find } from '../../../services/data';
-import { getCreatePage, getUpdatePage } from '../../../services/url';
+import { getCreatePage, getListPage, getUpdatePage } from '../../../services/url';
 import { BaseComplexPage } from '../base/base';
 import { AlertSeverityEnum, ListFieldTypeEnum } from '../../../core/enumerations';
 import { QUERY_STRING } from '../../../core/query_string';
@@ -72,7 +73,7 @@ export class ListComponent extends BaseComplexPage {
                         {value}
                     </Link>
                 )
-            }
+            };
         }
     }
 
@@ -95,7 +96,7 @@ export class ListComponent extends BaseComplexPage {
                         {value}
                     </Link>
                 )
-            }
+            };
         }
     }
 
@@ -108,28 +109,54 @@ export class ListComponent extends BaseComplexPage {
             else {
                 return <CancelIcon color='disabled' fontSize='small'/>;
             }
-        }
+        };
     }
 
     _renderDateTime(info, metadata) {
         info.render = rowData => {
             let value = rowData[info.field];
             return formatDateTime(value, metadata.datetime_format, metadata.locale);
-        }
+        };
     }
 
     _renderDate(info, metadata) {
         info.render = rowData => {
             let value = rowData[info.field];
             return formatDate(value, metadata.date_format, metadata.locale);
-        }
+        };
     }
 
     _renderTime(info, metadata) {
         info.render = rowData => {
             let value = rowData[info.field];
             return formatTime(value, metadata.time_format, metadata.locale);
-        }
+        };
+    }
+
+    _renderLink(info, metadata) {
+        info.render = rowData => {
+            let data = rowData[info.field];
+            let url = getListPage(data.register_name, null, data.filters);
+            if (data.type === 'button') {
+                return (
+                    <Button variant={data.button_type || 'contained'} color='default'
+                            type='button' size='small'
+                            onClick={() => {
+                                window.open(url, data.new_tab ? '_blank' : '');
+                    }}>
+                        {data.title}
+                    </Button>
+                );
+            }
+            else {
+                return (
+                    <Link component='a' underline='hover' className='link'
+                          target={data.new_tab ? '_blank' : ''} href={url}>
+                        {data.title}
+                    </Link>
+                );
+            }
+        };
     }
 
     _prepareMetadata(metadata) {
@@ -153,6 +180,9 @@ export class ListComponent extends BaseComplexPage {
                 }
                 else if (info.type === ListFieldTypeEnum.TIME) {
                     this._renderTime(info, metadata);
+                }
+                else if (info.is_link) {
+                    this._renderLink(info, metadata);
                 }
             }
         }
