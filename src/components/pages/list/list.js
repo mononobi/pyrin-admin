@@ -150,7 +150,8 @@ export class ListComponent extends BaseComplexPage {
             }
             else {
                 return (
-                    <Button variant={data.button_type} color='default' type='button' size='small'
+                    <Button variant={data.button_type} color='default' type='button'
+                            size='small' className='link-button'
                             onClick={() => {
                                 window.open(url, data.new_tab ? TargetEnum.NEW_TAB : TargetEnum.SAME_TAB);
                             }}>
