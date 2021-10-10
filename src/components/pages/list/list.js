@@ -134,6 +134,9 @@ export class ListComponent extends BaseComplexPage {
     }
 
     _renderLink(info, metadata) {
+        if (this._isForSelect()) {
+            info.hidden = true;
+        }
         info.render = rowData => {
             let data = rowData[info.field];
             let url = getListPage(data.register_name, null, data.filters);
