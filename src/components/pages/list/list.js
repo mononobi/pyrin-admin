@@ -161,6 +161,16 @@ export class ListComponent extends BaseComplexPage {
         };
     }
 
+    _getMaxBodyHeight() {
+        if (this.state.metadata.max_body_height) {
+            return this.state.metadata.max_body_height;
+        }
+        if (!this._isForSelect()) {
+            return `${window.screen.height - (0.27 * window.screen.height)}px`;
+        }
+        return `${window.screen.height - (0.34 * window.screen.height)}px`;
+    }
+
     _prepareMetadata(metadata) {
         for (let i = 0; i < metadata.datasource_info.length; i++) {
             let info = metadata.datasource_info[i];
@@ -196,6 +206,7 @@ export class ListComponent extends BaseComplexPage {
                 tableRef={this.TABLE_REF}
                 options={
                     {
+                        maxBodyHeight: this._getMaxBodyHeight(),
                         debounceInterval: this.state.metadata.search_debounce_interval,
                         search: this.state.metadata.search,
                         searchAutoFocus: this.state.metadata.search,
