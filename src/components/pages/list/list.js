@@ -8,7 +8,7 @@ import { getFindMetadata } from '../../../services/metadata';
 import { deleteAll, deleteBulk, find } from '../../../services/data';
 import { getCreatePage, getListPage, getUpdatePage } from '../../../services/url';
 import { BaseComplexPage } from '../base/base';
-import { AlertSeverityEnum, ListFieldTypeEnum } from '../../../core/enumerations';
+import { AlertSeverityEnum, ListFieldTypeEnum, TargetEnum } from '../../../core/enumerations';
 import { QUERY_STRING } from '../../../core/query_string';
 import { getGlobalState, STATE_KEY_HOLDER } from '../../../core/state';
 import { formatDate, formatDateTime, formatTime } from '../../../core/datetime';
@@ -137,23 +137,22 @@ export class ListComponent extends BaseComplexPage {
         info.render = rowData => {
             let data = rowData[info.field];
             let url = getListPage(data.register_name, null, data.filters);
-            if (data.type === 'button') {
+            if (data.type === 'link') {
                 return (
-                    <Button variant={data.button_type || 'contained'} color='default'
-                            type='button' size='small'
-                            onClick={() => {
-                                window.open(url, data.new_tab ? '_blank' : '');
-                    }}>
+                    <Link component='a' underline='hover' className='link'
+                          target={data.new_tab ? TargetEnum.NEW_TAB : TargetEnum.SAME_TAB} href={url}>
                         {data.title}
-                    </Button>
+                    </Link>
                 );
             }
             else {
                 return (
-                    <Link component='a' underline='hover' className='link'
-                          target={data.new_tab ? '_blank' : ''} href={url}>
+                    <Button variant={data.button_type} color='default' type='button' size='small'
+                            onClick={() => {
+                                window.open(url, data.new_tab ? TargetEnum.NEW_TAB : TargetEnum.SAME_TAB);
+                            }}>
                         {data.title}
-                    </Link>
+                    </Button>
                 );
             }
         };
