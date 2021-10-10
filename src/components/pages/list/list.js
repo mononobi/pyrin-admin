@@ -181,8 +181,7 @@ export class ListComponent extends BaseComplexPage {
         info.render = rowData => {
             let value = rowData[info.field];
             if (typeof value === JSTypeEnum.BOOLEAN) {
-                let checked = rowData[info.field];
-                return this._getBoolean(checked);
+                return this._getBoolean(value);
             }
             if (isJSONSerializable(value)) {
                 return this._getJSON(value);
