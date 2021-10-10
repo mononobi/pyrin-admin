@@ -12,6 +12,8 @@ import { AlertSeverityEnum, ListFieldTypeEnum, TargetEnum } from '../../../core/
 import { QUERY_STRING } from '../../../core/query_string';
 import { getGlobalState, STATE_KEY_HOLDER } from '../../../core/state';
 import { formatDate, formatDateTime, formatTime } from '../../../core/datetime';
+import { JSTypeEnum } from '../../../validators/enumerations';
+import { isJSONSerializable } from '../../../core/helpers';
 import './list.css';
 
 
@@ -50,6 +52,24 @@ export class ListComponent extends BaseComplexPage {
                 let originalURL = QUERY_STRING.exclude(currentURL, [STATE_KEY_HOLDER]);
                 this.props.history.replace(originalURL, currentURL);
             }
+        }
+    }
+
+    _getBoolean(checked) {
+        if (checked) {
+            return <CheckCircleIcon color='action' fontSize='small'/>;
+        }
+        else {
+            return <CancelIcon color='disabled' fontSize='small'/>;
+        }
+    }
+
+    _getJSON(value) {
+        try {
+            return JSON.stringify(value);
+        }
+        catch (error) {
+            return value;
         }
     }
 
@@ -103,12 +123,7 @@ export class ListComponent extends BaseComplexPage {
     _renderBoolean(info, metadata) {
         info.render = rowData => {
             let checked = rowData[info.field];
-            if (checked) {
-                return <CheckCircleIcon color='action' fontSize='small'/>;
-            }
-            else {
-                return <CancelIcon color='disabled' fontSize='small'/>;
-            }
+            return this._getBoolean(checked);
         };
     }
 
@@ -162,6 +177,20 @@ export class ListComponent extends BaseComplexPage {
         };
     }
 
+    _renderUnknown(info, metadata) {
+        info.render = rowData => {
+            let value = rowData[info.field];
+            if (typeof value === JSTypeEnum.BOOLEAN) {
+                let checked = rowData[info.field];
+                return this._getBoolean(checked);
+            }
+            if (isJSONSerializable(value)) {
+                return this._getJSON(value);
+            }
+            return value;
+        };
+    }
+
     _getMaxBodyHeight() {
         if (this.state.metadata.max_body_height) {
             return this.state.metadata.max_body_height;
@@ -196,6 +225,9 @@ export class ListComponent extends BaseComplexPage {
                 }
                 else if (info.is_link) {
                     this._renderLink(info, metadata);
+                }
+                else {
+                    this._renderUnknown(info, metadata);
                 }
             }
         }
