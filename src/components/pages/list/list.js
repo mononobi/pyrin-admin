@@ -92,7 +92,7 @@ export class ListComponent extends BaseComplexPage {
                           }}>
                         {value}
                     </Link>
-                )
+                );
             };
         }
     }
@@ -108,14 +108,12 @@ export class ListComponent extends BaseComplexPage {
                 if (info.lookup) {
                     value = info.lookup[value]
                 }
+                let url = getUpdatePage(info.fk_register_name, rowData[info.field]);
                 return (
-                    <Link component='a' underline='hover' className='link'
-                          onClick={() => {
-                              this.props.history.push(getUpdatePage(info.fk_register_name, rowData[info.field]));
-                          }}>
+                    <Link component='a' underline='hover' href={url} target={TargetEnum.NEW_TAB}>
                         {value}
                     </Link>
-                )
+                );
             };
         }
     }
