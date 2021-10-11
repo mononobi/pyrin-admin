@@ -1,10 +1,12 @@
+const BASE_AVAILABLE_HEIGHT = 1127;
+const MIN_HEIGHT = 300;
 const BASE_RATIO = 1.6;
 const BASE_HEIGHT = 1200;
 const BASE_WIDTH = 1920;
 
 export function getMaxHeight(reducer, forSelectReducer, forSelect) {
     let height = window.screen.availHeight;
-    let factor = window.screen.height / BASE_HEIGHT;
+    let factor = height / BASE_AVAILABLE_HEIGHT;
     reducer = reducer / factor;
     forSelectReducer = forSelectReducer / factor;
     let result = 0;
@@ -15,12 +17,16 @@ export function getMaxHeight(reducer, forSelectReducer, forSelect) {
         result = height - (forSelectReducer * height);
     }
 
-    if (factor < 0.7) {
-        result = result - 12;
+    if (result < MIN_HEIGHT) {
+        result = MIN_HEIGHT;
     }
-    else if (factor > 1.3) {
-        result = result + 12;
-    }
+
+    // if (factor < 0.7) {
+    //     result = result - 12;
+    // }
+    // else if (factor > 1.3) {
+    //     result = result + 12;
+    // }
 
     return `${result}px`;
 }
