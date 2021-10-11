@@ -7,7 +7,6 @@ export function getMaxHeight(reducer, forSelectReducer, forSelect) {
     let factor = window.screen.height / BASE_HEIGHT;
     reducer = reducer / factor;
     forSelectReducer = forSelectReducer / factor;
-
     let result = 0;
     if (!forSelect) {
         result = height - (reducer * height);
@@ -16,10 +15,10 @@ export function getMaxHeight(reducer, forSelectReducer, forSelect) {
         result = height - (forSelectReducer * height);
     }
 
-    if (factor < 0.8) {
+    if (factor < 0.7) {
         result = result - 12;
     }
-    else if (factor > 1.2) {
+    else if (factor > 1.3) {
         result = result + 12;
     }
 
