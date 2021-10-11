@@ -14,6 +14,7 @@ import { getGlobalState, STATE_KEY_HOLDER } from '../../../core/state';
 import { formatDate, formatDateTime, formatTime } from '../../../core/datetime';
 import { JSTypeEnum } from '../../../validators/enumerations';
 import { isJSONSerializable } from '../../../core/helpers';
+import { getMaxHeight } from '../../../core/window';
 import './list.css';
 
 
@@ -200,10 +201,7 @@ export class ListComponent extends BaseComplexPage {
         if (this.state.metadata.max_body_height) {
             return this.state.metadata.max_body_height;
         }
-        if (!this._isForSelect()) {
-            return `${window.screen.height - (0.27 * window.screen.height)}px`;
-        }
-        return `${window.screen.height - (0.34 * window.screen.height)}px`;
+        return getMaxHeight(0.22, 0.287, this._isForSelect());
     }
 
     _prepareMetadata(metadata) {

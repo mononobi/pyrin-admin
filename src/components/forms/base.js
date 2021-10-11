@@ -16,6 +16,7 @@ import { setGlobalState } from '../../core/state';
 import { JSTypeEnum } from '../../validators/enumerations';
 import { SelectDialog } from '../controls/dialogs/select';
 import { CreateDialog } from '../controls/dialogs/create';
+import { getMaxHeight } from '../../core/window';
 import './base.css';
 
 
@@ -189,10 +190,7 @@ export class FormBase extends BaseComponent {
     }
 
     _getMaxFormHeight() {
-        if (!this.props.forSelect) {
-            return `${window.screen.height - (0.26 * window.screen.height)}px`;
-        }
-        return `${window.screen.height - (0.325 * window.screen.height)}px`;
+        return getMaxHeight(0.21, 0.283, this.props.forSelect);
     }
 
     _render() {
