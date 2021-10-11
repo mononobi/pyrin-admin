@@ -21,12 +21,5 @@ export function getMaxHeight(reducer, forSelectReducer, forSelect) {
         result = MIN_HEIGHT;
     }
 
-    // if (factor < 0.7) {
-    //     result = result - 12;
-    // }
-    // else if (factor > 1.3) {
-    //     result = result + 12;
-    // }
-
     return `${result}px`;
 }
