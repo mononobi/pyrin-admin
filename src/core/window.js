@@ -1,8 +1,10 @@
-const BASE_AVAILABLE_HEIGHT = 1127;
-const MIN_HEIGHT = 300;
+/* eslint-disable */
 const BASE_RATIO = 1.6;
 const BASE_HEIGHT = 1200;
 const BASE_WIDTH = 1920;
+/* eslint-enable */
+const BASE_AVAILABLE_HEIGHT = 1127;
+const MIN_HEIGHT = 300;
 
 export function getMaxHeight(reducer, forSelectReducer, forSelect) {
     let height = window.screen.availHeight;
