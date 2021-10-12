@@ -7,3 +7,18 @@ export function isJSONSerializable(value) {
     }
     return typeof value === JSTypeEnum.OBJECT;
 }
+
+export function deleteKey(key, object) {
+    if (object[key] !== undefined) {
+        delete object[key];
+    }
+}
+
+export function popKey(key, object, defaultValue=undefined) {
+    let value = object[key];
+    deleteKey(key, object);
+    if (value === undefined) {
+        value = defaultValue;
+    }
+    return value;
+}

@@ -1,13 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
+import { deleteKey } from './helpers';
 
 
 const GLOBAL_STATE = {};
 export const STATE_KEY_HOLDER = '_k_';
 
 function deleteGlobalState(key) {
-    if (GLOBAL_STATE[key] !== undefined) {
-        delete GLOBAL_STATE[key];
-    }
+    deleteKey(key, GLOBAL_STATE);
 }
 
 export function setGlobalState(value) {
