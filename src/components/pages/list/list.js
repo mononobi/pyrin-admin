@@ -9,11 +9,11 @@ import { deleteAll, deleteBulk, find } from '../../../services/data';
 import { getCreatePage, getListPage, getUpdatePage } from '../../../services/url';
 import { BaseComplexPage } from '../base/base';
 import { AlertSeverityEnum, ListFieldTypeEnum, TargetEnum } from '../../../core/enumerations';
-import { QUERY_STRING } from '../../../core/query_string';
+import { addQueryParams, getPageKey, QUERY_STRING } from '../../../core/query_string';
 import { getGlobalState, STATE_KEY_HOLDER } from '../../../core/state';
 import { formatDate, formatDateTime, formatTime } from '../../../core/datetime';
 import { JSTypeEnum } from '../../../validators/enumerations';
-import { isJSONSerializable } from '../../../core/helpers';
+import { isJSONSerializable, popKey } from '../../../core/helpers';
 import { getMaxHeight } from '../../../core/window';
 import './list.css';
 
@@ -27,10 +27,19 @@ export class ListComponent extends BaseComplexPage {
     LINK_COLOR = '#12558d';
     TABLE_REF = React.createRef();
 
+    state = {
+        isInitial: true
+    }
+
     _rowClicked = (event, rowData, toggleDetailPanel) => {
         if (this._isForSelect()) {
             this.props.setSelectedFK(rowData[this.state.metadata.configs.hidden_pk_name]);
         }
+    }
+
+    _isTableStateValid() {
+        return !!(this.TABLE_REF && this.TABLE_REF.current &&
+            this.TABLE_REF.current.state);
     }
 
     _fetchMetadata()
@@ -40,7 +49,7 @@ export class ListComponent extends BaseComplexPage {
 
     _componentDidMount() {
         if (!this._isForSelect()) {
-            let query = QUERY_STRING.parse(this.props.location.search);
+            let query = this._getQueryParams();
             if (query && query[STATE_KEY_HOLDER]) {
                 let message = getGlobalState(query[STATE_KEY_HOLDER]);
                 if (message) {
@@ -49,7 +58,7 @@ export class ListComponent extends BaseComplexPage {
             }
 
             if (query[STATE_KEY_HOLDER] !== undefined) {
-                let currentURL = `${this.props.location.pathname}${this.props.location.search}`;
+                let currentURL = this._getCurrentURL();
                 let originalURL = QUERY_STRING.exclude(currentURL, [STATE_KEY_HOLDER]);
                 this.props.history.replace(originalURL, currentURL);
             }
@@ -272,11 +281,46 @@ export class ListComponent extends BaseComplexPage {
                 data={query =>
                     new Promise((resolve, reject) => {
                         let filters = {};
+                        let page = null;
                         if (!this._isForSelect()) {
                             filters = QUERY_STRING.parse(this.props.location.search);
+                            let pageKey = getPageKey(this.state.metadata.configs);
+                            page = popKey(pageKey, filters, null);
+                            page = parseInt(page, 10);
+                            page = isNaN(page) ? null : page;
+                            if (page !== null && page < 1) {
+                                page = 1;
+                            }
+
+                            if (!page || this.state.isInitial) {
+                                page = page || 1;
+                                filters[pageKey] = page;
+                                let currentURL = this._getCurrentURL();
+                                let originalURL = addQueryParams(currentURL, filters);
+                                this.state.isInitial = false;
+                                this.props.history.replace(originalURL, currentURL);
+                            }
+                            else {
+                                // we should go to the next page.
+                                if (query.page === page) {
+                                    page = page + 1;
+                                }
+                                // we should jump to the destination page, normally the end or first pages.
+                                else if (query.page !== page - 1) {
+                                    page = query.page + 1;
+                                }
+                                filters[pageKey] = page;
+                                let currentURL = this._getCurrentURL();
+                                let originalURL = addQueryParams(currentURL, filters);
+                                this.props.history.replace(originalURL, currentURL);
+                            }
                         }
-                        let response = find(this._getRegisterName(), query.page + 1,
-                            query.pageSize, query.orderBy, query.orderDirection, query.search, filters);
+                        page = page || (query.page + 1);
+                        query.page = page - 1;
+
+                        let response = find(this._getRegisterName(), page,
+                            query.pageSize, query.orderBy, query.orderDirection,
+                            query.search, filters);
 
                         response.then(([json, ok]) => {
                             if (!ok) {
@@ -289,11 +333,21 @@ export class ListComponent extends BaseComplexPage {
                                 });
                             }
                             else {
-                                resolve({
-                                    data: json.results,
-                                    page: query.page,
-                                    totalCount: json.count_total
-                                });
+                                let totalPageCount = Math.ceil(json.count_total / query.pageSize);
+                                if (page > totalPageCount) {
+                                    resolve({
+                                        data: [],
+                                        page: 0,
+                                        totalCount: 0
+                                    });
+                                }
+                                else {
+                                    resolve({
+                                        data: json.results,
+                                        page: query.page,
+                                        totalCount: json.count_total
+                                    });
+                                }
                             }
                         })
                     })
@@ -304,8 +358,7 @@ export class ListComponent extends BaseComplexPage {
                         tooltip: 'Refresh Data',
                         isFreeAction: true,
                         onClick: event => {
-                            if (this.TABLE_REF && this.TABLE_REF.current &&
-                                this.TABLE_REF.current.state) {
+                            if (this._isTableStateValid()) {
                                 this.TABLE_REF.current.onQueryChange(this.TABLE_REF.current.state.query);
                             }
                         }
@@ -337,10 +390,8 @@ export class ListComponent extends BaseComplexPage {
                                 let result = deleteAll(this._getRegisterName());
                                 result.then(([json, ok]) => {
                                     if (ok) {
-                                        if (this.TABLE_REF && this.TABLE_REF.current &&
-                                            this.TABLE_REF.current.state) {
-                                            this.TABLE_REF.current.onQueryChange(
-                                                this.TABLE_REF.current.state.query);
+                                        if (this._isTableStateValid()) {
+                                            this.TABLE_REF.current.onQueryChange(this.TABLE_REF.current.state.query);
                                         }
                                         this._setToastNotification(
                                             `All ${this._getPluralName()} have been deleted successfully.`,
@@ -370,10 +421,8 @@ export class ListComponent extends BaseComplexPage {
                                 let result = deleteBulk(this._getRegisterName(), pk);
                                 result.then(([json, ok]) => {
                                     if (ok) {
-                                        if (this.TABLE_REF && this.TABLE_REF.current &&
-                                            this.TABLE_REF.current.state) {
-                                            this.TABLE_REF.current.onQueryChange(
-                                                this.TABLE_REF.current.state.query);
+                                        if (this._isTableStateValid()) {
+                                            this.TABLE_REF.current.onQueryChange(this.TABLE_REF.current.state.query);
                                         }
                                         let message = count > 1 ? `${count} ${name} have`: `${count} ${name} has`;
                                         this._setToastNotification(

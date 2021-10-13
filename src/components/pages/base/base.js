@@ -1,5 +1,6 @@
 import { ComplexComponent } from '../../base/complex/complex';
 import { BaseComponent } from '../../base/base/base';
+import { QUERY_STRING } from '../../../core/query_string';
 
 
 export class BasePage extends BaseComponent {}
@@ -27,5 +28,13 @@ export class BaseComplexPage extends ComplexComponent {
 
     _isForSelect() {
         return this.props.forSelect;
+    }
+
+    _getCurrentURL() {
+        return `${this.props.location.pathname}${this.props.location.search}`;
+    }
+
+    _getQueryParams() {
+        return QUERY_STRING.parse(this.props.location.search);
     }
 }
