@@ -299,7 +299,7 @@ export class ListComponent extends BaseComplexPage {
                     new Promise((resolve, reject) => {
                         let filters = {};
                         let page = null;
-                        let isOrderByChange = this._isOrderByChanged(query);
+                        let isOrderByChanged = this._isOrderByChanged(query);
                         if (!this._isForSelect()) {
                             filters = QUERY_STRING.parse(this.props.location.search);
                             let pageKey = getPageKey(this.state.metadata.configs);
@@ -318,7 +318,7 @@ export class ListComponent extends BaseComplexPage {
                                 this.state.isInitial = false;
                                 this.props.history.replace(originalURL, currentURL);
                             }
-                            else if (!isOrderByChange) {
+                            else if (!isOrderByChanged) {
                                 // we should go to the next or previous page.
                                 if (query.page === page) {
                                     page = page + 1;
@@ -335,7 +335,7 @@ export class ListComponent extends BaseComplexPage {
                             query.page = page - 1;
                         }
                         else {
-                            if (!isOrderByChange) {
+                            if (!isOrderByChanged) {
                                 page = query.page + 1;
                                 this.state.currentPage = page;
                             }
@@ -345,7 +345,7 @@ export class ListComponent extends BaseComplexPage {
                             }
                         }
 
-                        if (isOrderByChange) {
+                        if (isOrderByChanged) {
                             if (!Boolean(query.orderBy)) {
                                 this.state.orderByField = null;
                                 this.state.orderDirection = null;
