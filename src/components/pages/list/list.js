@@ -28,7 +28,10 @@ export class ListComponent extends BaseComplexPage {
     TABLE_REF = React.createRef();
 
     state = {
-        isInitial: true
+        isInitial: true,
+        orderByField: null,
+        orderDirection: null,
+        currentPage: null
     }
 
     _rowClicked = (event, rowData, toggleDetailPanel) => {
@@ -248,6 +251,20 @@ export class ListComponent extends BaseComplexPage {
         }
     }
 
+    _isOrderByChange(query) {
+        if ((Boolean(query.orderBy) && !Boolean(this.state.orderByField)) ||
+            (!Boolean(query.orderBy) && Boolean(this.state.orderByField))) {
+            return  true;
+        }
+        else if (Boolean(query.orderBy) && Boolean(this.state.orderByField)) {
+            if (query.orderBy.field !== this.state.orderByField ||
+                query.orderDirection !== this.state.orderDirection) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     _finalRender() {
         return (
             <MaterialTable
@@ -282,6 +299,7 @@ export class ListComponent extends BaseComplexPage {
                     new Promise((resolve, reject) => {
                         let filters = {};
                         let page = null;
+                        let isOrderByChange = this._isOrderByChange(query);
                         if (!this._isForSelect()) {
                             filters = QUERY_STRING.parse(this.props.location.search);
                             let pageKey = getPageKey(this.state.metadata.configs);
@@ -300,7 +318,7 @@ export class ListComponent extends BaseComplexPage {
                                 this.state.isInitial = false;
                                 this.props.history.replace(originalURL, currentURL);
                             }
-                            else {
+                            else if (!isOrderByChange) {
                                 // we should go to the next page.
                                 if (query.page === page) {
                                     page = page + 1;
@@ -314,9 +332,29 @@ export class ListComponent extends BaseComplexPage {
                                 let originalURL = addQueryParams(currentURL, filters);
                                 this.props.history.replace(originalURL, currentURL);
                             }
+                            query.page = page - 1;
                         }
-                        page = page || (query.page + 1);
-                        query.page = page - 1;
+                        else {
+                            if (!isOrderByChange) {
+                                page = query.page + 1;
+                                this.state.currentPage = page;
+                            }
+                            else {
+                                page = this.state.currentPage;
+                                query.page = page - 1;
+                            }
+                        }
+
+                        if (isOrderByChange) {
+                            if (!Boolean(query.orderBy)) {
+                                this.state.orderByField = null;
+                                this.state.orderDirection = null;
+                            }
+                            else {
+                                this.state.orderByField = query.orderBy.field;
+                                this.state.orderDirection = query.orderDirection;
+                            }
+                        }
 
                         let response = find(this._getRegisterName(), page,
                             query.pageSize, query.orderBy, query.orderDirection,
@@ -338,7 +376,7 @@ export class ListComponent extends BaseComplexPage {
                                     resolve({
                                         data: [],
                                         page: 0,
-                                        totalCount: 0
+                                        totalCount: json.count_total
                                     });
                                 }
                                 else {
