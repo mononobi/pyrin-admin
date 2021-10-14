@@ -251,7 +251,7 @@ export class ListComponent extends BaseComplexPage {
         }
     }
 
-    _isOrderByChange(query) {
+    _isOrderByChanged(query) {
         if ((Boolean(query.orderBy) && !Boolean(this.state.orderByField)) ||
             (!Boolean(query.orderBy) && Boolean(this.state.orderByField))) {
             return  true;
@@ -299,7 +299,7 @@ export class ListComponent extends BaseComplexPage {
                     new Promise((resolve, reject) => {
                         let filters = {};
                         let page = null;
-                        let isOrderByChange = this._isOrderByChange(query);
+                        let isOrderByChange = this._isOrderByChanged(query);
                         if (!this._isForSelect()) {
                             filters = QUERY_STRING.parse(this.props.location.search);
                             let pageKey = getPageKey(this.state.metadata.configs);
