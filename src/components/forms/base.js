@@ -190,7 +190,7 @@ export class FormBase extends BaseComponent {
     }
 
     _getMaxFormHeight() {
-        return getMaxHeight(0.21, 0.283, this.props.forSelect);
+        return getMaxHeight(0.13, 0.205, this.props.forSelect);
     }
 
     _render() {

@@ -31,7 +31,8 @@ export class ListComponent extends BaseComplexPage {
         isInitial: true,
         orderByField: null,
         orderDirection: null,
-        currentPage: null
+        currentPage: null,
+        maxBodyHeight: null
     }
 
     _rowClicked = (event, rowData, toggleDetailPanel) => {
@@ -66,6 +67,10 @@ export class ListComponent extends BaseComplexPage {
                 this.props.history.replace(originalURL, currentURL);
             }
         }
+
+        this.setState({
+            maxBodyHeight: this._getMaxBodyHeight()
+        });
     }
 
     _getBoolean(checked) {
@@ -210,10 +215,7 @@ export class ListComponent extends BaseComplexPage {
     }
 
     _getMaxBodyHeight() {
-        if (this.state.metadata.max_body_height) {
-            return this.state.metadata.max_body_height;
-        }
-        return getMaxHeight(0.22, 0.287, this._isForSelect());
+        return getMaxHeight(0.14, 0.211, this._isForSelect());
     }
 
     _prepareMetadata(metadata) {
@@ -271,7 +273,7 @@ export class ListComponent extends BaseComplexPage {
                 tableRef={this.TABLE_REF}
                 options={
                     {
-                        maxBodyHeight: this._getMaxBodyHeight(),
+                        maxBodyHeight: this.state.metadata.max_body_height || this.state.maxBodyHeight,
                         debounceInterval: this.state.metadata.search_debounce_interval,
                         search: this.state.metadata.search,
                         searchAutoFocus: this.state.metadata.search,
