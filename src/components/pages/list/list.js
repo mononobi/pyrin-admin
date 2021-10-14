@@ -319,7 +319,7 @@ export class ListComponent extends BaseComplexPage {
                                 this.props.history.replace(originalURL, currentURL);
                             }
                             else if (!isOrderByChange) {
-                                // we should go to the next page.
+                                // we should go to the next or previous page.
                                 if (query.page === page) {
                                     page = page + 1;
                                 }
