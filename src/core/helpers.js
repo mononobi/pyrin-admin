@@ -22,3 +22,11 @@ export function popKey(key, object, defaultValue=undefined) {
     }
     return value;
 }
+
+export function isString(value) {
+    if (!value) {
+        return false;
+    }
+
+    return Object.prototype.toString.call(value) === '[object String]';
+}

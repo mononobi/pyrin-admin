@@ -82,6 +82,15 @@ export function addOrderingQueryParam(url, orderBy) {
     return url;
 }
 
+export function removeOrderingQueryParam(url) {
+    let configs = getConfigs();
+    let orderingKey = getOrderingKey(configs);
+    if (orderingKey) {
+        url = QUERY_STRING.exclude(url, [orderingKey]);
+    }
+    return url;
+}
+
 export function addSearchQueryParam(url, text) {
     let query = {};
     let configs = getConfigs();

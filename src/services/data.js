@@ -1,4 +1,5 @@
 import * as request from './request';
+import { getOrdering } from '../core/ordering';
 import { addOrderingQueryParam, addPagingQueryParam,
     addQueryParams, addSearchQueryParam
 } from '../core/query_string';
@@ -13,21 +14,14 @@ export function find(registerName, page=null,
         url = addQueryParams(url, filters);
     }
     url = addPagingQueryParam(url, page, pageSize);
-    if (orderBy) {
-        let name = orderBy.field;
-        if (name) {
-            let sign = '';
-            if (orderDirection === 'desc') {
-                sign = '-';
-            }
-            name = `${sign}${name}`;
-            url = addOrderingQueryParam(url, name);
-        }
+    if (orderBy && orderBy.field) {
+        let name = getOrdering(orderBy.field, orderDirection);
+        url = addOrderingQueryParam(url, name);
     }
+
     if (search) {
         url = addSearchQueryParam(url, search);
     }
-
     return request.get(url);
 }
 

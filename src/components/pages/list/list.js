@@ -9,12 +9,15 @@ import { deleteAll, deleteBulk, find } from '../../../services/data';
 import { getCreatePage, getListPage, getUpdatePage } from '../../../services/url';
 import { BaseComplexPage } from '../base/base';
 import { AlertSeverityEnum, ListFieldTypeEnum, TargetEnum } from '../../../core/enumerations';
-import { addQueryParams, getPageKey, QUERY_STRING } from '../../../core/query_string';
 import { getGlobalState, STATE_KEY_HOLDER } from '../../../core/state';
 import { formatDate, formatDateTime, formatTime } from '../../../core/datetime';
 import { JSTypeEnum } from '../../../validators/enumerations';
 import { isJSONSerializable, popKey } from '../../../core/helpers';
 import { getMaxHeight } from '../../../core/window';
+import { getOrdering } from '../../../core/ordering';
+import { addOrderingQueryParam, addQueryParams, getPageKey,
+    QUERY_STRING, removeOrderingQueryParam
+} from '../../../core/query_string';
 import './list.css';
 
 
@@ -297,6 +300,19 @@ export class ListComponent extends BaseComplexPage {
                 title={this._getPluralName()}
                 columns={this.state.metadata.datasource_info}
                 onRowClick={this._isForSelect() ? this._rowClicked : undefined}
+                onOrderChange={(orderBy, orderDirection) => {
+                    let currentURL = this._getCurrentURL();
+                    if (orderBy >= 0) {
+                        let fieldInfo = this.state.metadata.datasource_info[orderBy];
+                        let name = getOrdering(fieldInfo.field, orderDirection);
+                        let originalURL = addOrderingQueryParam(currentURL, name);
+                        this.props.history.replace(originalURL, currentURL);
+                    }
+                    else {
+                        let newURL = removeOrderingQueryParam(currentURL);
+                        this.props.history.replace(newURL, currentURL);
+                    }
+                }}
                 data={query =>
                     new Promise((resolve, reject) => {
                         let filters = {};
