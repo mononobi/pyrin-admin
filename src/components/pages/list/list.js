@@ -15,9 +15,8 @@ import { JSTypeEnum } from '../../../validators/enumerations';
 import { isJSONSerializable, popKey } from '../../../core/helpers';
 import { getMaxHeight } from '../../../core/window';
 import { getOrdering } from '../../../core/ordering';
-import {
-    addOrderingQueryParam, addQueryParams, getOrderingKey, getPageKey,
-    QUERY_STRING, removeOrderingQueryParam
+import { addOrderingQueryParam, addQueryParams, getOrderingKey, getPageKey,
+    getPageSizeKey, QUERY_STRING, removeOrderingQueryParam
 } from '../../../core/query_string';
 import './list.css';
 
@@ -36,6 +35,7 @@ export class ListComponent extends BaseComplexPage {
         orderByField: null,
         orderDirection: null,
         currentPage: null,
+        currentPageSize: null,
         maxBodyHeight: null
     }
 
@@ -271,6 +271,10 @@ export class ListComponent extends BaseComplexPage {
         return false;
     }
 
+    _isPageSizeChanged(query) {
+        return query.pageSize !== this.state.currentPageSize;
+    }
+
     _finalRender() {
         return (
             <MaterialTable
@@ -319,9 +323,38 @@ export class ListComponent extends BaseComplexPage {
                     new Promise((resolve, reject) => {
                         let filters = {};
                         let page = null;
+                        let pageSize = null;
                         let isOrderByChanged = this._isOrderByChanged(query);
+                        let isPageSizeChanged = this._isPageSizeChanged(query);
                         if (!this._isForSelect()) {
+                            let currentURL = this._getCurrentURL();
                             filters = QUERY_STRING.parse(this.props.location.search);
+                            let pageSizeKey = getPageSizeKey(this.state.metadata.configs);
+                            pageSize = popKey(pageSizeKey, filters, null);
+                            pageSize = parseInt(pageSize, 10);
+                            pageSize = isNaN(pageSize) ? null : pageSize;
+                            if (pageSize !== null) {
+                                if (pageSize < 1) {
+                                    pageSize = this.state.metadata.page_size;
+                                }
+                                else if (pageSize > this.state.metadata.max_page_size) {
+                                    pageSize = this.state.metadata.max_page_size;
+                                }
+                            }
+
+                            if (!pageSize || this.state.isInitial) {
+                                pageSize = pageSize || this.state.metadata.page_size;
+                                filters[pageSizeKey] = pageSize;
+                                let originalURL = addQueryParams(currentURL, filters);
+                                this.props.history.replace(originalURL, currentURL);
+                            }
+                            else if (isPageSizeChanged) {
+                                pageSize = query.pageSize;
+                                filters[pageSizeKey] = pageSize;
+                                let originalURL = addQueryParams(currentURL, filters);
+                                this.props.history.replace(originalURL, currentURL);
+                            }
+
                             let pageKey = getPageKey(this.state.metadata.configs);
                             page = popKey(pageKey, filters, null);
                             page = parseInt(page, 10);
@@ -333,7 +366,6 @@ export class ListComponent extends BaseComplexPage {
                             if (!page || this.state.isInitial) {
                                 page = page || 1;
                                 filters[pageKey] = page;
-                                let currentURL = this._getCurrentURL();
                                 let originalURL = addQueryParams(currentURL, filters);
                                 this.state.isInitial = false;
                                 this.props.history.replace(originalURL, currentURL);
@@ -348,7 +380,6 @@ export class ListComponent extends BaseComplexPage {
                                     page = query.page + 1;
                                 }
                                 filters[pageKey] = page;
-                                let currentURL = this._getCurrentURL();
                                 let originalURL = addQueryParams(currentURL, filters);
                                 this.props.history.replace(originalURL, currentURL);
                             }
@@ -359,6 +390,10 @@ export class ListComponent extends BaseComplexPage {
                             }
 
                             query.page = page - 1;
+                            if (query.pageSize !== pageSize) {
+                                query.pageSize = pageSize;
+                                this.TABLE_REF.current.dataManager.changePageSize(pageSize);
+                            }
                         }
                         else {
                             if (!isOrderByChanged) {
@@ -380,6 +415,10 @@ export class ListComponent extends BaseComplexPage {
                                 this.state.orderByField = query.orderBy.field;
                                 this.state.orderDirection = query.orderDirection;
                             }
+                        }
+
+                        if (isPageSizeChanged) {
+                            this.state.metadata.currentPageSize = query.pageSize;
                         }
 
                         let response = find(this._getRegisterName(), page,
