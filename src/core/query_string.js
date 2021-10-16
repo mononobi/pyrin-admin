@@ -3,6 +3,12 @@ import { CONFIGS, getConfigs } from './configs';
 
 
 export const QUERY_STRING = require('query-string');
+export const PLUS_ENCODED = '%2B';
+
+export function parseQueryString(text) {
+    text = text.replace('+', PLUS_ENCODED);
+    return QUERY_STRING.parse(text);
+}
 
 export function getPageKey(configs) {
     return configs['page_key'];

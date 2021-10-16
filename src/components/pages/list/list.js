@@ -328,8 +328,7 @@ export class ListComponent extends BaseComplexPage {
                         let isPageSizeChanged = this._isPageSizeChanged(query);
                         if (!this._isForSelect()) {
                             let currentURL = this._getCurrentURL();
-                            filters = QUERY_STRING.parse(this.props.location.search);
-
+                            filters = this._getQueryParams();
                             if (this.state.isInitial) {
                                 let orderingKey = getOrderingKey(this.state.metadata.configs);
                                 let ordering = filters[orderingKey];
@@ -342,7 +341,9 @@ export class ListComponent extends BaseComplexPage {
                                         query.orderDirection = direction;
                                         this.state.orderByField = field;
                                         this.state.orderDirection = direction;
-                                        this.TABLE_REF.current.dataManager.changeOrder(index, direction);
+                                        if (this._isTableStateValid()) {
+                                            this.TABLE_REF.current.dataManager.changeOrder(index, direction);
+                                        }
                                     }
                                 }
                             }
@@ -410,7 +411,9 @@ export class ListComponent extends BaseComplexPage {
                             query.page = page - 1;
                             if (query.pageSize !== pageSize) {
                                 query.pageSize = pageSize;
-                                this.TABLE_REF.current.dataManager.changePageSize(pageSize);
+                                if (this._isTableStateValid()) {
+                                    this.TABLE_REF.current.dataManager.changePageSize(pageSize);
+                                }
                             }
                         }
                         else {

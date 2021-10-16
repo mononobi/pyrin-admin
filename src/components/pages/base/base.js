@@ -1,6 +1,6 @@
 import { ComplexComponent } from '../../base/complex/complex';
 import { BaseComponent } from '../../base/base/base';
-import { QUERY_STRING } from '../../../core/query_string';
+import { parseQueryString } from '../../../core/query_string';
 
 
 export class BasePage extends BaseComponent {}
@@ -35,6 +35,6 @@ export class BaseComplexPage extends ComplexComponent {
     }
 
     _getQueryParams() {
-        return QUERY_STRING.parse(this.props.location.search);
+        return parseQueryString(this.props.location.search);
     }
 }
