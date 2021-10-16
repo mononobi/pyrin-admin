@@ -331,7 +331,7 @@ export class ListComponent extends BaseComplexPage {
                             filters = this._getQueryParams();
                             if (this.state.isInitial) {
                                 let orderingKey = getOrderingKey(this.state.metadata.configs);
-                                let ordering = filters[orderingKey];
+                                let ordering = popKey(orderingKey, filters, null);
                                 if (isString(ordering)) {
                                     let [field, direction] = getOrderingInfo(ordering);
                                     let index = this.state.metadata.field_names.indexOf(field);
