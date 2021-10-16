@@ -12,9 +12,9 @@ import { AlertSeverityEnum, ListFieldTypeEnum, TargetEnum } from '../../../core/
 import { getGlobalState, STATE_KEY_HOLDER } from '../../../core/state';
 import { formatDate, formatDateTime, formatTime } from '../../../core/datetime';
 import { JSTypeEnum } from '../../../validators/enumerations';
-import { isJSONSerializable, popKey } from '../../../core/helpers';
+import { isJSONSerializable, isString, popKey } from '../../../core/helpers';
 import { getMaxHeight } from '../../../core/window';
-import { getOrdering } from '../../../core/ordering';
+import { getOrdering, getOrderingInfo } from '../../../core/ordering';
 import { addOrderingQueryParam, addQueryParams, getOrderingKey, getPageKey,
     getPageSizeKey, QUERY_STRING, removeOrderingQueryParam
 } from '../../../core/query_string';
@@ -329,6 +329,24 @@ export class ListComponent extends BaseComplexPage {
                         if (!this._isForSelect()) {
                             let currentURL = this._getCurrentURL();
                             filters = QUERY_STRING.parse(this.props.location.search);
+
+                            if (this.state.isInitial) {
+                                let orderingKey = getOrderingKey(this.state.metadata.configs);
+                                let ordering = filters[orderingKey];
+                                if (isString(ordering)) {
+                                    let [field, direction] = getOrderingInfo(ordering);
+                                    let index = this.state.metadata.field_names.indexOf(field);
+                                    if (index >= 0)
+                                    {
+                                        query.orderBy = this.state.metadata.datasource_info[index];
+                                        query.orderDirection = direction;
+                                        this.state.orderByField = field;
+                                        this.state.orderDirection = direction;
+                                        this.TABLE_REF.current.dataManager.changeOrder(index, direction);
+                                    }
+                                }
+                            }
+
                             let pageSizeKey = getPageSizeKey(this.state.metadata.configs);
                             pageSize = popKey(pageSizeKey, filters, null);
                             pageSize = parseInt(pageSize, 10);
