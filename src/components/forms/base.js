@@ -12,7 +12,6 @@ import { DELETE_BUTTON_COLOR, DELETE_TEXT_COLOR } from '../controls/inputs/globa
 import { ServerFormFieldTypeEnum } from '../controls/inputs/globals/enumerations';
 import { fillWithDate, getDateTimeString, getTimeString, isValidDate } from '../../core/datetime';
 import { delete_ } from '../../services/data';
-import { setGlobalState } from '../../core/state';
 import { JSTypeEnum } from '../../validators/enumerations';
 import { SelectDialog } from '../controls/dialogs/select';
 import { CreateDialog } from '../controls/dialogs/create';
@@ -259,11 +258,14 @@ export class FormBase extends BaseComponent {
                                     let message = null;
                                     if (this.FOR_UPDATE) {
                                         message = `${this.props.name} [${this.props.pk}] has been updated successfully.`;
-                                    } else {
-                                        message = `A new ${this.props.name} has been added successfully.`;
                                     }
-                                    let key = setGlobalState(message);
-                                    this.props.history.push(getListPage(this.props.registerName, key));
+                                    else {
+                                        message = `A new ${this.props.name} has been added successfully.`;
+                                        if (json?.value) {
+                                            message = `A new ${this.props.name} with primary key [${json.value}] has been added successfully.`;
+                                        }
+                                    }
+                                    this.props.history.push(getListPage(this.props.registerName), {message: message});
                                 }
                                 else
                                 {
@@ -323,13 +325,11 @@ export class FormBase extends BaseComponent {
                                                             let result = delete_(this.props.registerName, this.props.pk);
                                                             result.then(([json, ok]) => {
                                                                 if (ok) {
-                                                                    let key =
-                                                                        setGlobalState(
-                                                                            `${this.props.name} [${this.props.pk}] has been deleted successfully.`);
+                                                                    let message = `${this.props.name} [${this.props.pk}] has been deleted successfully.`;
                                                                     this.props.history.replace(
-                                                                        getListPage(this.props.registerName, key),
-                                                                        this.props.location.pathname);
-                                                                } else {
+                                                                        getListPage(this.props.registerName), {message: message});
+                                                                }
+                                                                else {
                                                                     this._setToastNotification(json, AlertSeverityEnum.ERROR);
                                                                 }
                                                             });

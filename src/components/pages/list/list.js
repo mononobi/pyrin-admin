@@ -9,7 +9,6 @@ import { deleteAll, deleteBulk, find } from '../../../services/data';
 import { getCreatePage, getListPage, getUpdatePage } from '../../../services/url';
 import { BaseComplexPage } from '../base/base';
 import { AlertSeverityEnum, ListFieldTypeEnum, TargetEnum } from '../../../core/enumerations';
-import { getGlobalState, STATE_KEY_HOLDER } from '../../../core/state';
 import { formatDate, formatDateTime, formatTime } from '../../../core/datetime';
 import { JSTypeEnum } from '../../../validators/enumerations';
 import { DEBOUNCE } from '../../../core/debounce';
@@ -17,7 +16,7 @@ import { isJSONSerializable, isString, popKey } from '../../../core/helpers';
 import { getMaxHeight } from '../../../core/window';
 import { getOrdering, getOrderingInfo } from '../../../core/ordering';
 import { addOrderingQueryParam, addQueryParams, addSearchQueryParam, getOrderingKey, getPageKey,
-    getPageSizeKey, getSearchParamKey, removeOrderingQueryParam, removeSearchQueryParam, QUERY_STRING
+    getPageSizeKey, getSearchParamKey, removeOrderingQueryParam, removeSearchQueryParam
 } from '../../../core/query_string';
 import './list.css';
 
@@ -58,18 +57,8 @@ export class ListComponent extends BaseComplexPage {
 
     _componentDidMount() {
         if (!this._isForSelect()) {
-            let query = this._getQueryParams();
-            if (query && query[STATE_KEY_HOLDER]) {
-                let message = getGlobalState(query[STATE_KEY_HOLDER]);
-                if (message) {
-                    this._setToastNotification(message, AlertSeverityEnum.SUCCESS);
-                }
-            }
-
-            if (query[STATE_KEY_HOLDER] !== undefined) {
-                let currentURL = this._getCurrentURL();
-                let originalURL = QUERY_STRING.exclude(currentURL, [STATE_KEY_HOLDER]);
-                this.props.history.replace(originalURL, currentURL);
+            if (this.props.location.state && this.props.location.state.message) {
+                this._setToastNotification(this.props.location.state.message, AlertSeverityEnum.SUCCESS);
             }
         }
     }
@@ -171,7 +160,7 @@ export class ListComponent extends BaseComplexPage {
         }
         info.render = rowData => {
             let data = rowData[info.field];
-            let url = getListPage(data.register_name, null, data.filters);
+            let url = getListPage(data.register_name, data.filters);
             if (data.type === 'link') {
                 return (
                     <Link component='a' underline='hover' className='link'
@@ -314,12 +303,12 @@ export class ListComponent extends BaseComplexPage {
                         if (orderBy >= 0) {
                             let fieldInfo = this.state.metadata.datasource_info[orderBy];
                             let name = getOrdering(fieldInfo.field, orderDirection);
-                            let originalURL = addOrderingQueryParam(currentURL, name);
-                            this.props.history.replace(originalURL, currentURL);
+                            let newURL = addOrderingQueryParam(currentURL, name);
+                            this.props.history.push(newURL);
                         }
                         else {
                             let newURL = removeOrderingQueryParam(currentURL);
-                            this.props.history.replace(newURL, currentURL);
+                            this.props.history.push(newURL);
                         }
                     }
                 }}
@@ -379,14 +368,14 @@ export class ListComponent extends BaseComplexPage {
                                 if (!pageSize || this.state.isInitial) {
                                     pageSize = pageSize || this.state.metadata.page_size;
                                     filters[pageSizeKey] = pageSize;
-                                    let originalURL = addQueryParams(currentURL, filters);
-                                    this.props.history.replace(originalURL, currentURL);
+                                    let newURL = addQueryParams(currentURL, filters);
+                                    this.props.history.replace(newURL);
                                 }
                                 else if (isPageSizeChanged) {
                                     pageSize = query.pageSize;
                                     filters[pageSizeKey] = pageSize;
-                                    let originalURL = addQueryParams(currentURL, filters);
-                                    this.props.history.replace(originalURL, currentURL);
+                                    let newURL = addQueryParams(currentURL, filters);
+                                    this.props.history.push(newURL);
                                 }
 
                                 let pageKey = getPageKey(this.state.metadata.configs);
@@ -400,8 +389,8 @@ export class ListComponent extends BaseComplexPage {
                                 if (!page || this.state.isInitial) {
                                     page = page || 1;
                                     filters[pageKey] = page;
-                                    let originalURL = addQueryParams(currentURL, filters);
-                                    this.props.history.replace(originalURL, currentURL);
+                                    let newURL = addQueryParams(currentURL, filters);
+                                    this.props.history.replace(newURL);
                                 }
                                 else if (!isOrderByChanged) {
                                     // we should go to the next or previous page.
@@ -413,8 +402,8 @@ export class ListComponent extends BaseComplexPage {
                                         page = query.page + 1;
                                     }
                                     filters[pageKey] = page;
-                                    let originalURL = addQueryParams(currentURL, filters);
-                                    this.props.history.replace(originalURL, currentURL);
+                                    let newURL = addQueryParams(currentURL, filters);
+                                    this.props.history.push(newURL);
                                 }
 
                                 this.state.isInitial = false;
@@ -621,12 +610,12 @@ export class ListComponent extends BaseComplexPage {
                                 if (!this._isForSelect()) {
                                     let currentURL = this._getCurrentURL();
                                     if (searchText && searchText !== '') {
-                                        let originalURL = addSearchQueryParam(currentURL, searchText);
-                                        this.props.history.replace(originalURL, currentURL);
+                                        let newURL = addSearchQueryParam(currentURL, searchText);
+                                        this.props.history.push(newURL);
                                     }
                                     else {
                                         let newURL = removeSearchQueryParam(currentURL);
-                                        this.props.history.replace(newURL, currentURL);
+                                        this.props.history.push(newURL);
                                     }
                                 }
                                 props.onSearchChanged(searchText);}, this.state.metadata.search_debounce_interval)
