@@ -322,8 +322,8 @@ export class ListComponent extends BaseComplexPage {
                 data={query =>
                     new Promise((resolve, reject) => {
                         let filters = {};
-                        let page = null;
-                        let pageSize = null;
+                        let page = query.page;
+                        let pageSize = query.pageSize;
                         let isOrderByChanged = this._isOrderByChanged(query);
                         let isPageSizeChanged = this._isPageSizeChanged(query);
                         if (!this._isForSelect()) {
@@ -349,75 +349,77 @@ export class ListComponent extends BaseComplexPage {
                                 }
                             }
 
-                            let pageSizeKey = getPageSizeKey(this.state.metadata.configs);
-                            pageSize = popKey(pageSizeKey, filters, null);
-                            pageSize = parseInt(pageSize, 10);
-                            pageSize = isNaN(pageSize) ? null : pageSize;
-                            if (pageSize !== null) {
-                                if (pageSize < 1) {
-                                    pageSize = this.state.metadata.page_size;
+                            if (this.state.metadata.paged) {
+                                let pageSizeKey = getPageSizeKey(this.state.metadata.configs);
+                                pageSize = popKey(pageSizeKey, filters, null);
+                                pageSize = parseInt(pageSize, 10);
+                                pageSize = isNaN(pageSize) ? null : pageSize;
+                                if (pageSize !== null) {
+                                    if (pageSize < 1) {
+                                        pageSize = this.state.metadata.page_size;
+                                    }
+                                    else if (pageSize > this.state.metadata.max_page_size) {
+                                        pageSize = this.state.metadata.max_page_size;
+                                    }
                                 }
-                                else if (pageSize > this.state.metadata.max_page_size) {
-                                    pageSize = this.state.metadata.max_page_size;
+
+                                if (!pageSize || this.state.isInitial) {
+                                    pageSize = pageSize || this.state.metadata.page_size;
+                                    filters[pageSizeKey] = pageSize;
+                                    let originalURL = addQueryParams(currentURL, filters);
+                                    this.props.history.replace(originalURL, currentURL);
                                 }
-                            }
+                                else if (isPageSizeChanged) {
+                                    pageSize = query.pageSize;
+                                    filters[pageSizeKey] = pageSize;
+                                    let originalURL = addQueryParams(currentURL, filters);
+                                    this.props.history.replace(originalURL, currentURL);
+                                }
 
-                            if (!pageSize || this.state.isInitial) {
-                                pageSize = pageSize || this.state.metadata.page_size;
-                                filters[pageSizeKey] = pageSize;
-                                let originalURL = addQueryParams(currentURL, filters);
-                                this.props.history.replace(originalURL, currentURL);
-                            }
-                            else if (isPageSizeChanged) {
-                                pageSize = query.pageSize;
-                                filters[pageSizeKey] = pageSize;
-                                let originalURL = addQueryParams(currentURL, filters);
-                                this.props.history.replace(originalURL, currentURL);
-                            }
+                                let pageKey = getPageKey(this.state.metadata.configs);
+                                page = popKey(pageKey, filters, null);
+                                page = parseInt(page, 10);
+                                page = isNaN(page) ? null : page;
+                                if (page !== null && page < 1) {
+                                    page = 1;
+                                }
 
-                            let pageKey = getPageKey(this.state.metadata.configs);
-                            page = popKey(pageKey, filters, null);
-                            page = parseInt(page, 10);
-                            page = isNaN(page) ? null : page;
-                            if (page !== null && page < 1) {
-                                page = 1;
-                            }
+                                if (!page || this.state.isInitial) {
+                                    page = page || 1;
+                                    filters[pageKey] = page;
+                                    let originalURL = addQueryParams(currentURL, filters);
+                                    this.props.history.replace(originalURL, currentURL);
+                                }
+                                else if (!isOrderByChanged) {
+                                    // we should go to the next or previous page.
+                                    if (query.page === page) {
+                                        page = page + 1;
+                                    }
+                                    // we should jump to the destination page, normally the end or first pages.
+                                    else if (query.page !== page - 1) {
+                                        page = query.page + 1;
+                                    }
+                                    filters[pageKey] = page;
+                                    let originalURL = addQueryParams(currentURL, filters);
+                                    this.props.history.replace(originalURL, currentURL);
+                                }
 
-                            if (!page || this.state.isInitial) {
-                                page = page || 1;
-                                filters[pageKey] = page;
-                                let originalURL = addQueryParams(currentURL, filters);
                                 this.state.isInitial = false;
-                                this.props.history.replace(originalURL, currentURL);
-                            }
-                            else if (!isOrderByChanged) {
-                                // we should go to the next or previous page.
-                                if (query.page === page) {
-                                    page = page + 1;
+                                query.page = page - 1;
+                                if (query.pageSize !== pageSize) {
+                                    query.pageSize = pageSize;
+                                    if (this._isTableStateValid()) {
+                                        this.TABLE_REF.current.dataManager.changePageSize(pageSize);
+                                    }
                                 }
-                                // we should jump to the destination page, normally the end or first pages.
-                                else if (query.page !== page - 1) {
-                                    page = query.page + 1;
-                                }
-                                filters[pageKey] = page;
-                                let originalURL = addQueryParams(currentURL, filters);
-                                this.props.history.replace(originalURL, currentURL);
                             }
 
                             if (isOrderByChanged) {
                                 let orderingKey = getOrderingKey(this.state.metadata.configs);
                                 popKey(orderingKey, filters);
                             }
-
-                            query.page = page - 1;
-                            if (query.pageSize !== pageSize) {
-                                query.pageSize = pageSize;
-                                if (this._isTableStateValid()) {
-                                    this.TABLE_REF.current.dataManager.changePageSize(pageSize);
-                                }
-                            }
                         }
-                        else {
+                        else if (this.state.metadata.paged) {
                             if (!isOrderByChanged) {
                                 page = query.page + 1;
                                 this.state.currentPage = page;
@@ -439,12 +441,17 @@ export class ListComponent extends BaseComplexPage {
                             }
                         }
 
-                        if (isPageSizeChanged) {
+                        if (this.state.metadata.paged && isPageSizeChanged) {
                             this.state.metadata.currentPageSize = query.pageSize;
                         }
 
+                        if (!this.state.metadata.paged) {
+                            page = null;
+                            pageSize = null;
+                        }
+
                         let response = find(this._getRegisterName(), page,
-                            query.pageSize, query.orderBy, query.orderDirection,
+                            pageSize, query.orderBy, query.orderDirection,
                             query.search, filters);
 
                         response.then(([json, ok]) => {
@@ -458,18 +465,27 @@ export class ListComponent extends BaseComplexPage {
                                 });
                             }
                             else {
-                                let totalPageCount = Math.ceil(json.count_total / query.pageSize);
-                                if (page > totalPageCount) {
-                                    resolve({
-                                        data: [],
-                                        page: 0,
-                                        totalCount: json.count_total
-                                    });
+                                if (this.state.metadata.paged) {
+                                    let totalPageCount = Math.ceil(json.count_total / query.pageSize);
+                                    if (page > totalPageCount) {
+                                        resolve({
+                                            data: [],
+                                            page: 0,
+                                            totalCount: json.count_total
+                                        });
+                                    }
+                                    else {
+                                        resolve({
+                                            data: json.results,
+                                            page: query.page,
+                                            totalCount: json.count_total
+                                        });
+                                    }
                                 }
                                 else {
                                     resolve({
                                         data: json.results,
-                                        page: query.page,
+                                        page: 0,
                                         totalCount: json.count_total
                                     });
                                 }

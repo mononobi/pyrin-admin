@@ -13,7 +13,11 @@ export function find(registerName, page=null,
     if (filters) {
         url = addQueryParams(url, filters);
     }
-    url = addPagingQueryParam(url, page, pageSize);
+
+    if (page || pageSize) {
+        url = addPagingQueryParam(url, page, pageSize);
+    }
+
     if (orderBy && orderBy.field) {
         let name = getOrdering(orderBy.field, orderDirection);
         url = addOrderingQueryParam(url, name);
