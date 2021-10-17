@@ -284,7 +284,7 @@ export class ListComponent extends BaseComplexPage {
                     {
                         maxBodyHeight: this.state.metadata.max_body_height || this.state.maxBodyHeight,
                         search: this.state.metadata.search,
-                        searchAutoFocus: false,
+                        searchAutoFocus: this.state.metadata.search,
                         grouping: this.state.metadata.grouping && !this._isForSelect(),
                         columnsButton: (this.state.metadata.column_selection ||
                             this.state.metadata.enable_export) && !this._isForSelect(),
