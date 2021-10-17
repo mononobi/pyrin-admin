@@ -1,7 +1,7 @@
 import React from 'react';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
-import MaterialTable from 'material-table';
+import MaterialTable, { MTableToolbar } from 'material-table';
 import Link from '@material-ui/core/Link';
 import { Button } from '@material-ui/core';
 import { getFindMetadata } from '../../../services/metadata';
@@ -12,11 +12,12 @@ import { AlertSeverityEnum, ListFieldTypeEnum, TargetEnum } from '../../../core/
 import { getGlobalState, STATE_KEY_HOLDER } from '../../../core/state';
 import { formatDate, formatDateTime, formatTime } from '../../../core/datetime';
 import { JSTypeEnum } from '../../../validators/enumerations';
+import { DEBOUNCE } from '../../../core/debounce';
 import { isJSONSerializable, isString, popKey } from '../../../core/helpers';
 import { getMaxHeight } from '../../../core/window';
 import { getOrdering, getOrderingInfo } from '../../../core/ordering';
-import { addOrderingQueryParam, addQueryParams, getOrderingKey, getPageKey,
-    getPageSizeKey, QUERY_STRING, removeOrderingQueryParam
+import { addOrderingQueryParam, addQueryParams, addSearchQueryParam, getOrderingKey, getPageKey,
+    getPageSizeKey, getSearchParamKey, removeOrderingQueryParam, removeSearchQueryParam, QUERY_STRING
 } from '../../../core/query_string';
 import './list.css';
 
@@ -282,7 +283,6 @@ export class ListComponent extends BaseComplexPage {
                 options={
                     {
                         maxBodyHeight: this.state.metadata.max_body_height || this.state.maxBodyHeight,
-                        debounceInterval: this.state.metadata.search_debounce_interval,
                         search: this.state.metadata.search,
                         searchAutoFocus: false,
                         grouping: this.state.metadata.grouping && !this._isForSelect(),
@@ -313,7 +313,8 @@ export class ListComponent extends BaseComplexPage {
                             let name = getOrdering(fieldInfo.field, orderDirection);
                             let originalURL = addOrderingQueryParam(currentURL, name);
                             this.props.history.replace(originalURL, currentURL);
-                        } else {
+                        }
+                        else {
                             let newURL = removeOrderingQueryParam(currentURL);
                             this.props.history.replace(newURL, currentURL);
                         }
@@ -345,6 +346,15 @@ export class ListComponent extends BaseComplexPage {
                                         if (this._isTableStateValid()) {
                                             this.TABLE_REF.current.dataManager.changeOrder(index, direction);
                                         }
+                                    }
+                                }
+
+                                let searchKey = getSearchParamKey(this.state.metadata.configs);
+                                let searchText = popKey(searchKey, filters, null);
+                                if(searchText && searchText !== '') {
+                                    query.search = searchText;
+                                    if (this._isTableStateValid()) {
+                                        this.TABLE_REF.current.dataManager.changeSearchText(searchText);
                                     }
                                 }
                             }
@@ -598,6 +608,27 @@ export class ListComponent extends BaseComplexPage {
                             return count > 1 ? `${count} rows selected`: `${count} row selected`;
                         }
                     }
+                }}
+                components={{
+                    Toolbar: props => (
+                        <MTableToolbar
+                            {...props}
+                            onSearchChanged={
+                                DEBOUNCE(searchText => {
+                                if (!this._isForSelect()) {
+                                    let currentURL = this._getCurrentURL();
+                                    if (searchText && searchText !== '') {
+                                        let originalURL = addSearchQueryParam(currentURL, searchText);
+                                        this.props.history.replace(originalURL, currentURL);
+                                    }
+                                    else {
+                                        let newURL = removeSearchQueryParam(currentURL);
+                                        this.props.history.replace(newURL, currentURL);
+                                    }
+                                }
+                                props.onSearchChanged(searchText);}, this.state.metadata.search_debounce_interval)
+                            }
+                        />)
                 }}
             />
         )

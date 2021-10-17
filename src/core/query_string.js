@@ -107,3 +107,12 @@ export function addSearchQueryParam(url, text) {
     }
     return url;
 }
+
+export function removeSearchQueryParam(url) {
+    let configs = getConfigs();
+    let searchParam = getSearchParamKey(configs);
+    if (searchParam) {
+        url = QUERY_STRING.exclude(url, [searchParam]);
+    }
+    return url;
+}
