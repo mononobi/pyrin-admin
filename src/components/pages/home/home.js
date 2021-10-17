@@ -82,6 +82,10 @@ export class HomeComponent extends BaseComplexPage {
     }
 
     _finalRender() {
-        return <PageListComponent pages={this.state.metadata.pages}/>
+        return (
+            <div className='pages-container'>
+                <PageListComponent pages={this.state.metadata.pages}/>
+            </div>
+        )
     }
 }
