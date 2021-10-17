@@ -72,10 +72,6 @@ export class ListComponent extends BaseComplexPage {
                 this.props.history.replace(originalURL, currentURL);
             }
         }
-
-        this.setState({
-            maxBodyHeight: this._getMaxBodyHeight()
-        });
     }
 
     _getBoolean(checked) {
@@ -219,11 +215,18 @@ export class ListComponent extends BaseComplexPage {
         };
     }
 
-    _getMaxBodyHeight() {
-        return getMaxHeight(0.14, 0.211, this._isForSelect());
+    _getMaxBodyHeight(paged) {
+        let reducer = 0.14;
+        let forSelectReducer = 0.211;
+        if (!paged) {
+            reducer = 0.085;
+            forSelectReducer = 0.160;
+        }
+        return getMaxHeight(reducer, forSelectReducer, this._isForSelect());
     }
 
     _prepareMetadata(metadata) {
+        this.state.maxBodyHeight = this._getMaxBodyHeight(metadata.paged);
         for (let i = 0; i < metadata.datasource_info.length; i++) {
             let info = metadata.datasource_info[i];
             if (!info.hidden) {
