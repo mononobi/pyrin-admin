@@ -31,6 +31,7 @@ export class ListComponent extends BaseComplexPage {
 
     LINK_COLOR = '#12558d';
     TABLE_REF = React.createRef();
+    RESIZE_DEBOUNCE = 200;
 
     state = {
         isInitial: true,
@@ -78,7 +79,17 @@ export class ListComponent extends BaseComplexPage {
         }
     }
 
+    _handleResize = () => {
+        let currentHeight = this._getMaxBodyHeight(this.state.metadata.paged);
+        if (currentHeight !== this.state.maxBodyHeight) {
+            // we could not trigger re-render here because material table has a glitch
+            // which causes browser freezing on extra re-renders.
+            window.location.reload();
+        }
+    }
+
     _componentDidMount() {
+        window.addEventListener('resize', DEBOUNCE(this._handleResize, this.RESIZE_DEBOUNCE));
         if (!this._isForSelect()) {
             if (this.props.location.state && this.props.location.state.message) {
                 this._setToastNotification(this.props.location.state.message, AlertSeverityEnum.SUCCESS);
@@ -664,6 +675,7 @@ export class ListComponent extends BaseComplexPage {
     }
 
     componentWillUnmount() {
+        window.removeEventListener('resize', this._handleResize);
         if (!this._isForSelect()) {
             this._backListener();
         }

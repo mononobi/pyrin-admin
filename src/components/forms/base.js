@@ -16,6 +16,7 @@ import { JSTypeEnum } from '../../validators/enumerations';
 import { SelectDialog } from '../controls/dialogs/select';
 import { CreateDialog } from '../controls/dialogs/create';
 import { getMaxHeight } from '../../core/window';
+import { DEBOUNCE } from '../../core/debounce';
 import './base.css';
 
 
@@ -23,6 +24,7 @@ export class FormBase extends BaseComponent {
 
     FOR_UPDATE = false;
     CHECKBOX_DEFAULT = false;
+    RESIZE_DEBOUNCE = 200;
 
     state = {
         initialValues: this._getInitialValues(this.props.initialValues),
@@ -31,7 +33,21 @@ export class FormBase extends BaseComponent {
         fkField: null,
         fkRegisterName: null,
         fkName: null,
-        setFieldValue: null
+        setFieldValue: null,
+        maxFormHeight: this._getMaxFormHeight()
+    }
+
+    _handleResize = () => {
+        let currentHeight = this._getMaxFormHeight();
+        if (currentHeight !== this.state.maxFormHeight) {
+            this.setState({
+                maxFormHeight: currentHeight
+            });
+        }
+    }
+
+    _componentDidMount() {
+        window.addEventListener('resize', DEBOUNCE(this._handleResize, this.RESIZE_DEBOUNCE));
     }
 
     _openFKCreateDialog = () => {
@@ -290,7 +306,7 @@ export class FormBase extends BaseComponent {
                         return (
                             <Form onSubmit={props.handleSubmit}>
                                 <div className='form-controls-container'
-                                     style={{maxHeight: this._getMaxFormHeight()}}>
+                                     style={{maxHeight: this.state.maxFormHeight}}>
                                     {
                                         this.props.dataFields.map(info => {
                                             return (
@@ -357,5 +373,9 @@ export class FormBase extends BaseComponent {
                 </Formik>
             </div>
         );
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this._handleResize);
     }
 }
