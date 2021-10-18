@@ -31,3 +31,18 @@ export const ListFieldTypeEnum = {
 };
 
 Object.freeze(ListFieldTypeEnum);
+
+export const HistoryActionEnum = {
+    POP: 'POP',
+    PUSH: 'PUSH',
+    REPLACE: 'REPLACE'
+};
+
+Object.freeze(HistoryActionEnum);
+
+export const OrderingEnum = {
+    ASCENDING: 'asc',
+    DESCENDING: 'desc'
+};
+
+Object.freeze(OrderingEnum);

@@ -1,12 +1,15 @@
+import { OrderingEnum } from './enumerations';
+
+
 export function getOrderingInfo(name) {
-    let direction = 'asc';
+    let direction = OrderingEnum.ASCENDING;
     let field = name;
     if (name.startsWith('-')) {
-        direction = 'desc';
+        direction = OrderingEnum.DESCENDING;
         field = name.substring(1);
     }
     else if (name.startsWith('+')) {
-        direction = 'asc';
+        direction = OrderingEnum.ASCENDING;
         field = name.substring(1);
     }
     return [field, direction];
@@ -14,7 +17,7 @@ export function getOrderingInfo(name) {
 
 export function getOrdering(field, orderDirection) {
     let sign = '';
-    if (orderDirection === 'desc') {
+    if (orderDirection === OrderingEnum.DESCENDING) {
         sign = '-';
     }
     field = `${sign}${field}`;

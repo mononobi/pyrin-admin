@@ -1,5 +1,6 @@
 import * as request from './request';
 import { getOrdering } from '../core/ordering';
+import { OrderingEnum } from '../core/enumerations';
 import { addOrderingQueryParam, addPagingQueryParam,
     addQueryParams, addSearchQueryParam
 } from '../core/query_string';
@@ -7,8 +8,8 @@ import { addOrderingQueryParam, addPagingQueryParam,
 
 export function find(registerName, page=null,
                      pageSize=null, orderBy=null,
-                     orderDirection='asc', search=null,
-                     filters=null) {
+                     orderDirection=OrderingEnum.ASCENDING,
+                     search=null, filters=null) {
     let url = `${registerName}/`;
     if (filters) {
         url = addQueryParams(url, filters);

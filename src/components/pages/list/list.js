@@ -8,13 +8,15 @@ import { getFindMetadata } from '../../../services/metadata';
 import { deleteAll, deleteBulk, find } from '../../../services/data';
 import { getCreatePage, getListPage, getUpdatePage } from '../../../services/url';
 import { BaseComplexPage } from '../base/base';
-import { AlertSeverityEnum, ListFieldTypeEnum, TargetEnum } from '../../../core/enumerations';
 import { formatDate, formatDateTime, formatTime } from '../../../core/datetime';
 import { JSTypeEnum } from '../../../validators/enumerations';
 import { DEBOUNCE } from '../../../core/debounce';
 import { isJSONSerializable, isString, popKey } from '../../../core/helpers';
 import { getMaxHeight } from '../../../core/window';
 import { getOrdering, getOrderingInfo } from '../../../core/ordering';
+import { AlertSeverityEnum, HistoryActionEnum, ListFieldTypeEnum,
+    OrderingEnum, TargetEnum
+} from '../../../core/enumerations';
 import { addOrderingQueryParam, addQueryParams, addSearchQueryParam, getOrderingKey, getPageKey,
     getPageSizeKey, getSearchParamKey, removeOrderingQueryParam, removeSearchQueryParam
 } from '../../../core/query_string';
@@ -36,7 +38,8 @@ export class ListComponent extends BaseComplexPage {
         orderDirection: null,
         currentPage: null,
         currentPageSize: null,
-        maxBodyHeight: null
+        maxBodyHeight: null,
+        shouldReloadData: false
     }
 
     _rowClicked = (event, rowData, toggleDetailPanel) => {
@@ -55,20 +58,38 @@ export class ListComponent extends BaseComplexPage {
         return getFindMetadata(this._getInitialRegisterName());
     }
 
+    _handleBackButton = () => {
+        if (this._isTableStateValid()) {
+            let filters = this._getQueryParams();
+            let orderingKey = getOrderingKey(this.state.metadata.configs);
+            if (!filters[orderingKey] && this.TABLE_REF.current.dataManager.orderBy !== -1) {
+                this.TABLE_REF.current.dataManager.changeOrder(-1, OrderingEnum.ASCENDING);
+            }
+
+            let searchKey = getSearchParamKey(this.state.metadata.configs);
+            if (!filters[searchKey] && this.TABLE_REF.current.dataManager.searchText !== '') {
+                this.TABLE_REF.current.dataManager.changeSearchText('');
+            }
+
+            if (this.state.shouldReloadData) {
+                this.state.isInitial = true;
+                this.TABLE_REF.current.onQueryChange(this.TABLE_REF.current.state.query);
+            }
+        }
+    }
+
     _componentDidMount() {
         if (!this._isForSelect()) {
             if (this.props.location.state && this.props.location.state.message) {
                 this._setToastNotification(this.props.location.state.message, AlertSeverityEnum.SUCCESS);
             }
 
-            this.props.history.listen((location, action) => {
-                if (action === 'POP') {
-                    this.state.isInitial = true;
-                    if (this._isTableStateValid()) {
-                        this.TABLE_REF.current.onQueryChange(this.TABLE_REF.current.state.query);
+            this._backListener = this.props.history.listen(
+                (location, action) => {
+                    if (action === HistoryActionEnum.POP) {
+                        this._handleBackButton();
                     }
-                }
-            });
+                });
         }
     }
 
@@ -349,6 +370,9 @@ export class ListComponent extends BaseComplexPage {
                                         }
                                     }
                                 }
+                                else if (!ordering) {
+                                    query.orderBy = null;
+                                }
 
                                 let searchKey = getSearchParamKey(this.state.metadata.configs);
                                 let searchText = popKey(searchKey, filters, null);
@@ -357,6 +381,9 @@ export class ListComponent extends BaseComplexPage {
                                     if (this._isTableStateValid()) {
                                         this.TABLE_REF.current.dataManager.changeSearchText(searchText);
                                     }
+                                }
+                                else {
+                                    query.search = '';
                                 }
                             }
 
@@ -634,5 +661,19 @@ export class ListComponent extends BaseComplexPage {
                 }}
             />
         )
+    }
+
+    componentWillUnmount() {
+        super.componentWillUnmount();
+        if (!this._isForSelect()) {
+            this._backListener();
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        super.componentDidUpdate(prevProps, prevState, snapshot);
+        if (!this._isForSelect()) {
+            this.state.shouldReloadData = this.props.location.search !== prevProps.location.search;
+        }
     }
 }
