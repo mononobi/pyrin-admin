@@ -645,8 +645,7 @@ export class ListComponent extends BaseComplexPage {
                     toolbar: {
                         nRowsSelected: count => {
                             return count > 1 ? `${count} rows selected`: `${count} row selected`;
-                        },
-                        addRemoveColumns: 'Add or Remove Columns'
+                        }
                     }
                 }}
                 components={{
