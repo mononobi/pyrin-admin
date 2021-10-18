@@ -664,14 +664,12 @@ export class ListComponent extends BaseComplexPage {
     }
 
     componentWillUnmount() {
-        super.componentWillUnmount();
         if (!this._isForSelect()) {
             this._backListener();
         }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        super.componentDidUpdate(prevProps, prevState, snapshot);
         if (!this._isForSelect()) {
             this.state.shouldReloadData = this.props.location.search !== prevProps.location.search;
         }
