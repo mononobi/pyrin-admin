@@ -60,6 +60,15 @@ export class ListComponent extends BaseComplexPage {
             if (this.props.location.state && this.props.location.state.message) {
                 this._setToastNotification(this.props.location.state.message, AlertSeverityEnum.SUCCESS);
             }
+
+            this.props.history.listen((location, action) => {
+                if (action === 'POP') {
+                    this.state.isInitial = true;
+                    if (this._isTableStateValid()) {
+                        this.TABLE_REF.current.onQueryChange(this.TABLE_REF.current.state.query);
+                    }
+                }
+            });
         }
     }
 
@@ -598,7 +607,8 @@ export class ListComponent extends BaseComplexPage {
                     toolbar: {
                         nRowsSelected: count => {
                             return count > 1 ? `${count} rows selected`: `${count} row selected`;
-                        }
+                        },
+                        addRemoveColumns: 'Add or Remove Columns'
                     }
                 }}
                 components={{
