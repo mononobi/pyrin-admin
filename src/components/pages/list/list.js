@@ -89,11 +89,12 @@ export class ListComponent extends BaseComplexPage {
     }
 
     _componentDidMount() {
-        window.addEventListener('resize', DEBOUNCE(this._handleResize, this.RESIZE_DEBOUNCE));
         if (!this._isForSelect()) {
             if (this.props.location.state && this.props.location.state.message) {
                 this._setToastNotification(this.props.location.state.message, AlertSeverityEnum.SUCCESS);
             }
+
+            window.addEventListener('resize', DEBOUNCE(this._handleResize, this.RESIZE_DEBOUNCE));
 
             this._backListener = this.props.history.listen(
                 (location, action) => {
@@ -674,9 +675,9 @@ export class ListComponent extends BaseComplexPage {
     }
 
     componentWillUnmount() {
-        window.removeEventListener('resize', this._handleResize);
         if (!this._isForSelect()) {
             this._backListener();
+            window.removeEventListener('resize', this._handleResize);
         }
     }
 
