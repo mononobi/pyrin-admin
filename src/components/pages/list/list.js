@@ -40,7 +40,8 @@ export class ListComponent extends BaseComplexPage {
         currentPage: null,
         currentPageSize: null,
         maxBodyHeight: null,
-        shouldReloadData: false
+        shouldReloadData: false,
+        hasPushed: false
     }
 
     _rowClicked = (event, rowData, toggleDetailPanel) => {
@@ -81,7 +82,7 @@ export class ListComponent extends BaseComplexPage {
 
     _handleResize = () => {
         let currentHeight = this._getMaxBodyHeight(this.state.metadata.paged);
-        if (currentHeight !== this.state.maxBodyHeight) {
+        if (currentHeight !== this.state.maxBodyHeight && !this.state.hasPushed) {
             // we could not trigger re-render here because material table has a glitch
             // which causes browser freezing on extra re-renders.
             window.location.reload();
@@ -138,6 +139,8 @@ export class ListComponent extends BaseComplexPage {
                 return (
                     <Link component='a' underline='hover' className='link'
                           onClick={() => {
+                              // eslint-disable-next-line react/no-direct-mutation-state
+                              this.state.hasPushed = true;
                               this.props.history.push(getUpdatePage(info.pk_register_name, rowData[info.field]));
                           }}>
                         {value}
@@ -562,6 +565,7 @@ export class ListComponent extends BaseComplexPage {
                         isFreeAction: true,
                         onClick: event => {
                             if (!this._isForSelect()) {
+                                this.state.hasPushed = true;
                                 this.props.history.push(getCreatePage(this._getRegisterName()));
                             }
                             else {
@@ -635,6 +639,7 @@ export class ListComponent extends BaseComplexPage {
                         onClick: (event, rowData) => {
                             let url = getUpdatePage(this._getRegisterName(),
                                 rowData[this.state.metadata.configs.hidden_pk_name]);
+                            this.state.hasPushed = true;
                             this.props.history.push(url);
                         }
                     }
