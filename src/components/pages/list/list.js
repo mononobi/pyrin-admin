@@ -1,7 +1,7 @@
 import React from 'react';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
-import MaterialTable, { MTableToolbar } from 'material-table';
+import MaterialTable, { MTableToolbar } from '@material-table/core';
 import Link from '@material-ui/core/Link';
 import { Button } from '@material-ui/core';
 import { getFindMetadata } from '../../../services/metadata';
@@ -31,7 +31,7 @@ export class ListComponent extends BaseComplexPage {
 
     LINK_COLOR = '#12558d';
     TABLE_REF = React.createRef();
-    RESIZE_DEBOUNCE = 200;
+    RESIZE_DEBOUNCE = 150;
 
     state = {
         isInitial: true,
@@ -40,8 +40,7 @@ export class ListComponent extends BaseComplexPage {
         currentPage: null,
         currentPageSize: null,
         maxBodyHeight: null,
-        shouldReloadData: false,
-        hasPushed: false
+        shouldReloadData: false
     }
 
     _rowClicked = (event, rowData, toggleDetailPanel) => {
@@ -82,20 +81,19 @@ export class ListComponent extends BaseComplexPage {
 
     _handleResize = () => {
         let currentHeight = this._getMaxBodyHeight(this.state.metadata.paged);
-        if (currentHeight !== this.state.maxBodyHeight && !this.state.hasPushed) {
-            // we could not trigger re-render here because material table has a glitch
-            // which causes browser freezing on extra re-renders.
-            window.location.reload();
+        if (currentHeight !== this.state.maxBodyHeight) {
+            this.setState({
+                maxBodyHeight: currentHeight
+            })
         }
     }
 
     _componentDidMount() {
+        window.addEventListener('resize', DEBOUNCE(this._handleResize, this.RESIZE_DEBOUNCE));
         if (!this._isForSelect()) {
             if (this.props.location.state && this.props.location.state.message) {
                 this._setToastNotification(this.props.location.state.message, AlertSeverityEnum.SUCCESS);
             }
-
-            window.addEventListener('resize', DEBOUNCE(this._handleResize, this.RESIZE_DEBOUNCE));
 
             this._backListener = this.props.history.listen(
                 (location, action) => {
@@ -139,8 +137,6 @@ export class ListComponent extends BaseComplexPage {
                 return (
                     <Link component='a' underline='hover' className='link'
                           onClick={() => {
-                              // eslint-disable-next-line react/no-direct-mutation-state
-                              this.state.hasPushed = true;
                               this.props.history.push(getUpdatePage(info.pk_register_name, rowData[info.field]));
                           }}>
                         {value}
@@ -565,7 +561,6 @@ export class ListComponent extends BaseComplexPage {
                         isFreeAction: true,
                         onClick: event => {
                             if (!this._isForSelect()) {
-                                this.state.hasPushed = true;
                                 this.props.history.push(getCreatePage(this._getRegisterName()));
                             }
                             else {
@@ -639,7 +634,6 @@ export class ListComponent extends BaseComplexPage {
                         onClick: (event, rowData) => {
                             let url = getUpdatePage(this._getRegisterName(),
                                 rowData[this.state.metadata.configs.hidden_pk_name]);
-                            this.state.hasPushed = true;
                             this.props.history.push(url);
                         }
                     }
@@ -655,7 +649,7 @@ export class ListComponent extends BaseComplexPage {
                     }
                 }}
                 components={{
-                    Toolbar: props => (
+                    Toolbar: (props) => (
                         <MTableToolbar
                             {...props}
                             onSearchChanged={
@@ -680,9 +674,9 @@ export class ListComponent extends BaseComplexPage {
     }
 
     componentWillUnmount() {
+        window.removeEventListener('resize', this._handleResize);
         if (!this._isForSelect()) {
             this._backListener();
-            window.removeEventListener('resize', this._handleResize);
         }
     }
 

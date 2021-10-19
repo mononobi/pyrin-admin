@@ -24,7 +24,7 @@ export class FormBase extends BaseComponent {
 
     FOR_UPDATE = false;
     CHECKBOX_DEFAULT = false;
-    RESIZE_DEBOUNCE = 200;
+    RESIZE_DEBOUNCE = 150;
 
     state = {
         initialValues: this._getInitialValues(this.props.initialValues),
