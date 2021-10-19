@@ -2,6 +2,7 @@ import React from 'react';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
 import MaterialTable, { MTableToolbar } from '@material-table/core';
+import { ExportCsv, ExportPdf } from '@material-table/exporters';
 import Link from '@material-ui/core/Link';
 import { Button } from '@material-ui/core';
 import { getFindMetadata } from '../../../services/metadata';
@@ -42,6 +43,24 @@ export class ListComponent extends BaseComplexPage {
         maxBodyHeight: null,
         shouldReloadData: false
     }
+
+    _exportCSV = (columns, renderData) => {
+        ExportCsv(columns, renderData, this.state.metadata.export_name);
+    }
+    _exportPDF = (columns, renderData) => {
+        ExportPdf(columns, renderData, this.state.metadata.export_name);
+    }
+
+    _exportMenu = [
+        {
+            label: 'Export CSV',
+            exportFunc: this._exportCSV
+        },
+        {
+            label: 'Export PDF',
+            exportFunc: this._exportPDF
+        }
+    ]
 
     _rowClicked = (event, rowData, toggleDetailPanel) => {
         if (this._isForSelect()) {
@@ -321,7 +340,7 @@ export class ListComponent extends BaseComplexPage {
                         grouping: this.state.metadata.grouping && !this._isForSelect(),
                         columnsButton: (this.state.metadata.column_selection ||
                             this.state.metadata.enable_export) && !this._isForSelect(),
-                        exportButton: this.state.metadata.enable_export && !this._isForSelect(),
+                        exportMenu: this.state.metadata.enable_export && !this._isForSelect() ? this._exportMenu : [],
                         padding: this.state.metadata.table_type,
                         headerSelectionProps: {size: this.state.metadata.table_type === 'default' ? 'medium': 'small'},
                         paging: this.state.metadata.paged,
