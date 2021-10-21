@@ -10,6 +10,7 @@ axios.defaults.baseURL = CONFIGS.admin_api;
 axios.defaults.timeout = CONFIGS.api_timeout;
 axios.defaults.responseType = 'json';
 axios.defaults.timeoutErrorMessage = 'The request has been timed out.'
+axios.defaults.withCredentials = false
 
 
 function fetchResponse(request) {
