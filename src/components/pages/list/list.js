@@ -99,7 +99,7 @@ export class ListComponent extends BaseComplexPage {
     }
 
     _handleResize = () => {
-        let currentHeight = this._getMaxBodyHeight(this.state.metadata.paged);
+        let currentHeight = this._getMaxBodyHeight(this.state.metadata?.paged);
         if (currentHeight !== this.state.maxBodyHeight) {
             this.setState({
                 maxBodyHeight: currentHeight
