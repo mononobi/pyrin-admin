@@ -153,7 +153,7 @@ export class ComplexComponent extends BaseComponent {
                 )
             }
             else {
-                return this.this._getHelmet();
+                return this._getHelmet();
             }
         }
         else if (!this._hasError()) {
