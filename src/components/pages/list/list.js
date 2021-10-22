@@ -261,13 +261,17 @@ export class ListComponent extends BaseComplexPage {
         };
     }
 
+    _render_lookup(info, metadata) {
+        info.render = rowData => {
+            let value = rowData[info.field];
+            return this._get_lookup_value(info.lookup, value);
+        };
+    }
+
     _renderUnknown(info, metadata) {
         info.render = rowData => {
             let value = rowData[info.field];
-            if (info.lookup) {
-                return this._get_lookup_value(info.lookup, value);
-            }
-            else if (typeof value === JSTypeEnum.BOOLEAN) {
+            if (typeof value === JSTypeEnum.BOOLEAN) {
                 return this._getBoolean(value);
             }
             else if (isJSONSerializable(value)) {
@@ -315,6 +319,9 @@ export class ListComponent extends BaseComplexPage {
                 }
                 else if (info.type === ListFieldTypeEnum.OBJECT) {
                     this._renderJSON(info, metadata);
+                }
+                else if (info.lookup) {
+                    this._render_lookup(info, metadata);
                 }
                 else {
                     this._renderUnknown(info, metadata);
