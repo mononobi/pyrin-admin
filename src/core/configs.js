@@ -3,12 +3,22 @@ import * as storage from './local_storage';
 
 
 const CONFIGS_KEY = 'configs';
+const DEFAULT_CONFIGS = {
+    panel_home_path: '/admin',
+    panel_name: 'Admin Panel',
+    admin_api: 'http://127.0.0.1:5000/admin/api/',
+    api_timeout: '20000',
+    api_locale: 'en'
+};
+
+Object.freeze(DEFAULT_CONFIGS);
+
 export const CONFIGS = {
-    panel_home_path: process.env.REACT_APP_PANEL_HOME_PATH,
-    panel_name: process.env.REACT_APP_PANEL_NAME,
-    admin_api: process.env.REACT_APP_ADMIN_API,
-    api_timeout: process.env.REACT_APP_API_TIMEOUT,
-    api_locale: process.env.REACT_APP_API_LOCALE
+    panel_home_path: process.env.REACT_APP_PANEL_HOME_PATH || DEFAULT_CONFIGS.panel_home_path,
+    panel_name: process.env.REACT_APP_PANEL_NAME || DEFAULT_CONFIGS.panel_name,
+    admin_api: process.env.REACT_APP_ADMIN_API || DEFAULT_CONFIGS.admin_api,
+    api_timeout: process.env.REACT_APP_API_TIMEOUT || DEFAULT_CONFIGS.api_timeout,
+    api_locale: process.env.REACT_APP_API_LOCALE || DEFAULT_CONFIGS.api_locale
 };
 
 Object.freeze(CONFIGS);
