@@ -25,6 +25,7 @@ export class FormBase extends BaseComponent {
     FOR_UPDATE = false;
     CHECKBOX_DEFAULT = false;
     RESIZE_DEBOUNCE = 150;
+    IS_MOUNTED = false;
 
     state = {
         initialValues: this._getInitialValues(this.props.initialValues),
@@ -39,7 +40,7 @@ export class FormBase extends BaseComponent {
 
     _handleResize = () => {
         let currentHeight = this._getMaxFormHeight();
-        if (currentHeight !== this.state.maxFormHeight) {
+        if (currentHeight !== this.state.maxFormHeight && this.IS_MOUNTED) {
             this.setState({
                 maxFormHeight: currentHeight
             });
@@ -47,6 +48,7 @@ export class FormBase extends BaseComponent {
     }
 
     _componentDidMount() {
+        this.IS_MOUNTED = true;
         window.addEventListener('resize', DEBOUNCE(this._handleResize, this.RESIZE_DEBOUNCE));
     }
 
@@ -376,6 +378,7 @@ export class FormBase extends BaseComponent {
     }
 
     componentWillUnmount() {
+        this.IS_MOUNTED = false;
         window.removeEventListener('resize', this._handleResize);
     }
 }

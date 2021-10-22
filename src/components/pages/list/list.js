@@ -33,6 +33,7 @@ export class ListComponent extends BaseComplexPage {
     LINK_COLOR = '#12558d';
     TABLE_REF = React.createRef();
     RESIZE_DEBOUNCE = 150;
+    IS_MOUNTED = false;
 
     state = {
         isInitial: true,
@@ -100,7 +101,7 @@ export class ListComponent extends BaseComplexPage {
 
     _handleResize = () => {
         let currentHeight = this._getMaxBodyHeight(this.state.metadata?.paged);
-        if (currentHeight !== this.state.maxBodyHeight) {
+        if (currentHeight !== this.state.maxBodyHeight && this.IS_MOUNTED) {
             this.setState({
                 maxBodyHeight: currentHeight
             })
@@ -108,6 +109,7 @@ export class ListComponent extends BaseComplexPage {
     }
 
     _componentDidMount() {
+        this.IS_MOUNTED = true;
         window.addEventListener('resize', DEBOUNCE(this._handleResize, this.RESIZE_DEBOUNCE));
         if (!this._isForSelect()) {
             if (this.props.location.state && this.props.location.state.message) {
@@ -713,6 +715,7 @@ export class ListComponent extends BaseComplexPage {
     }
 
     componentWillUnmount() {
+        this.IS_MOUNTED = false;
         window.removeEventListener('resize', this._handleResize);
         if (!this._isForSelect()) {
             this._backListener();
