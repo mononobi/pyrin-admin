@@ -267,10 +267,10 @@ export class ListComponent extends BaseComplexPage {
             if (info.lookup) {
                 return this._get_lookup_value(info.lookup, value);
             }
-            if (typeof value === JSTypeEnum.BOOLEAN) {
+            else if (typeof value === JSTypeEnum.BOOLEAN) {
                 return this._getBoolean(value);
             }
-            if (isJSONSerializable(value)) {
+            else if (isJSONSerializable(value)) {
                 return this._getJSON(value);
             }
             return value;
