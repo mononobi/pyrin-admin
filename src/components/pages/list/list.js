@@ -125,13 +125,13 @@ export class ListComponent extends BaseComplexPage {
         }
     }
 
-    _get_lookup_value(lookup, value) {
-        let lookup_value = lookup[value];
-        if (lookup_value === undefined) {
+    _getLookupValue(lookup, value) {
+        let lookupValue = lookup[value];
+        if (lookupValue === undefined) {
             return value;
         }
         else {
-            return lookup_value;
+            return lookupValue;
         }
     }
 
@@ -163,7 +163,7 @@ export class ListComponent extends BaseComplexPage {
             info.render = rowData => {
                 let value = rowData[info.field];
                 if (info.lookup) {
-                    value = this._get_lookup_value(info.lookup, value);
+                    value = this._getLookupValue(info.lookup, value);
                 }
                 return (
                     <Link component='a' underline='hover' className='link'
@@ -186,7 +186,7 @@ export class ListComponent extends BaseComplexPage {
             info.render = rowData => {
                 let value = rowData[info.field];
                 if (info.lookup) {
-                    value = this._get_lookup_value(info.lookup, value);
+                    value = this._getLookupValue(info.lookup, value);
                 }
                 let url = getUpdatePage(info.fk_register_name, rowData[info.field]);
                 return (
@@ -263,10 +263,10 @@ export class ListComponent extends BaseComplexPage {
         };
     }
 
-    _render_lookup(info, metadata) {
+    _renderLookup(info, metadata) {
         info.render = rowData => {
             let value = rowData[info.field];
-            return this._get_lookup_value(info.lookup, value);
+            return this._getLookupValue(info.lookup, value);
         };
     }
 
@@ -323,7 +323,7 @@ export class ListComponent extends BaseComplexPage {
                     this._renderJSON(info, metadata);
                 }
                 else if (info.lookup) {
-                    this._render_lookup(info, metadata);
+                    this._renderLookup(info, metadata);
                 }
                 else {
                     this._renderUnknown(info, metadata);
