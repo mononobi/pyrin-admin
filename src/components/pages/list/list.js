@@ -123,6 +123,16 @@ export class ListComponent extends BaseComplexPage {
         }
     }
 
+    _get_lookup_value(lookup, value) {
+        let lookup_value = lookup[value];
+        if (lookup_value === undefined) {
+            return value;
+        }
+        else {
+            return lookup_value;
+        }
+    }
+
     _getBoolean(checked) {
         if (checked) {
             return <CheckCircleIcon color='action' fontSize='small'/>;
@@ -151,7 +161,7 @@ export class ListComponent extends BaseComplexPage {
             info.render = rowData => {
                 let value = rowData[info.field];
                 if (info.lookup) {
-                    value = info.lookup[value];
+                    value = this._get_lookup_value(info.lookup, value);
                 }
                 return (
                     <Link component='a' underline='hover' className='link'
@@ -174,7 +184,7 @@ export class ListComponent extends BaseComplexPage {
             info.render = rowData => {
                 let value = rowData[info.field];
                 if (info.lookup) {
-                    value = info.lookup[value]
+                    value = this._get_lookup_value(info.lookup, value);
                 }
                 let url = getUpdatePage(info.fk_register_name, rowData[info.field]);
                 return (
@@ -254,6 +264,9 @@ export class ListComponent extends BaseComplexPage {
     _renderUnknown(info, metadata) {
         info.render = rowData => {
             let value = rowData[info.field];
+            if (info.lookup) {
+                return this._get_lookup_value(info.lookup, value);
+            }
             if (typeof value === JSTypeEnum.BOOLEAN) {
                 return this._getBoolean(value);
             }
