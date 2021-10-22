@@ -3,11 +3,18 @@ import * as storage from './local_storage';
 
 
 const CONFIGS_KEY = 'configs';
-export const CONFIGS = require('../settings/settings.json');
+export const CONFIGS = {
+    panel_home_path: process.env.REACT_APP_PANEL_HOME_PATH,
+    panel_name: process.env.REACT_APP_PANEL_NAME,
+    admin_api: process.env.REACT_APP_ADMIN_API,
+    api_timeout: process.env.REACT_APP_API_TIMEOUT,
+    api_locale: process.env.REACT_APP_API_LOCALE
+};
+
 Object.freeze(CONFIGS);
 
 axios.defaults.baseURL = CONFIGS.admin_api;
-axios.defaults.timeout = CONFIGS.api_timeout;
+axios.defaults.timeout = Number(CONFIGS.api_timeout);
 axios.defaults.responseType = 'json';
 axios.defaults.timeoutErrorMessage = 'The request has been timed out.'
 axios.defaults.withCredentials = false

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { NotImplementedError } from '../../../core/exceptions';
 import { BaseComponent } from '../base/base';
 import { ProgressBar } from '../../controls/progress/progress';
@@ -105,16 +106,54 @@ export class ComplexComponent extends BaseComponent {
         throw new NotImplementedError();
     }
 
+    _needsTitle() {
+        return true;
+    }
+
+    _getBaseTitle() {
+        return this.state.metadata.configs.panel_name;
+    }
+
+    _getPageTitle() {
+        return null;
+    }
+
+    _getHelmet() {
+        if (this._needsTitle()) {
+            let baseTitle = this._getBaseTitle();
+            let pageTitle = this._getPageTitle();
+            let finalTitle = pageTitle ? `${pageTitle} - ${baseTitle}` : `${baseTitle}`;
+            return (
+                <>
+                    <Helmet>
+                        <title>{finalTitle}</title>
+                    </Helmet>
+                </>
+            )
+        }
+        return null;
+    }
+
     _render() {
         if (this.state.isMetadataLoaded) {
             if (!this.REQUIRES_DATA || this.state.isDataLoaded) {
-                return this._finalRender();
+                return (
+                    <>
+                        {this._getHelmet()}
+                        {this._finalRender()}
+                    </>
+                )
             }
             else if (!this._hasError()) {
-                return <ProgressBar/>
+                return (
+                    <>
+                        {this._getHelmet()}
+                        <ProgressBar/>
+                    </>
+                )
             }
             else {
-                return null;
+                return this.this._getHelmet();
             }
         }
         else if (!this._hasError()) {

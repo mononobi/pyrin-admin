@@ -18,6 +18,10 @@ export class AddComponent extends BaseComplexPage {
         return getCreateMetadata(this._getInitialRegisterName());
     }
 
+    _getPageTitle() {
+        return `Add ${this._getName()}`;
+    }
+
     _finalRender() {
         return (
             <div style={{padding: '6px'}}>

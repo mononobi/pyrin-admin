@@ -332,6 +332,10 @@ export class ListComponent extends BaseComplexPage {
         }
     }
 
+    _getPageTitle() {
+        return this._getPluralName();
+    }
+
     _isOrderByChanged(query) {
         if ((Boolean(query.orderBy) && !Boolean(this.state.orderByField)) ||
             (!Boolean(query.orderBy) && Boolean(this.state.orderByField))) {

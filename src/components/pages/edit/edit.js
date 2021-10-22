@@ -33,6 +33,10 @@ export class EditComponent extends BaseComplexPage {
         return result;
     }
 
+    _getPageTitle() {
+        return `Edit ${this._getName()}`;
+    }
+
     _finalRender() {
         return (
             <div style={{padding: '6px'}}>

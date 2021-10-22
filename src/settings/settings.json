@@ -1,7 +1,0 @@
-{
-  "panel_home_path": "/admin",
-  "panel_name": "Admin Panel",
-  "admin_api": "http://127.0.0.1:5000/admin/api/",
-  "api_timeout": 20000,
-  "api_locale": "en"
-}

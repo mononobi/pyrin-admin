@@ -81,6 +81,10 @@ export class HomeComponent extends BaseComplexPage {
         }
     }
 
+    _getPageTitle() {
+        return `Home`;
+    }
+
     _finalRender() {
         return (
             <div className='pages-container'>

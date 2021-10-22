@@ -37,4 +37,8 @@ export class BaseComplexPage extends ComplexComponent {
     _getQueryParams() {
         return parseQueryString(this.props.location.search);
     }
+
+    _needsTitle() {
+        return !this._isForSelect();
+    }
 }
