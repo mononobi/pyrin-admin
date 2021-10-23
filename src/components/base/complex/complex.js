@@ -107,7 +107,7 @@ export class ComplexComponent extends BaseComponent {
     }
 
     _needsTitle() {
-        return true;
+        return false;
     }
 
     _getBaseTitle() {
