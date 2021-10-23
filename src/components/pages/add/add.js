@@ -31,6 +31,7 @@ export class AddComponent extends BaseComplexPage {
                                 forSelect={this._isForSelect()}
                                 setSelectedFK={this.props.setSelectedFK}
                                 history={this.props.history}
+                                location={this.props.location}
                                 dataFields={this.state.metadata.data_fields}
                                 dataFieldsDict={this.state.metadata.data_fields_dict}
                                 hasSavePermission={this.state.metadata.has_create_permission}/>

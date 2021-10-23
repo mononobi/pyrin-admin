@@ -1,5 +1,5 @@
 import { CONFIGS } from '../core/configs';
-import { addQueryParams } from '../core/query_string';
+import { addListFiltersQueryString, addQueryParams } from '../core/query_string';
 
 
 export function getListPage(registerName, filters=null) {
@@ -10,10 +10,18 @@ export function getListPage(registerName, filters=null) {
     return url;
 }
 
-export function getCreatePage(registerName) {
-    return `${CONFIGS.panel_home_path}/${registerName}/add`;
+export function getCreatePage(registerName, listFilters=null) {
+    let url = `${CONFIGS.panel_home_path}/${registerName}/add`;
+    if (listFilters) {
+        url = addListFiltersQueryString(url, listFilters);
+    }
+    return url;
 }
 
-export function getUpdatePage(registerName, pk) {
-    return `${CONFIGS.panel_home_path}/${registerName}/${pk}`;
+export function getUpdatePage(registerName, pk, listFilters=null) {
+    let url = `${CONFIGS.panel_home_path}/${registerName}/${pk}`;
+    if (listFilters) {
+        url = addListFiltersQueryString(url, listFilters);
+    }
+    return url;
 }

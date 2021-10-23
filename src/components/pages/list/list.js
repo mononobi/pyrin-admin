@@ -168,7 +168,12 @@ export class ListComponent extends BaseComplexPage {
                 return (
                     <Link component='a' underline='hover' className='link'
                           onClick={() => {
-                              this.props.history.push(getUpdatePage(info.pk_register_name, rowData[info.field]));
+                              let listFilters = null;
+                              if (!this._isForSelect()) {
+                                  listFilters = this.props.location.search;
+                              }
+                              this.props.history.push(getUpdatePage(info.pk_register_name,
+                                  rowData[info.field], listFilters));
                           }}>
                         {value}
                     </Link>
@@ -606,7 +611,8 @@ export class ListComponent extends BaseComplexPage {
                         isFreeAction: true,
                         onClick: event => {
                             if (!this._isForSelect()) {
-                                this.props.history.push(getCreatePage(this._getRegisterName()));
+                                this.props.history.push(
+                                    getCreatePage(this._getRegisterName(), this.props.location.search));
                             }
                             else {
                                 this.props.openFKCreateDialog();
@@ -677,8 +683,12 @@ export class ListComponent extends BaseComplexPage {
                         position: 'row',
                         hidden: !this.state.metadata.has_get_permission || this._isForSelect(),
                         onClick: (event, rowData) => {
+                            let listFilters = null;
+                            if (!this._isForSelect()) {
+                                listFilters = this.props.location.search;
+                            }
                             let url = getUpdatePage(this._getRegisterName(),
-                                rowData[this.state.metadata.configs.hidden_pk_name]);
+                                rowData[this.state.metadata.configs.hidden_pk_name], listFilters);
                             this.props.history.push(url);
                         }
                     }

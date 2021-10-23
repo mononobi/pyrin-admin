@@ -4,6 +4,7 @@ import { CONFIGS, getConfigs } from './configs';
 
 export const QUERY_STRING = require('query-string');
 export const PLUS_ENCODED = '%2B';
+export const LIST_FILTERS_NAME = '_list_filters';
 
 export function parseQueryString(text) {
     text = text.replace('+', PLUS_ENCODED);
@@ -115,4 +116,23 @@ export function removeSearchQueryParam(url) {
         url = QUERY_STRING.exclude(url, [searchParam]);
     }
     return url;
+}
+
+export function addListFiltersQueryString(url, listFilters) {
+    if (listFilters.startsWith('?')) {
+        listFilters = listFilters.slice(1);
+    }
+    let filters = {};
+    filters[LIST_FILTERS_NAME] = listFilters;
+    return addQueryParams(url, filters);
+}
+
+export function parseListFiltersQueryString(text) {
+    let result = null;
+    let queryStrings = parseQueryString(text);
+    let listFilters = queryStrings[LIST_FILTERS_NAME];
+    if (listFilters) {
+        result = parseQueryString(listFilters);
+    }
+    return result;
 }

@@ -16,6 +16,7 @@ import { JSTypeEnum } from '../../validators/enumerations';
 import { SelectDialog } from '../controls/dialogs/select';
 import { CreateDialog } from '../controls/dialogs/create';
 import { getMaxHeight } from '../../core/window';
+import { parseListFiltersQueryString } from '../../core/query_string';
 import { DEBOUNCE } from '../../core/debounce';
 import './base.css';
 
@@ -210,6 +211,14 @@ export class FormBase extends BaseComponent {
         return getMaxHeight(0.13, 0.205, this.props.forSelect);
     }
 
+    _getListFilters() {
+        let listFilters = null;
+        if (!this.props.forSelect && this.props.location.search) {
+            listFilters = parseListFiltersQueryString(this.props.location.search);
+        }
+        return listFilters;
+    }
+
     _render() {
         return (
             <div>
@@ -283,7 +292,8 @@ export class FormBase extends BaseComponent {
                                             message = `A new ${this.props.name} with primary key [${json.value}] has been added successfully.`;
                                         }
                                     }
-                                    this.props.history.push(getListPage(this.props.registerName), {message: message});
+                                    this.props.history.push(getListPage(this.props.registerName,
+                                        this._getListFilters()), {message: message});
                                 }
                                 else
                                 {
@@ -345,7 +355,9 @@ export class FormBase extends BaseComponent {
                                                                 if (ok) {
                                                                     let message = `${this.props.name} [${this.props.pk}] has been deleted successfully.`;
                                                                     this.props.history.replace(
-                                                                        getListPage(this.props.registerName), {message: message});
+                                                                        getListPage(this.props.registerName,
+                                                                            this._getListFilters()),
+                                                                        {message: message});
                                                                 }
                                                                 else {
                                                                     this._setToastNotification(json, AlertSeverityEnum.ERROR);
