@@ -168,12 +168,8 @@ export class ListComponent extends BaseComplexPage {
                 return (
                     <Link component='a' underline='hover' className='link'
                           onClick={() => {
-                              let listFilters = null;
-                              if (!this._isForSelect()) {
-                                  listFilters = this.props.location.search;
-                              }
                               this.props.history.push(getUpdatePage(info.pk_register_name,
-                                  rowData[info.field], listFilters));
+                                  rowData[info.field], this.props.location.search));
                           }}>
                         {value}
                     </Link>
