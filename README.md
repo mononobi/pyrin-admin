@@ -33,7 +33,9 @@ Your application is ready to be deployed!
 
 ## Available Configs
 
-You can edit or add required configs in `.env` file of root folder before building the source code or running the container.\
+You can edit or add required configs in `.env` file of root folder or set them as environment variables
+before building the source code or running the container.
+
 These are the configs which are required for Pyrin Admin to work.\
 If you do not provide them, the default values of each one will be used.
 
@@ -43,6 +45,6 @@ If you do not provide them, the default values of each one will be used.
 
 `REACT_APP_ADMIN_API`: The remote server url which exposes the admin api to the client. defaults to `http://127.0.0.1:5000/admin/api/`.
 
-`REACT_APP_API_TIMEOUT`: The timeout in seconds for remote service calls to admin api. defaults to `20 seconds`.
+`REACT_APP_API_TIMEOUT`: The timeout in milliseconds for remote service calls to the admin api. defaults to `20000 milliseconds`.
 
 `REACT_APP_API_LOCALE`: The api locale to be requested on service calls. defaults to `en`.
