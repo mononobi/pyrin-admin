@@ -48,3 +48,5 @@ If you do not provide them, the default values of each one will be used.
 `REACT_APP_API_TIMEOUT`: The timeout in milliseconds for remote service calls to the admin api. defaults to `20000 milliseconds`.
 
 `REACT_APP_API_LOCALE`: The api locale to be requested on service calls. defaults to `en`.
+
+`REACT_APP_CONTENT`: A short description of your server application. defaults to `Client side admin panel for Pyrin framework`.
