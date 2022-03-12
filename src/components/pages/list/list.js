@@ -48,6 +48,7 @@ export class ListComponent extends BaseComplexPage {
     _exportCSV = (columns, renderData) => {
         ExportCsv(columns, renderData, this.state.metadata.export_name);
     }
+
     _exportPDF = (columns, renderData) => {
         ExportPdf(columns, renderData, this.state.metadata.export_name);
     }
