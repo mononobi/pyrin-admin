@@ -25,3 +25,7 @@ yarn-error.log*
 # pycharm stuff
 /.idea/
 /.idea
+
+# vscode stuff
+/.vscode/
+/.vscode
