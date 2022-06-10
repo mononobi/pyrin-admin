@@ -27,5 +27,3 @@ export class App extends BaseComponent {
         )
     }
 }
-
-// test commit
