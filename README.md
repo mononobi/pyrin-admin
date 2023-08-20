@@ -10,6 +10,7 @@ Pyrin admin panel gives you a rich admin dashboard for your application with a s
 * Delete records of different entities
 * List records of different entities with extensive filtering features
 * List related records to a parent record
+* Define custom actions which can be executed on the list page per each record
 
 ## Deployment
 
