@@ -43,6 +43,8 @@ If you do not provide them, the default values of each one will be used.
 
 `REACT_APP_PANEL_NAME`: The admin panel name to be used for example on login page. defaults to `Admin Panel`.
 
+`REACT_APP_BASE_API`: The remote server url which exposes the main application api to the client. defaults to `http://127.0.0.1:5000/`.
+
 `REACT_APP_ADMIN_API`: The remote server url which exposes the admin api to the client. defaults to `http://127.0.0.1:5000/admin/api/`.
 
 `REACT_APP_API_TIMEOUT`: The timeout in milliseconds for remote service calls to the admin api. defaults to `20000 milliseconds`.
