@@ -6,7 +6,7 @@ import { ExportCsv, ExportPdf } from '@material-table/exporters';
 import Link from '@material-ui/core/Link';
 import { Button } from '@material-ui/core';
 import { getFindMetadata } from '../../../services/metadata';
-import { deleteAll, deleteBulk, find } from '../../../services/data';
+import { deleteAll, deleteBulk, find, dynamicOperation } from '../../../services/data';
 import { getCreatePage, getListPage, getUpdatePage } from '../../../services/url';
 import { BaseComplexPage } from '../base/base';
 import { formatDate, formatDateTime, formatTime } from '../../../core/datetime';
@@ -257,6 +257,52 @@ export class ListComponent extends BaseComplexPage {
         };
     }
 
+    _renderAction(info, metadata) {
+        if (this._isForSelect()) {
+            info.hidden = true;
+        }
+        // `this` handle is not available inside the `info.render` method, so we have to 
+        // put it in a local variable here to be accessible later.
+        const tempThis = this
+        info.render = rowData => {
+            let data = rowData[info.field];
+
+            function callService() {
+                let result = dynamicOperation(data.remote_url, data.params, data.http_method);
+                result.then(([json, ok]) => {
+                    if (ok) {
+                        if (tempThis._isTableStateValid()) {
+                            tempThis.TABLE_REF.current.onQueryChange(tempThis.TABLE_REF.current.state.query);
+                        }
+                        let message =  data.success_message ? data.success_message : 'Action has been done successfully.'
+                        tempThis._setToastNotification(message, AlertSeverityEnum.SUCCESS);
+                    }
+                    else {
+                        tempThis._setToastNotification(json, AlertSeverityEnum.ERROR);
+                    }
+                });
+            }
+
+            return (
+                <Button variant={data.button_type} color='default' type='button'
+                    size='small' className='link-button'
+                    onClick={() => {
+                        if (data.confirmation_message) {
+                            tempThis._setConfirmActionDialog(data.confirmation_message,
+                                () => {
+                                    callService()
+                                }, data.important_action);
+                        }
+                        else {
+                            callService();
+                        }
+                    }}>
+                    {data.title}
+                </Button>
+            );
+        };
+    }
+
     _renderJSON(info, metadata) {
         info.type = ListFieldTypeEnum.STRING;
         info.render = rowData => {
@@ -320,6 +366,9 @@ export class ListComponent extends BaseComplexPage {
                 }
                 else if (info.is_link) {
                     this._renderLink(info, metadata);
+                }
+                else if (info.is_action) {
+                    this._renderAction(info, metadata);
                 }
                 else if (info.type === ListFieldTypeEnum.OBJECT) {
                     this._renderJSON(info, metadata);

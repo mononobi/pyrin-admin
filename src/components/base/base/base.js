@@ -3,7 +3,7 @@ import { NotImplementedError } from '../../../core/exceptions';
 import { AlertSeverityEnum, AlertTypeEnum } from '../../../core/enumerations';
 import { getAlert, getAlertInfo } from '../../controls/alert/provider';
 import { getConfirmDialog, getConfirmDialogInfo } from '../../controls/dialogs/provider';
-import { ConfirmDeleteDialog } from '../../controls/dialogs/confirm';
+import { ConfirmActionDialog, ConfirmDeleteDialog } from '../../controls/dialogs/confirm';
 
 
 export class BaseComponent extends Component {
@@ -60,6 +60,18 @@ export class BaseComponent extends Component {
                 this._removeConfirmDialog();
             },
             ConfirmDeleteDialog);
+        this._setConfirmDialog(dialogInfo);
+    }
+
+    _setConfirmActionDialog(title, handleAccept, importantAction=false) {
+        let dialogInfo = getConfirmDialogInfo(
+            title, () => {
+                this._removeConfirmDialog();
+                handleAccept();
+            }, () => {
+                this._removeConfirmDialog();
+            },
+            ConfirmActionDialog, importantAction);
         this._setConfirmDialog(dialogInfo);
     }
 

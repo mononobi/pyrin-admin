@@ -57,3 +57,17 @@ export const ConfirmDeleteDialog = props => {
                        acceptTitle='Delete'/>
     );
 };
+
+export const ConfirmActionDialog = props => {
+
+    return (
+        <ConfirmDialog handleAccept={props.handleAccept}
+                       handleReject={props.handleReject}
+                       title={props.title}
+                       description={props.importantAction ? 'This operation can not be undone.' : null}
+                       rejectTitle='Cancel' 
+                       acceptColor={props.importantAction ? 'error' : 'primary'}
+                       acceptSx={{color: props.importantAction ? DELETE_BUTTON_COLOR : 'primary'}}
+                       acceptTitle='Confirm'/>
+    );
+};

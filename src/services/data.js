@@ -71,3 +71,7 @@ export function deleteBulk(registerName, primaryKeys) {
     url = addQueryParams(url, query);
     return request.delete_(url);
 }
+
+export function dynamicOperation(url, inputs, methodName) {
+    return request.dynamicMethod(url, inputs, methodName);
+}
